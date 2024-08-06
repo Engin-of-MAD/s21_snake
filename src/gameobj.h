@@ -4,26 +4,13 @@
 
 #ifndef BRICKGAME_GAMEOBJ_H
 #define BRICKGAME_GAMEOBJ_H
-#include <exception>
 
-class GameObj {
-    int state = 0;
-    class Field {
-        int** field = nullptr;
-        int height = 0;
-        int width = 0;
-        void createField();
-        void deleteField();
-    public:
-        Field(int height, int width);
-        ~Field();
-    };
-
-    int time = 0;
-public:
-    ;
+#include "../brick_game/tetris/tetris.h"
+struct GameObject : game_data_t {
+    char** Table = nullptr;
 
 };
+
 
 
 #endif //BRICKGAME_GAMEOBJ_H

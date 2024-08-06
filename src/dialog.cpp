@@ -30,8 +30,7 @@ void Dialog::changeSizeField() {
     window->resize(size);
     window->setMinimumSize(size);
     window->setMaximumSize(size);
-//    qDebug() << "Pointer: " << window << window->size();
-//    qDebug() << "New size: " << size;
+
 }
 
 Dialog::~Dialog()

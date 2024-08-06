@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+#include "gameobj.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -15,12 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-
+    GameObject g;
     connect(ui->actionSizeField, SIGNAL(triggered()), this, SLOT(sizeFieldDialog()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitGame()));
 
     qDebug() << "Pointer: " << this << size();
-
+    qDebug() << "GameObject: " << &g << g.Table;
 }
 
 MainWindow::~MainWindow()
