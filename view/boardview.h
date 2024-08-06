@@ -13,6 +13,9 @@ private:
     QPointF startPos;
     QPointF sizeField;
 public:
+    const int paddingY = 66;
+    const int paddingX = 20;
+
     explicit BoardView(int tile_x, int tile_y, QObject *parent = nullptr);
 
     void setBackground(int height, int width);
