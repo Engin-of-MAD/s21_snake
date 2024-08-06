@@ -47,7 +47,7 @@ void BoardView::resize(int width, int height) {
     setWidth(width);
     setHeight(height);
     setSceneRect(0, 0, sizeField.x(), sizeField.y());
-    addRect(0, 0, sizeField.x(), sizeField.y());
+//    addRect(0, 0, sizeField.x(), sizeField.y());
 //    setItemIndexMethod(QGraphicsScene::NoIndex);
 //    setBackground(width, height);
 }

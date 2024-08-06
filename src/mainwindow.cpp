@@ -37,6 +37,7 @@ void MainWindow::printResize(QResizeEvent* event) {
     qDebug() << "Pointer: " << this << size();
 }
 void MainWindow::exitGame() {
+    QApplication::exit();
 }
 void MainWindow::pauseGame() {}
 void MainWindow::resumeGame() {}
