@@ -1,16 +1,16 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowcYZDBP.ui'
+** Form generated from reading UI file 'mainwindowmXVanu.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.14
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWCYZDBP_H
-#define MAINWINDOWCYZDBP_H
+#ifndef MAINWINDOWMXVANU_H
+#define MAINWINDOWMXVANU_H
 
 #include <QtCore/QVariant>
-#include <QAction>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
@@ -170,4 +170,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWCYZDBP_H
+#endif // MAINWINDOWMXVANU_H

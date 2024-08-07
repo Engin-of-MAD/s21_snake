@@ -20,10 +20,10 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
-      <size>
+      <fixSize>
        <width>20</width>
        <height>40</height>
-      </size>
+      </fixSize>
      </property>
     </spacer>
    </item>
@@ -49,10 +49,10 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
-      <size>
+      <fixSize>
        <width>40</width>
        <height>20</height>
-      </size>
+      </fixSize>
      </property>
     </spacer>
    </item>
@@ -62,10 +62,10 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
-      <size>
+      <fixSize>
        <width>40</width>
        <height>20</height>
-      </size>
+      </fixSize>
      </property>
     </spacer>
    </item>
@@ -89,10 +89,10 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
-      <size>
+      <fixSize>
        <width>20</width>
        <height>40</height>
-      </size>
+      </fixSize>
      </property>
     </spacer>
    </item>

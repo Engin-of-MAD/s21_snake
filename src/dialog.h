@@ -16,7 +16,7 @@ class Dialog : public QDialog
 
 public:
     explicit Dialog(QWidget *parent = nullptr);
-    Dialog(QMainWindow* window, QGraphicsView* view, BoardView* boardView);
+    Dialog(QMainWindow* window, QGraphicsView* view, BoardView* boardView, QSize* fixSize);
     ~Dialog();
 public slots:
     void changeSizeField();
@@ -25,6 +25,7 @@ private:
     QGraphicsView* view;
     BoardView* boardView;
     QMainWindow* window;
+    QSize* fixSize;
 };
 
 

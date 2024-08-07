@@ -10,7 +10,6 @@ BoardView::BoardView(int tile_x, int tile_y, QObject *parent): QGraphicsScene(pa
     sizeField.rx() = tile_x * sizeSquare;
     sizeField.ry() = tile_y * sizeSquare;
     setSceneRect(0, 0, sizeField.x(), sizeField.y());
-    addRect(0, 0, sizeField.x(), sizeField.y());
     setItemIndexMethod(QGraphicsScene::NoIndex);
     setBackground(tile_x, tile_y);
 }
@@ -27,7 +26,7 @@ void BoardView::setBackground(int height, int width) {
     painter.setPen(gridPen);
     painter.drawRect(0, 0, sizeSquare, sizeSquare);
     setBackgroundBrush(QBrush(bg));
-
+    addRect(0, 0, sizeField.x(), sizeField.y());
 }
 
 QSize BoardView::getSize() {
@@ -47,4 +46,5 @@ void BoardView::resize(int width, int height) {
     setWidth(width);
     setHeight(height);
     setSceneRect(0, 0, sizeField.x(), sizeField.y());
+    addRect(0, 0, sizeField.x(), sizeField.y());
 }

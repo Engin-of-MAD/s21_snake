@@ -11,16 +11,16 @@
    </rect>
   </property>
   <property name="minimumSize">
-   <size>
+   <fixSize>
     <width>0</width>
     <height>0</height>
-   </size>
+   </fixSize>
   </property>
   <property name="maximumSize">
-   <size>
+   <fixSize>
     <width>16777215</width>
     <height>16777215</height>
-   </size>
+   </fixSize>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>

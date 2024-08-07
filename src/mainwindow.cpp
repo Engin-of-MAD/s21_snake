@@ -4,23 +4,40 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+
 
     m_board = new BoardView(10,20, this);
-//    ui->graphicsView->resize(m_board->getSize());
-    ui->graphicsView->setScene(m_board);
-    ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    resize(m_board->getSize());
-    ui->graphicsView->resize(m_board->getSize());
-//    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    initView();
+
 
     GameObject g;
     connect(ui->actionSizeField, SIGNAL(triggered()), this, SLOT(sizeFieldDialog()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitGame()));
 
     qDebug() << "Pointer: " << this << size();
-    qDebug() << "GameObject: " << &g << g.Table;
+
+
+}
+
+
+void MainWindow::initView() {
+    QSize size(m_board->getSize().width() , m_board->getSize().height());
+
+    ui->setupUi(this);
+    ui->graphicsView->setScene(m_board);
+    ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    resize(size);
+    qDebug() << "Pointer: " << this << size;
+}
+
+void MainWindow::setFixSize() {
+    QRect frameGeometry = this->frameGeometry();
+    fixSize.rheight() = frameGeometry.height() - m_board->getSize().height();
+    fixSize.rwidth() = frameGeometry.width() - m_board->getSize().width();
+
+    qDebug() << "Fix fixSize: " << this << fixSize;
+
 }
 
 MainWindow::~MainWindow()
@@ -29,7 +46,10 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::sizeFieldDialog() {
-    Dialog d(this, ui->graphicsView, m_board);
+
+
+
+    Dialog d(this, ui->graphicsView, m_board, &fixSize);
     d.exec();
 }
 
@@ -39,6 +59,8 @@ void MainWindow::printResize(QResizeEvent* event) {
 void MainWindow::exitGame() {
     QApplication::exit();
 }
+
+
 void MainWindow::pauseGame() {}
 void MainWindow::resumeGame() {}
 

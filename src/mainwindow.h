@@ -15,15 +15,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void printResize(QResizeEvent* event);
+    void setFixSize();
 private:
-
-    Ui::MainWindow *ui;
+    QSize fixSize;
+    void initView();
+    Ui::MainWindow* ui;
     BoardView* m_board;
 private slots:
     void exitGame();
     void sizeFieldDialog();
-
     void pauseGame();
     void resumeGame();
 };
+
+
 #endif // MAINWINDOW_H
