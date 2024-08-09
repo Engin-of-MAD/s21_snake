@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 #set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
 
-find_package(Qt5 COMPONENTS
+find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
@@ -17,14 +17,12 @@ add_executable(untitled2
         view/boardview.h
         view/boardview.cpp
         src/mainwindow.h
-        src/ui_dialog.h
         src/ui_mainwindow.h
         src/mainwindow.cpp
         src/main.cpp
         src/gameobj.h
         src/gameobj.cpp
-        src/dialog.h
-        src/dialog.cpp
+        src/mainwindow.ui
 )
 target_link_libraries(untitled2
         Qt::Core
