@@ -6,7 +6,7 @@
 
 #include "../view/boardview.h"
 #include "./ui_mainwindow.h"
-#include "./dialog.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -23,9 +23,6 @@ private:
     BoardView* m_board;
 private slots:
     void exitGame();
-    void sizeFieldDialog();
-    void pauseGame();
-    void resumeGame();
 };
 
 

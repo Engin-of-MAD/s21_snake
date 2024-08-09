@@ -1,16 +1,16 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowmXVanu.ui'
+** Form generated from reading UI file 'mainwindowXylqHc.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.14
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWMXVANU_H
-#define MAINWINDOWMXVANU_H
+#ifndef MAINWINDOWXYLQHC_H
+#define MAINWINDOWXYLQHC_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
@@ -35,7 +35,10 @@ public:
     QAction *actionTetris;
     QAction *actionGame;
     QAction *actionAbout;
-    QAction *actionSizeField;
+    QAction *action10x20;
+    QAction *action15x20;
+    QAction *action20x20;
+    QAction *action30x30;
     QWidget *centralwidget;
     QGridLayout *gridLayout;
     QGraphicsView *graphicsView;
@@ -50,7 +53,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 800);
+        MainWindow->resize(640, 632);
         MainWindow->setMinimumSize(QSize(0, 0));
         MainWindow->setMaximumSize(QSize(16777215, 16777215));
         actionNewGame = new QAction(MainWindow);
@@ -73,8 +76,14 @@ public:
         actionGame->setObjectName(QString::fromUtf8("actionGame"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
-        actionSizeField = new QAction(MainWindow);
-        actionSizeField->setObjectName(QString::fromUtf8("actionSizeField"));
+        action10x20 = new QAction(MainWindow);
+        action10x20->setObjectName(QString::fromUtf8("action10x20"));
+        action15x20 = new QAction(MainWindow);
+        action15x20->setObjectName(QString::fromUtf8("action15x20"));
+        action20x20 = new QAction(MainWindow);
+        action20x20->setObjectName(QString::fromUtf8("action20x20"));
+        action30x30 = new QAction(MainWindow);
+        action30x30->setObjectName(QString::fromUtf8("action30x30"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
@@ -92,7 +101,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 23));
+        menubar->setGeometry(QRect(0, 0, 640, 23));
         menuGame = new QMenu(menubar);
         menuGame->setObjectName(QString::fromUtf8("menuGame"));
         menuGame_mode = new QMenu(menuGame);
@@ -111,7 +120,6 @@ public:
         menuGame->addAction(actionNewGame);
         menuGame->addAction(actionPause);
         menuGame->addAction(actionStop);
-        menuGame->addAction(actionSizeField);
         menuGame->addAction(menuChoose_game->menuAction());
         menuGame->addAction(menuGame_mode->menuAction());
         menuGame->addAction(actionExit);
@@ -155,7 +163,10 @@ public:
         actionGame->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+H", nullptr));
 #endif // QT_CONFIG(shortcut)
         actionAbout->setText(QCoreApplication::translate("MainWindow", "About", nullptr));
-        actionSizeField->setText(QCoreApplication::translate("MainWindow", "Size field", nullptr));
+        action10x20->setText(QCoreApplication::translate("MainWindow", "10x20", nullptr));
+        action15x20->setText(QCoreApplication::translate("MainWindow", "15x20", nullptr));
+        action20x20->setText(QCoreApplication::translate("MainWindow", "20x20", nullptr));
+        action30x30->setText(QCoreApplication::translate("MainWindow", "30x30", nullptr));
         menuGame->setTitle(QCoreApplication::translate("MainWindow", "Game", nullptr));
         menuGame_mode->setTitle(QCoreApplication::translate("MainWindow", "Game mode", nullptr));
         menuChoose_game->setTitle(QCoreApplication::translate("MainWindow", "Choose game", nullptr));
@@ -170,4 +181,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWMXVANU_H
+#endif // MAINWINDOWXYLQHC_H
