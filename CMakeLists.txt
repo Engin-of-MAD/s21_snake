@@ -14,15 +14,18 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(untitled2
-        view/boardview.h
+        view/inc/boardview.h
         view/boardview.cpp
-        src/mainwindow.h
-        src/ui_mainwindow.h
-        src/mainwindow.cpp
+        view/inc/mainwindow.h
+        view/inc/ui_mainwindow.h
+        view/mainwindow.cpp
         src/main.cpp
         src/gameobj.h
         src/gameobj.cpp
-        src/mainwindow.ui
+        view/mainwindow.ui
+#        brick_game/tetris/tetris_backend.h
+#        brick_game/tetris/backend.c
+#        brick_game/tetris/tetris.h
 )
 target_link_libraries(untitled2
         Qt::Core
