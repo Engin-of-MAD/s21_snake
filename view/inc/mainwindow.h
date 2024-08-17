@@ -4,23 +4,24 @@
 #include <QMainWindow>
 #include <QtWidgets>
 
-#include "../view/boardview.h"
-#include "./ui_mainwindow.h"
+#include "boardview.h"
+#include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void printResize(QResizeEvent* event);
     void setFixSize();
+    QSize getFixSize() const;
+
 private:
-    QSize fixSize;
-    void initView();
+    QGraphicsView* m_view;
+    QGraphicsScene* m_scene;
     Ui::MainWindow* ui;
-    BoardView* m_board;
+    void initView();
+
 private slots:
     void exitGame();
 };

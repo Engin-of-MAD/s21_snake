@@ -3,49 +3,57 @@
 //
 
 
-#include "boardview.h"
-const int sizeSquare = 20;
+#include "inc/boardview.h"
 
-BoardView::BoardView(int tile_x, int tile_y, QObject *parent): QGraphicsScene(parent) {
-    sizeField.rx() = tile_x * sizeSquare;
-    sizeField.ry() = tile_y * sizeSquare;
-    setSceneRect(0, 0, sizeField.x(), sizeField.y());
-    setItemIndexMethod(QGraphicsScene::NoIndex);
-    setBackground(tile_x, tile_y);
+
+
+
+
+
+BoardView::BoardView()
+{
+    m_sizeField = QRectF(0, 0, 200, 400);
 }
 
-void BoardView::setBackground(int height, int width) {
-
-
-    QPixmap bg(sizeSquare, sizeSquare);
-    QPainter painter(&bg);
-    QPen gridPen(Qt::gray);
-
-    painter.setPen(gridPen);
-    painter.setBrush(Qt::white);
-    painter.setPen(gridPen);
-    painter.drawRect(0, 0, sizeSquare, sizeSquare);
-    setBackgroundBrush(QBrush(bg));
-    addRect(0, 0, sizeField.x(), sizeField.y());
+BoardView::BoardView(int width, int height, int x0, int y0)
+{
+    m_sizeField = QRectF(x0, y0, width * sizeItemGrid, height * sizeItemGrid);
 }
 
-QSize BoardView::getSize() {
-    QSize size(sceneRect().width(), sceneRect().height());
-    return size;
+
+
+void BoardView::drawGrid(QPainter *painter)
+{
+    for (int i = 20; i < m_sizeField.height(); i +=  20) {
+        painter->drawLine(0, i, m_sizeField.width(), i);
+        for (int j = 0; j < m_sizeField.width(); j += sizeItemGrid) {
+            painter->drawLine(j, 0, j,  m_sizeField.height());
+        }
+    }
 }
 
-void BoardView::setHeight(int height) {
-    sizeField.ry() = height * sizeSquare;
+void BoardView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QPen pen(Qt::lightGray, 1, Qt::SolidLine);
+    painter->setPen(pen);
+    drawGrid(painter);
+    painter->drawRect(m_sizeField);
+
+
 }
 
-void BoardView::setWidth(int width) {
-    sizeField.rx() = width * sizeSquare;
+QRectF BoardView::boundingRect() const
+{
+    return m_sizeField;
 }
 
-void BoardView::resize(int width, int height) {
-    setWidth(width);
-    setHeight(height);
-    setSceneRect(0, 0, sizeField.x(), sizeField.y());
-    addRect(0, 0, sizeField.x(), sizeField.y());
-}
+
+
+InfoBoardView::InfoBoardView() : BoardView(1, 1){}
+
+InfoBoardView::InfoBoardView( int x0, int y0)
+    : BoardView(10, 10, x0, y0){}
+
+
+
 

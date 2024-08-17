@@ -1,23 +1,21 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowXylqHc.ui'
+** Form generated from reading UI file 'mainwindowyAexdD.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.14
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWXYLQHC_H
-#define MAINWINDOWXYLQHC_H
+#ifndef MAINWINDOWYAEXDD_H
+#define MAINWINDOWYAEXDD_H
 
 #include <QtCore/QVariant>
 #include <QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -41,19 +39,17 @@ public:
     QAction *action30x30;
     QWidget *centralwidget;
     QGridLayout *gridLayout;
-    QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QMenu *menuGame;
     QMenu *menuGame_mode;
     QMenu *menuChoose_game;
     QMenu *menuHelp;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(640, 632);
+        MainWindow->resize(274, 466);
         MainWindow->setMinimumSize(QSize(0, 0));
         MainWindow->setMaximumSize(QSize(16777215, 16777215));
         actionNewGame = new QAction(MainWindow);
@@ -88,32 +84,20 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        graphicsView = new QGraphicsView(centralwidget);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
-        graphicsView->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(graphicsView, 0, 0, 1, 1);
-
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 640, 23));
+        menubar->setGeometry(QRect(0, 0, 274, 23));
         menuGame = new QMenu(menubar);
         menuGame->setObjectName(QString::fromUtf8("menuGame"));
         menuGame_mode = new QMenu(menuGame);
         menuGame_mode->setObjectName(QString::fromUtf8("menuGame_mode"));
+        menuGame_mode->setBaseSize(QSize(220, 466));
         menuChoose_game = new QMenu(menuGame);
         menuChoose_game->setObjectName(QString::fromUtf8("menuChoose_game"));
         menuHelp = new QMenu(menubar);
         menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
         MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuGame->menuAction());
         menubar->addAction(menuHelp->menuAction());
@@ -176,9 +160,9 @@ public:
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+class MainWindow: public Ui_MainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWXYLQHC_H
+#endif // MAINWINDOWYAEXDD_H

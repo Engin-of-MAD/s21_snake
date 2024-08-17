@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>274</width>
+    <height>466</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>274</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>Game</string>
+    </property>
+    <widget class="QMenu" name="menuGame_mode">
+     <property name="baseSize">
+      <size>
+       <width>220</width>
+       <height>466</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Game mode</string>
+     </property>
+     <addaction name="actionClI"/>
+     <addaction name="actionGUI"/>
+    </widget>
+    <widget class="QMenu" name="menuChoose_game">
+     <property name="title">
+      <string>Choose game</string>
+     </property>
+     <addaction name="actionSnake"/>
+     <addaction name="actionTetris"/>
+    </widget>
+    <addaction name="actionNewGame"/>
+    <addaction name="actionPause"/>
+    <addaction name="actionStop"/>
+    <addaction name="menuChoose_game"/>
+    <addaction name="menuGame_mode"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionGame"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuGame"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionNewGame">
+   <property name="text">
+    <string>New Game</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="text">
+    <string>Pause</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionClI">
+   <property name="text">
+    <string>CLI</string>
+   </property>
+  </action>
+  <action name="actionGUI">
+   <property name="text">
+    <string>GUI</string>
+   </property>
+  </action>
+  <action name="actionSnake">
+   <property name="text">
+    <string>Snake</string>
+   </property>
+  </action>
+  <action name="actionTetris">
+   <property name="text">
+    <string>Tetris</string>
+   </property>
+  </action>
+  <action name="actionGame">
+   <property name="text">
+    <string>Game Help</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="action10x20">
+   <property name="text">
+    <string>10x20</string>
+   </property>
+  </action>
+  <action name="action15x20">
+   <property name="text">
+    <string>15x20</string>
+   </property>
+  </action>
+  <action name="action20x20">
+   <property name="text">
+    <string>20x20</string>
+   </property>
+  </action>
+  <action name="action30x30">
+   <property name="text">
+    <string>30x30</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
