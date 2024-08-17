@@ -170,19 +170,19 @@ Shape CopyShape(Shape shape) {
   return new_shape;
 }
 
-void DeleteShape(Shape *shape) {
-  if (shape->array != NULL) {
-    for (int i = 0; i < shape->width; i++) {
-      free(shape->array[i]);
-    }
-    free(shape->array);
-  }
-  shape->width = 0;
-  shape->col = 0;
-  shape->row = 0;
-  shape->name = ' ';
-  shape->array = NULL;
-}
+//void DeleteShape(Shape *shape) {
+//  if (shape->array != NULL) {
+//    for (int i = 0; i < shape->width; i++) {
+//      free(shape->array[i]);
+//    }
+//    free(shape->array);
+//  }
+//  shape->width = 0;
+//  shape->col = 0;
+//  shape->row = 0;
+//  shape->name = ' ';
+//  shape->array = NULL;
+//}
 
 // Вращение фигуры
 

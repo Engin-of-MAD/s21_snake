@@ -15,16 +15,16 @@
 
 #define GET_USER_INPUT getch()
 
-//enum {
-//  MOVE_UP = 0,
-//  MOVE_DOWN,
-//  MOVE_RIGHT,
-//  MOVE_LEFT,
-//  ESCAPE_BTN,
-//  ENTER_BTN,
-//  NOSIG,
-//  PAUSE_BTN
-//} signals;
+enum {
+  MOVE_UP = 0,
+  MOVE_DOWN,
+  MOVE_RIGHT,
+  MOVE_LEFT,
+  ESCAPE_BTN,
+  ENTER_BTN,
+  NOSIG,
+  PAUSE_BTN
+} signal;
 
 typedef enum { START = 0, SPAWN, MOVING, PAUSE, GAMEOVER, EXIT_STATE } state_t;
 
