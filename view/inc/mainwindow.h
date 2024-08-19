@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
-
+#include <QMenuBar>
+#include <QAction>
 #include "boardview.h"
 // #include "ui_mainwindow.h"
 
@@ -15,6 +16,10 @@ class MainWindow : public QMainWindow
     ButtonBoardView* m_buttonsField;
     QGridLayout* m_gridLayout;
     QWidget* m_centralWidget;
+    QMenuBar* m_menuBar;
+    QMenu* m_gameMenu;
+    QAction* m_snakeGame;
+    QAction* m_tetrisGame;
     void initView();
 public:
     MainWindow(QWidget *parent = nullptr);
