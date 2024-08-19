@@ -8,17 +8,6 @@ BoardView::BoardView(int width, int height)
     setFixedSize(width * sizeCell, height * sizeCell);
 }
 
-void BoardView::paintEvent(QPaintEvent *e)
-{
-    Q_UNUSED(e);
-    QPainter p;
-    p.begin(this);
-    p.drawRect(0, 0, width() - 1, height() - 1);
-    drawGrid(&p);
-
-    p.end();
-}
-
 void BoardView::drawGrid(QPainter *painter)
 {
     QPen gridPen(Qt::lightGray);
@@ -29,6 +18,22 @@ void BoardView::drawGrid(QPainter *painter)
             painter->drawLine(j, 1, j, height() - 1);
     }
 }
+
+void BoardView::paintEvent(QPaintEvent *e)
+{
+    Q_UNUSED(e);
+    QPainter p;
+    QBrush brush(Qt::green);
+    p.begin(this);
+    p.drawRect(0, 0, width() - 1, height() - 1);
+    drawGrid(&p);
+        p.setBrush(brush);
+    p.drawRect(0, 0, 20, 20);
+
+    p.end();
+}
+
+
 
 InfoBoardView::InfoBoardView()
 {
