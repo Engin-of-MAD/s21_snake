@@ -22,6 +22,8 @@ public:
 protected:
     void paintEvent(QPaintEvent* e) override;
     void drawGrid(QPainter* painter);
+    void drawSnake(QPainter* painter);
+
 };
 
 class InfoBoardView : public QWidget {
