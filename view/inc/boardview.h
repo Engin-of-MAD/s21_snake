@@ -5,32 +5,58 @@
 #ifndef BRICKGAME_BOARDVIEW_H
 #define BRICKGAME_BOARDVIEW_H
 
-#include <QGraphicsItem>
+#include <QWidget>
 #include <QPainter>
+#include <QLabel>
+#include <QLCDNumber>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
 
-class BoardView : public QGraphicsItem{
-    QRectF m_sizeField;
-    const int sizeItemGrid = 20;
+class BoardView : public QWidget {
+    Q_OBJECT
+
 public:
     BoardView();
-    explicit BoardView(int width, int height, int x0 = 0, int y0 = 0);
+    explicit BoardView(int width, int height);
 protected:
-    void drawGrid(QPainter *painter);
-    void paint(QPainter* painter
-               , const QStyleOptionGraphicsItem* option
-               , QWidget * widget = nullptr) override;
-    QRectF boundingRect() const override;
+    void paintEvent(QPaintEvent* e) override;
+    void drawGrid(QPainter* painter);
 };
 
-class InfoBoardView : public BoardView {
+class InfoBoardView : public QWidget {
+    Q_OBJECT
+    QGridLayout* m_gridLayout;
+    QLabel* m_score;
+    QLabel* m_bestScore;
+    QLabel* m_nextShapeLabel;
+    QLCDNumber* m_lcdScore;
+    QLCDNumber* m_lcdBestScore;
+    BoardView* m_nextShape;
 public:
     InfoBoardView();
-    InfoBoardView(int x0 = 0, int y0 = 0);
+public slots:
+    void snakeMod();
+    void tetrisMod();
+
 protected:
-    // void drawGrid(QPainter *painter);
-    // void paint(QPainter* painter
-    //            , const QStyleOptionGraphicsItem* option
-    //            , QWidget * widget = nullptr) override;
+    void paintEvent(QPaintEvent* e) override;
 };
+
+
+class ButtonBoardView : public QWidget {
+    Q_OBJECT
+    QVBoxLayout* m_lineLayout;
+    QPushButton* m_startBtn;
+    QPushButton* m_pauseBtn;
+    QPushButton* m_stopBtn;
+
+public:
+    ButtonBoardView();
+protected:
+    void paintEvent(QPaintEvent* e) override;
+};
+
+
 
 #endif //BRICKGAME_BOARDVIEW_H
