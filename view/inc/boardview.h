@@ -23,6 +23,7 @@ protected:
     void paintEvent(QPaintEvent* e) override;
     void drawGrid(QPainter* painter);
     void drawSnake(QPainter* painter);
+    void drawShape(QPainter* painter);
 
 };
 
@@ -40,7 +41,6 @@ public:
 public slots:
     void snakeMod();
     void tetrisMod();
-
 protected:
     void paintEvent(QPaintEvent* e) override;
 };
