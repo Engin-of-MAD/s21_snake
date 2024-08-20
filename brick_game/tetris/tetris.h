@@ -11,7 +11,7 @@
 #define ENTER_KEY 10
 
 #define ROWS_TB 20
-#define COLS_TB 15
+#define COLS_TB 10
 
 #define GET_USER_INPUT getch()
 
