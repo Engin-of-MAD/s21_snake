@@ -9,6 +9,26 @@ BoardView::BoardView(int width, int height)
     {setFixedSize(width * sizeCell, height * sizeCell);}
 
 
+void BoardView::drawGrid(QPainter *painter)
+{
+    QPen gridPen(Qt::lightGray);
+    painter->setPen(gridPen);
+    for (int i = 20; i < height(); i += sizeCell) {
+        painter->drawLine(1, i, width(), i);
+        for (int j = 20; j < width() - 1; j += sizeCell)
+            painter->drawLine(j, 1, j, height() - 1);
+    }
+}
+
+void BoardView::drawSnake(QPainter *painter)
+{
+
+}
+
+void BoardView::drawShape(QPainter *painter)
+{
+
+}
 
 void BoardView::paintEvent(QPaintEvent *e)
 {
@@ -22,11 +42,6 @@ void BoardView::paintEvent(QPaintEvent *e)
     p.drawRect(1, 1, 18, 18);
 
     p.end();
-}
-
-void BoardView::drawSnake(QPainter *painter)
-{
-
 }
 
 InfoBoardView::InfoBoardView()
