@@ -31,8 +31,16 @@ GameBoard::~GameBoard() {
 
 int GameBoard::width() const { return m_width; }
 int GameBoard::height() const { return m_height; }
+int *GameBoard::operator[](int index) {
+    return m_gameField[index];
+}
 
-
+int &GameBoard::operator()(int row, int col) {
+    if ((row < 0 or col < 0) or (row >= m_width or col >= m_width)) {
+        throw std::out_of_range("Index out of range");
+    }
+    return m_gameField[row][col];
+}
 
 Shapes::Shapes(char name): m_cordX(0), m_cordY(0)
 {
@@ -164,7 +172,32 @@ void Shapes::shapeI()
     fillShape(reinterpret_cast<int**>(newShape));
 }
 
+char Shapes::name() const {return m_name;}
+int Shapes::width() const{return m_width;}
+int Shapes::cordX() const{return m_cordX;}
+int Shapes::cordY() const {return m_cordY;}
+int *Shapes::operator[](int index) { return  m_array[index];}
+int &Shapes::operator()(int row, int col) {
+    if ((row < 0 or col < 0) or (row >= m_width or col >= m_width)) {
+        throw std::out_of_range("Index out of range");
+    }
+    return m_array[row][col];
+
+}
+
+
 bool GameObject::genRandomShape()
 {
 
+}
+
+void GameObject::writeToBoard()
+{
+    for (int i = 0; i < currShape->width(); ++i) {
+        for (int j = 0; j < currShape->width(); ++j) {
+            if (currShape[i][j]) {
+                m_gBoard[currShape->cordY() + i] [currShape->cordX() + j] = currShape[i][j];
+            }
+        }
+    }
 }

@@ -13,10 +13,10 @@ void BoardView::drawGrid(QPainter *painter)
 {
     QPen gridPen(Qt::lightGray);
     painter->setPen(gridPen);
-    for (int i = 20; i < height(); i += sizeCell) {
-        painter->drawLine(1, i, width(), i);
+    for (int i = 20; i < height() - 1; i += sizeCell) {
+        painter->drawLine(1, i, width() - 2, i);
         for (int j = 20; j < width() - 1; j += sizeCell)
-            painter->drawLine(j, 1, j, height() - 1);
+            painter->drawLine(j, 1, j, height() - 2);
     }
 }
 

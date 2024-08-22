@@ -6,7 +6,7 @@
 #define BRICKGAME_GAMEOBJ_H
 // #include "../brick_game/tetris/tetris.h"
 // #include <initializer_list>
-
+#include<stdexcept>
 
 typedef enum {START = 0, SPAWN, MOVING, PAUSE, GAMEOVER, EXIT_STATE} stateApp;
 
@@ -20,6 +20,8 @@ public:
     ~GameBoard();
     int width() const;
     int height() const;
+    int* operator [](int index);
+    int& operator ()(int row, int col);
 };
 
 class Shapes {
@@ -41,10 +43,12 @@ public:
     Shapes(Shapes& other);
     ~Shapes();
 
-    char name();
-    int width();
-    int cordX();
-
+    char name() const;
+    int width() const;
+    int cordX() const;
+    int cordY() const;
+    int* operator [](int index);
+    int& operator ()(int row, int col);
 };
 
 class GameObject {
@@ -60,7 +64,6 @@ class GameObject {
                                    , new Shapes('I')};
 
     bool genRandomShape();
-    Shapes copyShape(Shapes& other);
     void delShape();
     void writeToBoard();
     bool chekPos();
