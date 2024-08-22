@@ -22,46 +22,45 @@ public:
     int height() const;
 };
 
-struct Shape {
-    int **m_array; // shape
-    int m_width;
+class Shapes {
+    int **m_array = nullptr; // shape
+    int m_width, m_cordX, m_cordY; // params shape
     char m_name;
-    int cordX, cordY; // params shape
-    Shape();
-    Shape(int width, char name);
-    Shape(Shape& other);
-    ~Shape();
+    void createShape(int width);
+    void fillShape(int** shape);
+    void shapeS();
+    void shapeZ();
+    void shapeT();
+    void shapeL();
+    void shapeJ();
+    void shapeO();
+    void shapeI();
+public:
+
+    Shapes(char name);
+    Shapes(Shapes& other);
+    ~Shapes();
+
+    char name();
+    int width();
+    int cordX();
+
 };
 
 class GameObject {
 
     GameBoard* m_gBoard;
-    Shape* currShape;
-    Shape* nextShape;
+    Shapes* currShape;
+    Shapes* nextShape;
     stateApp state;
     int score, bestScore;
-    /*
-    const Shape ShapesArray[7] = {
-        {(int *[]){(int[]){0, 1, 1}, (int[]){1, 1, 0}, (int[]){0, 0, 0}}, 3,
-         'S', 0, 0}, // S shape
-        {(int *[]){(int[]){1, 1, 0}, (int[]){0, 1, 1}, (int[]){0, 0, 0}}, 3,
-         'Z', 0, 0}, // Z shape
-        {(int *[]){(int[]){0, 1, 0}, (int[]){1, 1, 1}, (int[]){0, 0, 0}}, 3,
-         'T', 0, 0}, // T shape
-        {(int *[]){(int[]){0, 0, 1}, (int[]){1, 1, 1}, (int[]){0, 0, 0}}, 3,
-         'L', 0, 0}, // L shape
-        {(int *[]){(int[]){1, 0, 0}, (int[]){1, 1, 1}, (int[]){0, 0, 0}}, 3,
-         'J', 0, 0},                                                // J shape
-        {(int *[]){(int[]){1, 1}, (int[]){1, 1}}, 2, 'O', 0, 0}, // O shape
-        {(int *[]){(int[]){0, 0, 0, 0}, (int[]){1, 1, 1, 1},
-                    (int[]){0, 0, 0, 0}, (int[]){0, 0, 0, 0}},
-         4, 'I', 0, 0} // I shape
-        // you can add any shape like it's done above. Don't be naughty.
-    };
-    */
+    const Shapes* shapesArray[7] = {new Shapes('S'), new Shapes('Z')
+                                   , new Shapes('T'), new Shapes('L')
+                                   , new Shapes('J'), new Shapes('O')
+                                   , new Shapes('I')};
 
     bool genRandomShape();
-    Shape copyShape(Shape& other);
+    Shapes copyShape(Shapes& other);
     void delShape();
     void writeToBoard();
     bool chekPos();

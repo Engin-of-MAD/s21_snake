@@ -34,28 +34,137 @@ int GameBoard::height() const { return m_height; }
 
 
 
-Shape::Shape(int width, char name) : m_width(width)
-    , m_name(name)
-    , cordX(0)
-    , cordY(0)
+Shapes::Shapes(char name): m_cordX(0), m_cordY(0)
 {
-    m_array = new int*[m_width];
-    for (int i = 0; i < m_width; ++i) {
-        m_array[i] = new int[m_width];
+    switch (m_name) {
+    case 'S':
+        shapeS();
+        break;
+    case 'Z':
+        shapeZ();
+        break;
+    case 'T':
+        shapeT();
+        break;
+    case 'L':
+        shapeL();
+        break;
+    case 'J':
+        shapeJ();
+        break;
+    case 'O':
+        shapeO();
+        break;
+    case 'I':
+        shapeI();
+        break;
+    default:
+        break;
     }
 }
 
-Shape::Shape(Shape& other) {
-
+Shapes::Shapes(Shapes& other)
+    : m_width(other.m_width), m_cordX(other.m_cordX)
+    , m_cordY(other.m_cordY) ,m_name(other.m_name)
+{
+    createShape(other.m_width);
+    fillShape(other.m_array);
 }
 
-Shape::~Shape()
+Shapes::~Shapes()
 {
     if (m_array) {
         for (int i = 0; i < m_width; ++i) {
             delete[] m_array[i];
         }
         delete[] m_array;
-        m_array = nullptr;
     }
+}
+
+void Shapes::createShape(int width)
+{
+    m_array = new int*[width];
+    if (m_array) {
+        for (int i = 0; i < width; ++i) {
+            m_array[i] = new int[width];
+        }
+    }
+}
+
+void Shapes::fillShape(int** shape)
+{
+    for (int i = 0; i < m_width; ++i) {
+        for (int j = 0; j < m_width; ++j) {
+            m_array[i][j] = shape[i][j];
+        }
+    }
+}
+
+void Shapes::shapeS() {
+    m_width = 3;
+    m_name = 'S';
+    int newShape[3][3] = {{0, 1, 1}, {1, 1, 0}, {0, 0, 0}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+
+}
+
+void Shapes::shapeZ()
+{
+    m_width = 3;
+    m_name = 'Z';
+    int newShape[3][3] = {{1, 1, 0}, {0, 1, 1}, {0, 0, 0}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+
+}
+
+void Shapes::shapeT()
+{
+    m_width = 3;
+    m_name = 'T';
+    int newShape[3][3] = {{0, 1, 0}, {1, 1, 1}, {0, 0, 0}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+}
+
+void Shapes::shapeL()
+{
+    m_width = 3;
+    m_name = 'L';
+    int newShape[3][3] = {{0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+}
+
+void Shapes::shapeJ()
+{
+    m_width = 3;
+    m_name = 'J';
+    int newShape[3][3] = {{1, 0, 0}, {1, 1, 1}, {0, 0, 0}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+}
+
+void Shapes::shapeO()
+{
+    m_width = 2;
+    m_name = 'O';
+    int newShape[2][2] = {{1, 1}, {1, 1}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+}
+
+void Shapes::shapeI()
+{
+    m_width = 4;
+    m_name = 'I';
+    int newShape[4][4] = {{0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+    createShape(m_width);
+    fillShape(reinterpret_cast<int**>(newShape));
+}
+
+bool GameObject::genRandomShape()
+{
+
 }
