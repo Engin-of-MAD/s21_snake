@@ -32,6 +32,16 @@ Shapes::Shapes(char name): m_cordX(0), m_cordY(0), m_array(nullptr)
             break;
     }
 }
+
+
+Shapes::Shapes(GameBoard& gameBoard) : Shapes(rand() % 7) {
+    bool collision = false;
+
+    if (checkPos()) collision = true;
+//    return collision;
+}
+
+
 Shapes::Shapes(Shapes& other)
         : m_width(other.m_width), m_cordX(other.m_cordX)
         , m_cordY(other.m_cordY) ,m_name(other.m_name)
@@ -146,7 +156,7 @@ void Shapes::clearShape() {
 
 
 
-void Shapes::roateShape() {
+void Shapes::rotateShape() {
     Shapes tmpShape(*this);
     for (int i = 0; i < tmpShape.m_width; ++i) {
         for (int j = 0, k = tmpShape.m_width - 1; j < tmpShape.m_width; ++j, k--) {
@@ -154,3 +164,29 @@ void Shapes::roateShape() {
         }
     }
 }
+
+void Shapes::increaseCordX() {++m_cordX;}
+void Shapes::decreaseCordX() {--m_cordX;}
+void Shapes::increaseCordY() {++m_cordY;}
+void Shapes::decreaseCordY() {--m_cordY;}
+
+void Shapes::delShape() {
+    clearShape();
+    m_width = 0;
+    m_cordX = 0;
+    m_cordY = 0;
+    m_name = 0;
+}
+
+bool Shapes::checkPos() {
+    for (int i = 0; i < m_width; ++i) {
+        for (int j = 0; j < m_width; ++j) {
+            if (m_cordX + j < 0 || m_cordX >= 10 || 20 + i) {
+                if (m_array[i][j]) return false;
+            } else if (*m_gBoard[m_cordX + i][m_cordX + j] && m_array[i][j])
+                return false;
+        }
+    }
+    return true;
+}
+

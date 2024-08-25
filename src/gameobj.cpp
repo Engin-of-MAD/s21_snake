@@ -15,24 +15,21 @@ bool GameObject::delay() {
             getMicroSeconds(before_now)) > timer;
 }
 
-bool GameObject::chekPos(Shapes *shape, GameBoard *board) {
-    for (int i = 0; i < shape->width(); ++i) {
-        for (int j = 0; j < shape->width(); ++j) {
-            if (shape->cordX() + j < 0 || shape->cordX() >= board->width() || shape->cordY() + i) {
-                if (*shape[i][j]) return false;
-            } else if (*m_gBoard[shape->cordY() + i][shape->cordX() + j] && *shape[i][j])
+bool GameObject::checkPos(Shapes& shape) {
+    for (int i = 0; i < shape.width(); ++i) {
+        for (int j = 0; j < shape.width(); ++j) {
+            if (shape.cordX() + j < 0 || shape.cordX() >= m_gBoard->width() || shape.cordY() + i) {
+                if (shape[i][j]) return false;
+            } else if (*m_gBoard[shape.cordY() + i][shape.cordX() + j] && shape[i][j])
                 return false;
         }
     }
     return true;
 }
 
-bool GameObject::genRandomShape(Shapes* newShape, GameBoard* board)
+bool GameObject::genRandomShape(Shapes* newShape)
 {
-    bool collision = false;
-    newShape = new Shapes(shapesArray[rand() % 7], rand() % board->width());
-    if (!chekPos(newShape, board)) collision = true;
-    return collision;
+
 }
 
 void GameObject::removeFullRows() {
@@ -60,36 +57,72 @@ void GameObject::updateScore() {
 
 }
 
-void GameObject::start_action(const int input, stateGame state) {
-    if (input == 0) state = SPAWN;
-    if (input == 1) state = EXIT_STATE;
+
+GameObject::GameObject()
+: m_gBoard(new GameBoard(10, 20))
+, score(0) , bestScore(0), timer(1000000), state(START){}
+
+void GameObject::userAction(gameControl g_input) {
+    Shapes temp(*m_currShape);
+
+    switch (g_input) {
+        case MOVE_DOWN:
+            temp.increaseCordY();
+            if (checkPos(temp)) temp.increaseCordY();
+            else {
+                m_gBoard->setShapeOnBoard(&temp);
+                removeFullRows();
+                state = SPAWN;
+            }
+            break;
+        case MOVE_RIGHT:
+            temp.increaseCordX();
+            if (checkPos(temp)) m_currShape->increaseCordX();
+            break;
+        case MOVE_LEFT:
+            temp.decreaseCordX();
+            if (checkPos(temp)) m_currShape->decreaseCordX();
+            break;
+        case MOVE_UP:
+            temp.rotateShape();
+            if (checkPos(temp)) m_currShape->rotateShape();
+            break;
+        case STAR_PAUSE_GAME:
+            if (state == START) state = SPAWN;
+            if (state == MOVING) state = PAUSE;
+            if (state == PAUSE) state = MOVING;
+            break;
+        case STOP_GAME:
+            state = STOP;
+            break;
+        case EXIT_GAME:
+            state = EXIT_STATE;
+            break;
+    }
+
+}
+
+void GameObject::start_action() {
+    if (input == STAR_PAUSE_GAME) state = SPAWN;
+    if (input == EXIT_GAME) state = EXIT_STATE;
 }
 
 void GameObject::stateMachine() {
     switch (state) {
         case START:
+            start_action();
             break;
         case SPAWN:
+            m_currShape = new Shapes(*m_nextShape);
+            state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
-            break;
-        case PAUSE:
-            break;
-        case GAMEOVER:
-            break;
-        case EXIT_STATE:
+            userAction(input);
+            gettimeofday(&now, nullptr);
+            if (delay()) {
+                userAction(MOVE_DOWN);
+            }
             break;
     }
 }
-
-GameObject::GameObject()
-: m_gBoard(new GameBoard(10, 20))
-, score(0) , bestScore(0), timer(1000000), state(START)
-{
-    genRandomShape(m_currShape, m_gBoard);
-    genRandomShape(m_nextShape, m_gBoard);
-
-}
-
-
 

@@ -1,17 +1,30 @@
 //
 // Created by roach on 23.08.2024.
 //
+
+#ifndef SHAPE_MODEL_H
+#define SHAPE_MODEL_H
+
 #include<stdexcept>
-//#include "../brick_game/tetris/tetris.h"
-#ifndef SHAPEMODEL_H
-#define SHAPEMODEL_H
+#include "boardModel.h"
+
+
 class Shapes {
+    struct Shape{
+        int **m_array; // shape
+        int m_width, m_cordX, m_cordY; // params shape
+        char m_name;
+    };
+
+
+    const char shapesArray[7] = {'S', 'Z','T','L','J', 'O', 'I'};
     int **m_array; // shape
     int m_width, m_cordX, m_cordY; // params shape
     char m_name;
     void createShape(int width);
     void fillShape(int** shape);
     void clearShape();
+
     void shapeS();
     void shapeZ();
     void shapeT();
@@ -20,9 +33,9 @@ class Shapes {
     void shapeO();
     void shapeI();
 public:
-
+    Shapes(GameBoard& gameBoard);
     Shapes(char name);
-    Shapes(char name, int cordX = 0, int cordY = 0);
+    Shapes(char name, int cordX, int cordY);
     Shapes(Shapes& other);
     ~Shapes();
 
@@ -31,10 +44,15 @@ public:
     int cordX() const;
     int cordY() const;
 
-
+    bool checkPos();
+    void increaseCordX();
+    void decreaseCordX();
+    void increaseCordY();
+    void decreaseCordY();
+    void delShape();
     int* operator [](int index);
     int& operator ()(int row, int col);
-    void roateShape();
-    const int& operator ()(int row, int col) const;
+    void rotateShape();
+
 };
-#endif //SHAPEMODEL_H
+#endif //SHAPE_MODEL_H

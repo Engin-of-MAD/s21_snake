@@ -18,6 +18,5 @@ public:
     void setShapeOnBoard(Shapes* shape);
     int* operator [](int index);
     int& operator ()(int row, int col);
-    const int& operator ()(int row, int col) const;
 };
 #endif //BOARDMODEL_H
