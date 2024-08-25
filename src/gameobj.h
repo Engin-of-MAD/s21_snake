@@ -6,71 +6,43 @@
 #define BRICKGAME_GAMEOBJ_H
 // #include "../brick_game/tetris/tetris.h"
 // #include <initializer_list>
-#include<stdexcept>
 
-typedef enum {START = 0, SPAWN, MOVING, PAUSE, GAMEOVER, EXIT_STATE} stateApp;
+#include <ctime>
+#include <sys/time.h>
 
-class GameBoard {
-    int** m_gameField;
-    int m_width, m_height;
-public:
-    GameBoard();
-    explicit GameBoard(int width = 1, int height = 1);
-    GameBoard(GameBoard& other);
-    ~GameBoard();
-    int width() const;
-    int height() const;
-    int* operator [](int index);
-    int& operator ()(int row, int col);
-};
+#include "boardModel.h"
+#include "shapeModel.h"
+typedef enum {START = 0, SPAWN, MOVING, PAUSE, GAMEOVER, EXIT_STATE} stateGame;
 
-class Shapes {
-    int **m_array = nullptr; // shape
-    int m_width, m_cordX, m_cordY; // params shape
-    char m_name;
-    void createShape(int width);
-    void fillShape(int** shape);
-    void shapeS();
-    void shapeZ();
-    void shapeT();
-    void shapeL();
-    void shapeJ();
-    void shapeO();
-    void shapeI();
-public:
 
-    Shapes(char name);
-    Shapes(Shapes& other);
-    ~Shapes();
 
-    char name() const;
-    int width() const;
-    int cordX() const;
-    int cordY() const;
-    int* operator [](int index);
-    int& operator ()(int row, int col);
-};
+
+
+
 
 class GameObject {
 
     GameBoard* m_gBoard;
-    Shapes* currShape;
-    Shapes* nextShape;
-    stateApp state;
+    Shapes* m_currShape;
+    Shapes* m_nextShape;
+    stateGame state;
     int score, bestScore;
-    const Shapes* shapesArray[7] = {new Shapes('S'), new Shapes('Z')
-                                   , new Shapes('T'), new Shapes('L')
-                                   , new Shapes('J'), new Shapes('O')
-                                   , new Shapes('I')};
+    struct timeval before_now, now; // time points
+    int input;
+    suseconds_t timer;
+    const char shapesArray[7] = {'S', 'Z','T','L','J', 'O', 'I'};
 
-    bool genRandomShape();
-    void delShape();
-    void writeToBoard();
-    bool chekPos();
-    void userAction();
+    bool genRandomShape(Shapes* newShape, GameBoard* board);
+    suseconds_t getMicroSeconds(struct timeval timeDiff);
+    bool delay();
+    bool chekPos(Shapes* shape, GameBoard* board);
+//    void userAction(stateGame state);
     void removeFullRows();
     void updateScore();
     void stateMachine();
+    void start_action(const int input, stateGame state);
+public:
+    GameObject();
 };
 
 

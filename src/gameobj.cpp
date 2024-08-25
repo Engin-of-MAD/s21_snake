@@ -1,203 +1,95 @@
 #include "gameobj.h"
 
-GameBoard::GameBoard() : GameBoard(10, 20){}
-GameBoard::GameBoard(int width, int height)
-{
-    m_gameField = new int*[height];
 
-    for (int i = 0; i < height; ++i) {
-        m_gameField[i] = new int[width];
-    }
+
+suseconds_t GameObject::getMicroSeconds(struct timeval timeDiff) {
+    suseconds_t microSeconds =
+            timeDiff.tv_sec * 1000000 +
+            timeDiff.tv_usec; // getting microseconds for all time
+    return microSeconds;
 }
 
-GameBoard::GameBoard(GameBoard &other): GameBoard(other.m_width, other.m_height)
-{
-    for (int i = 0; i < other.m_height; ++i) {
-        for (int j = 0; j < other.m_width; ++j) {
-            m_gameField[i][j] = other.m_gameField[i][j];
+
+bool GameObject::delay() {
+    return (getMicroSeconds(now) -
+            getMicroSeconds(before_now)) > timer;
+}
+
+bool GameObject::chekPos(Shapes *shape, GameBoard *board) {
+    for (int i = 0; i < shape->width(); ++i) {
+        for (int j = 0; j < shape->width(); ++j) {
+            if (shape->cordX() + j < 0 || shape->cordX() >= board->width() || shape->cordY() + i) {
+                if (*shape[i][j]) return false;
+            } else if (*m_gBoard[shape->cordY() + i][shape->cordX() + j] && *shape[i][j])
+                return false;
         }
     }
+    return true;
 }
 
-GameBoard::~GameBoard() {
-    if (m_gameField) {
-        for (int i = 0; i < m_height; ++i) {
-            delete[] m_gameField[i];
+bool GameObject::genRandomShape(Shapes* newShape, GameBoard* board)
+{
+    bool collision = false;
+    newShape = new Shapes(shapesArray[rand() % 7], rand() % board->width());
+    if (!chekPos(newShape, board)) collision = true;
+    return collision;
+}
+
+void GameObject::removeFullRows() {
+    int sum, count = 0;
+    for (int i = 0; i < m_gBoard->height(); ++i) {
+        sum = 0;
+        for (int j = 0; j < m_gBoard->width(); ++j) {
+            sum += *m_gBoard[i][j];
         }
-        delete[] m_gameField;
-        m_gameField = nullptr;
-    }
-}
-
-int GameBoard::width() const { return m_width; }
-int GameBoard::height() const { return m_height; }
-int *GameBoard::operator[](int index) {
-    return m_gameField[index];
-}
-
-int &GameBoard::operator()(int row, int col) {
-    if ((row < 0 or col < 0) or (row >= m_width or col >= m_width)) {
-        throw std::out_of_range("Index out of range");
-    }
-    return m_gameField[row][col];
-}
-
-Shapes::Shapes(char name): m_cordX(0), m_cordY(0)
-{
-    switch (m_name) {
-    case 'S':
-        shapeS();
-        break;
-    case 'Z':
-        shapeZ();
-        break;
-    case 'T':
-        shapeT();
-        break;
-    case 'L':
-        shapeL();
-        break;
-    case 'J':
-        shapeJ();
-        break;
-    case 'O':
-        shapeO();
-        break;
-    case 'I':
-        shapeI();
-        break;
-    default:
-        break;
-    }
-}
-
-Shapes::Shapes(Shapes& other)
-    : m_width(other.m_width), m_cordX(other.m_cordX)
-    , m_cordY(other.m_cordY) ,m_name(other.m_name)
-{
-    createShape(other.m_width);
-    fillShape(other.m_array);
-}
-
-Shapes::~Shapes()
-{
-    if (m_array) {
-        for (int i = 0; i < m_width; ++i) {
-            delete[] m_array[i];
-        }
-        delete[] m_array;
-    }
-}
-
-void Shapes::createShape(int width)
-{
-    m_array = new int*[width];
-    if (m_array) {
-        for (int i = 0; i < width; ++i) {
-            m_array[i] = new int[width];
-        }
-    }
-}
-
-void Shapes::fillShape(int** shape)
-{
-    for (int i = 0; i < m_width; ++i) {
-        for (int j = 0; j < m_width; ++j) {
-            m_array[i][j] = shape[i][j];
-        }
-    }
-}
-
-void Shapes::shapeS() {
-    m_width = 3;
-    m_name = 'S';
-    int newShape[3][3] = {{0, 1, 1}, {1, 1, 0}, {0, 0, 0}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-
-}
-
-void Shapes::shapeZ()
-{
-    m_width = 3;
-    m_name = 'Z';
-    int newShape[3][3] = {{1, 1, 0}, {0, 1, 1}, {0, 0, 0}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-
-}
-
-void Shapes::shapeT()
-{
-    m_width = 3;
-    m_name = 'T';
-    int newShape[3][3] = {{0, 1, 0}, {1, 1, 1}, {0, 0, 0}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-}
-
-void Shapes::shapeL()
-{
-    m_width = 3;
-    m_name = 'L';
-    int newShape[3][3] = {{0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-}
-
-void Shapes::shapeJ()
-{
-    m_width = 3;
-    m_name = 'J';
-    int newShape[3][3] = {{1, 0, 0}, {1, 1, 1}, {0, 0, 0}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-}
-
-void Shapes::shapeO()
-{
-    m_width = 2;
-    m_name = 'O';
-    int newShape[2][2] = {{1, 1}, {1, 1}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-}
-
-void Shapes::shapeI()
-{
-    m_width = 4;
-    m_name = 'I';
-    int newShape[4][4] = {{0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-    createShape(m_width);
-    fillShape(reinterpret_cast<int**>(newShape));
-}
-
-char Shapes::name() const {return m_name;}
-int Shapes::width() const{return m_width;}
-int Shapes::cordX() const{return m_cordX;}
-int Shapes::cordY() const {return m_cordY;}
-int *Shapes::operator[](int index) { return  m_array[index];}
-int &Shapes::operator()(int row, int col) {
-    if ((row < 0 or col < 0) or (row >= m_width or col >= m_width)) {
-        throw std::out_of_range("Index out of range");
-    }
-    return m_array[row][col];
-
-}
-
-
-bool GameObject::genRandomShape()
-{
-
-}
-
-void GameObject::writeToBoard()
-{
-    for (int i = 0; i < currShape->width(); ++i) {
-        for (int j = 0; j < currShape->width(); ++j) {
-            if (currShape[i][j]) {
-                m_gBoard[currShape->cordY() + i] [currShape->cordX() + j] = currShape[i][j];
+        if (sum == m_gBoard->width()){
+            ++count;
+            int l, k;
+            for (k = 0; k >= 1; --k)
+                for (l = 0; l < m_gBoard->width(); ++l)
+                    *m_gBoard[k][l] = *m_gBoard[k-1][l];
+            for ( l = 0; l < m_gBoard->width(); ++l) {
+                *m_gBoard[k][l] = 0;
             }
         }
     }
+    score += 100;
 }
+
+void GameObject::updateScore() {
+
+}
+
+void GameObject::start_action(const int input, stateGame state) {
+    if (input == 0) state = SPAWN;
+    if (input == 1) state = EXIT_STATE;
+}
+
+void GameObject::stateMachine() {
+    switch (state) {
+        case START:
+            break;
+        case SPAWN:
+            break;
+        case MOVING:
+            break;
+        case PAUSE:
+            break;
+        case GAMEOVER:
+            break;
+        case EXIT_STATE:
+            break;
+    }
+}
+
+GameObject::GameObject()
+: m_gBoard(new GameBoard(10, 20))
+, score(0) , bestScore(0), timer(1000000), state(START)
+{
+    genRandomShape(m_currShape, m_gBoard);
+    genRandomShape(m_nextShape, m_gBoard);
+
+}
+
+
+
