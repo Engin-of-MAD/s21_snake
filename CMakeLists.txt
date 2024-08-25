@@ -23,7 +23,11 @@ add_executable(untitled2
         src/gameobj.h
         src/gameobj.cpp
         view/mainwindow.ui
-#        brick_game/tetris/tetris_backend.h
+        src/boardModel.cpp
+        src/boardModel.h
+        src/shapeModel.cpp
+        src/shapeModel.h
+        #        brick_game/tetris/tetris_backend.h
 #        brick_game/tetris/backend.c
 #        brick_game/tetris/tetris.h
 )
