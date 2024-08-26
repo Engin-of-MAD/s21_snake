@@ -20,8 +20,8 @@ add_executable(untitled2
         view/inc/ui_mainwindow.h
         view/mainwindow.cpp
         src/main.cpp
-        src/gameobj.h
-        src/gameobj.cpp
+        src/gameModel.h
+        src/gameModel.cpp
         view/mainwindow.ui
         src/boardModel.cpp
         src/boardModel.h
