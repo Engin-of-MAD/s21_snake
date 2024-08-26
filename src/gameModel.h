@@ -14,13 +14,7 @@
 #include "shapeModel.h"
 
 
-
-
-
-
-
-
-class GameObject {
+class GameModel {
     const char shapesArray[7] = {'S', 'Z','T','L','J', 'O', 'I'};
     enum stateGame{START = 0, SPAWN, MOVING, PAUSE, STOP, GAMEOVER, EXIT_STATE};
     enum gameControl {  MOVE_UP = 0,
@@ -30,9 +24,9 @@ class GameObject {
         STAR_PAUSE_GAME,
         EXIT_GAME,
         STOP_GAME};
-    GameBoard* m_gBoard;
-    Shapes* m_currShape;
-    Shapes* m_nextShape;
+    GameBoard m_gBoard;
+    Shape m_currShape;
+    Shape m_nextShape;
 
     int score, bestScore;
     struct timeval before_now, now; // time points
@@ -41,17 +35,16 @@ class GameObject {
     suseconds_t timer;
 
 
-    bool genRandomShape(Shapes* newShape);
+    bool genRandomShape(Shape& shape);
     suseconds_t getMicroSeconds(struct timeval timeDiff);
     bool delay();
-    bool checkPos(Shapes& shape);
+    bool checkPos(Shape& shape);
     void userAction(gameControl g_input);
-    void removeFullRows();
     void updateScore();
     void stateMachine();
     void start_action();
 public:
-    GameObject();
+    GameModel();
 };
 
 

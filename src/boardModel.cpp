@@ -35,18 +35,28 @@ int GameBoard::height() const { return m_height; }
 int *GameBoard::operator[](int index) {
     return m_gameField[index];
 }
-int &GameBoard::operator()(int row, int col) {
-    if ((row < 0 or col < 0) or (row >= m_width or col >= m_width)) {
-        throw std::out_of_range("Index out of range");
-    }
-    return m_gameField[row][col];
-}
-void GameBoard::setShapeOnBoard(Shapes *shape) {
-    for (int i = 0; i < shape->width(); ++i) {
-        for (int j = 0; j < shape->width(); ++j) {
-            if (shape[i][j])
-                m_gameField[shape->cordY() + i][shape->cordX() + j] = *shape[i][j];
 
+void GameBoard::setShapeOnBoard(Shape& shape) {
+    for (int i = 0; i < shape.width(); ++i) {
+        for (int j = 0; j < shape.width(); ++j) {
+            if (shape[i][j])
+                m_gameField[shape.cordY() + i][shape.cordX() + j] = shape[i][j];
         }
     }
 }
+
+void sumRows(){
+
+}
+void GameBoard::clearFullRows(int sum) {
+    int r = 0;
+    for (r = 0; r >= 1; --r) {
+        for (int j = 0; j < m_width; ++j) {
+            m_gameField[r][j] = m_gameField[r - 1][j];
+        }
+    }
+    for (int c = 0; c < m_width; ++c) {
+        m_gameField[r][c] = 0;
+    }
+}
+

@@ -5,54 +5,43 @@
 #ifndef SHAPE_MODEL_H
 #define SHAPE_MODEL_H
 
-#include<stdexcept>
-#include "boardModel.h"
+#include <stdexcept>
 
-
-class Shapes {
-    struct Shape{
-        int **m_array; // shape
-        int m_width, m_cordX, m_cordY; // params shape
+class Shape{
         char m_name;
-    };
-
-
-    const char shapesArray[7] = {'S', 'Z','T','L','J', 'O', 'I'};
-    int **m_array; // shape
-    int m_width, m_cordX, m_cordY; // params shape
-    char m_name;
-    void createShape(int width);
-    void fillShape(int** shape);
-    void clearShape();
-
-    void shapeS();
-    void shapeZ();
-    void shapeT();
-    void shapeL();
-    void shapeJ();
-    void shapeO();
-    void shapeI();
+        int** m_array; // shape
+        int m_width, m_cordX, m_cordY;
+        Shape S();
+        Shape Z();
+        Shape T();
+        Shape L();
+        Shape J();
+        Shape O();
+        Shape I();
+        void delMatrix();
+        void createMatrix();
+        void fillMatrix(int** matrix);
 public:
-    Shapes(GameBoard& gameBoard);
-    Shapes(char name);
-    Shapes(char name, int cordX, int cordY);
-    Shapes(Shapes& other);
-    ~Shapes();
+        Shape();
+        Shape(char name, int** arr, int width, int cordX, int cordY);
+        Shape(Shape& other);
+        ~Shape();
+        char name() const;
+        int width() const;
+        int cordX() const;
+        int cordY() const;
 
-    char name() const;
-    int width() const;
-    int cordX() const;
-    int cordY() const;
+        void increaseCordX();
+        void decreaseCordX();
+        void increaseCordY();
+        void decreaseCordY();
+        void rotateShape();
 
-    bool checkPos();
-    void increaseCordX();
-    void decreaseCordX();
-    void increaseCordY();
-    void decreaseCordY();
-    void delShape();
-    int* operator [](int index);
-    int& operator ()(int row, int col);
-    void rotateShape();
-
+        Shape& operator=(const Shape& other);
+        int* operator [](int index);
+        int& operator()(int row, int col);
+        bool operator()(Shape& other);
 };
+
+
 #endif //SHAPE_MODEL_H

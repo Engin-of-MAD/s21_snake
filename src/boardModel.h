@@ -15,7 +15,8 @@ public:
     ~GameBoard();
     int width() const;
     int height() const;
-    void setShapeOnBoard(Shapes* shape);
+    void setShapeOnBoard(Shape& shape);
+    void clearFullRows(int sum);
     int* operator [](int index);
     int& operator ()(int row, int col);
 };
