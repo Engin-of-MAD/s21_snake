@@ -37,56 +37,70 @@ Shape::Shape(Shape &other)
         , m_cordY(other.m_cordY), m_name(other.m_name)
 {
     delMatrix();
-    createMatrix();
-    fillMatrix(other.m_array);
+    m_array =  createMatrix(m_width);
+    fillMatrix(m_array, other.m_array, m_width);
 }
 
-Shape::Shape(char name, int** arr, int width, int cordX, int cordY)
-: m_name(name), m_width(width), m_array(nullptr)
+Shape::Shape(char name, int (*arr)[2], int width, int cordX, int cordY)
+: m_name(name), m_width(width)
 , m_cordX(cordX), m_cordY(cordY){
-    createMatrix();
-    fillMatrix(arr);
+    m_array = createMatrix(m_width);
+    fillMatrix(m_array, arr);
+}
+Shape::Shape(char name, int (*arr)[3], int width, int cordX, int cordY)
+: m_name(name), m_width(width)
+, m_cordX(cordX), m_cordY(cordY){
+    m_array = createMatrix(m_width);
+    fillMatrix(m_array, arr);
 }
 
+Shape::Shape(char name, int (*arr)[4], int width, int cordX, int cordY)
+: m_name(name), m_width(width)
+, m_cordX(cordX), m_cordY(cordY){
+    m_array = createMatrix(m_width);
+    fillMatrix(m_array, arr);
+}
 Shape::~Shape() {
     delMatrix();
 }
 
 Shape Shape::S() {
-    int arr[3][3] = {{0, 1, 1},{1, 1, 0}, {0, 0, 0}};
-    Shape shape('S',reinterpret_cast<int **>(arr), 3, 0, 0);
+    int S[3][3] = {{0, 1, 1},{1, 1, 0}, {0, 0, 0}};
+    Shape shape('S',S, 3);
     return shape;
 }
 Shape Shape::Z() {
-
-    int arr[3][3] = {{1, 1, 0}, {0, 1, 1},{0, 0, 0}};
-    Shape shape('Z',reinterpret_cast<int **>(arr), 3, 0, 0);
+    int Z[3][3] = {{1, 1, 0}, {0, 1, 1},{0, 0, 0}};
+    Shape shape('Z',Z, 3);
     return shape;
 }
 Shape Shape::T() {
-    int arr[3][3] = {{0, 1, 0},{1, 1, 1}, {0, 0, 0}};
-    Shape shape('T',reinterpret_cast<int **>(arr), 3, 0, 0);
+    int** arr = createMatrix(3);
+    int T[3][3] = {{0, 1, 0},{1, 1, 1}, {0, 0, 0}};
+    fillMatrix(arr, T);
+    Shape shape('T',T, 3);
     return shape;
 }
 Shape Shape::L() {
-    int arr[3][3] = {{0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
-    Shape shape('L',reinterpret_cast<int **>(arr), 3, 0, 0);
+    int L[3][3] = {{0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
+    Shape shape('L', L, 3);
     return shape;
 }
 Shape Shape::J() {
-    int arr[3][3] = {{1, 0, 0}, {1, 1, 1}, {0, 0, 0}};
-    Shape shape('J',reinterpret_cast<int **>(arr), 3, 0, 0);
+    int J[3][3] = {{1, 0, 0}, {1, 1, 1}, {0, 0, 0}};
+    Shape shape('J',J, 3, 0, 0);
     return shape;
 }
 Shape Shape::O() {
-    int arr[2][2] ={{1, 1}, {1, 1}};
-    Shape shape('O',reinterpret_cast<int **>(arr), 2, 0, 0);
+    int O[2][2] ={{1, 1}, {1, 1}};
+    Shape shape('O',O, 2, 0, 0);
     return shape;
 }
 Shape Shape::I() {
-    int arr[4][4] ={{0, 0, 0, 0}, {1, 1, 1, 1},
+
+    int I[4][4] ={{0, 0, 0, 0}, {1, 1, 1, 1},
                     {0, 0, 0, 0}, {0, 0, 0, 0}};
-    Shape shape('I',reinterpret_cast<int **>(arr), 4, 0, 0);
+    Shape shape('I',I, 4, 0, 0);
     return shape;
 }
 
@@ -127,31 +141,58 @@ void Shape::delMatrix() {
     }
 }
 
-void Shape::createMatrix() {
-    if (nullptr == m_array) {
-        m_array = new int* [m_width];
-        for (int i = 0; i < m_width; ++i) {
-            m_array[i] = new int [m_width];
+int** Shape::createMatrix(int width) {
+        int** matrix = new int* [width];
+        for (int i = 0; i < width; ++i) {
+            matrix[i] = new int [width];
         }
-    }
+    return matrix;
 }
 
-void Shape::fillMatrix(int** matrix) {
-    for (int i = 0; i < m_width; ++i) {
-        for (int j = 0; j < m_width; ++j)
-            m_array[i][j] = matrix[i][j];
-    }
-}
+
 
 Shape& Shape::operator=(const Shape &other) {
-    this->m_width = other.m_width;
-    this->m_cordX = other.m_cordX;
-    this->m_cordY = other.m_cordY;
-    delMatrix();
-    createMatrix();
-    fillMatrix(other.m_array);
+    if (this != &other) {
+        this->m_width = other.m_width;
+        this->m_cordX = other.m_cordX;
+        this->m_cordY = other.m_cordY;
+        delMatrix();
+        m_array =  createMatrix(m_width);
+        fillMatrix(m_array,other.m_array, m_width);
+    }
     return *this;
 }
+void Shape::fillMatrix(int** matrix, int** other, const int size) {
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j)
+            matrix[i][j] = other[i][j];
+    }
+}
+
+void Shape::fillMatrix(int **matrix, int (*other)[3]) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j)
+            matrix[i][j] = other[i][j];
+    }
+}
+
+void Shape::fillMatrix(int **matrix, int (*other)[2]) {
+    for (int i = 0; i < 2; ++i) {
+        for (int j = 0; j < 2; ++j)
+            matrix[i][j] = other[i][j];
+    }
+}
+
+void Shape::fillMatrix(int **matrix, int (*other)[4]) {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j)
+            matrix[i][j] = other[i][j];
+    }
+}
+
+
+
+
 
 
 

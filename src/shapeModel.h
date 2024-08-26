@@ -19,11 +19,17 @@ class Shape{
         Shape O();
         Shape I();
         void delMatrix();
-        void createMatrix();
-        void fillMatrix(int** matrix);
+        int** createMatrix(int width);
+        void fillMatrix(int** matrix, int** other, const int size);
+        void fillMatrix(int** matrix, int (*other)[2]);
+        void fillMatrix(int** matrix, int (*other)[3]);
+        void fillMatrix(int** matrix, int (*other)[4]);
+
 public:
         Shape();
-        Shape(char name, int** arr, int width, int cordX, int cordY);
+        Shape(char name, int (*arr)[2], int width, int cordX = 0, int cordY = 0);
+        Shape(char name, int (*arr)[3], int width, int cordX = 0, int cordY = 0);
+        Shape(char name, int (*arr)[4], int width, int cordX = 0, int cordY = 0);
         Shape(Shape& other);
         ~Shape();
         char name() const;

@@ -1,10 +1,14 @@
 #include "gameModel.h"
 
-
-
+GameModel::GameModel()
+        : m_gBoard(BoardModel(10, 20))
+        , score(0) , timer(1000000), state(START){
+    stateMachine();
+    srand(NULL);
+}
+// getting microseconds for all time
 suseconds_t GameModel::getMicroSeconds(struct timeval timeDiff) {
     suseconds_t microSeconds = timeDiff.tv_sec * 1000000 + timeDiff.tv_usec;
-    // getting microseconds for all time
     return microSeconds;
 }
 
@@ -27,11 +31,6 @@ void GameModel::updateScore() {
     }
     score += 100;
 }
-
-
-GameModel::GameModel()
-: m_gBoard(GameBoard(10, 20))
-, score(0) , bestScore(0), timer(1000000), state(START){}
 
 void GameModel::userAction(gameControl g_input) {
     Shape temp(m_currShape);
@@ -100,7 +99,7 @@ void GameModel::stateMachine() {
 bool GameModel::genRandomShape(Shape& shape) {
     bool collision = false;
     Shape newShape;
-    shape(newShape);
+    shape = newShape;
     if (!checkPos(newShape))
         collision = true;
     return collision;
@@ -116,4 +115,8 @@ bool GameModel::checkPos(Shape& shape) {
         }
     }
     return true;
+}
+
+BoardModel GameModel::getBoardModel() {
+    return m_gBoard;
 }

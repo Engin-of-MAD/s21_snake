@@ -6,7 +6,7 @@
 #define BRICKGAME_GAMEOBJ_H
 // #include "../brick_game/tetris/tetris.h"
 // #include <initializer_list>
-#include <Qt>
+
 #include <ctime>
 #include <sys/time.h>
 
@@ -24,11 +24,11 @@ class GameModel {
         STAR_PAUSE_GAME,
         EXIT_GAME,
         STOP_GAME};
-    GameBoard m_gBoard;
+    BoardModel m_gBoard;
     Shape m_currShape;
     Shape m_nextShape;
 
-    int score, bestScore;
+    int score;
     struct timeval before_now, now; // time points
     gameControl input;
     stateGame state;
@@ -45,6 +45,7 @@ class GameModel {
     void start_action();
 public:
     GameModel();
+    BoardModel getBoardModel();
 };
 
 

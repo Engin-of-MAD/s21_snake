@@ -5,14 +5,14 @@
 
 #ifndef BOARDMODEL_H
 #define BOARDMODEL_H
-class GameBoard {
+class BoardModel {
     int** m_gameField;
     int m_width, m_height;
 public:
-    GameBoard();
-    explicit GameBoard(int width = 1, int height = 1);
-    GameBoard(GameBoard& other);
-    ~GameBoard();
+    BoardModel();
+    explicit BoardModel(int width = 1, int height = 1);
+    BoardModel(BoardModel& other);
+    ~BoardModel();
     int width() const;
     int height() const;
     void setShapeOnBoard(Shape& shape);
