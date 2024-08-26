@@ -13,25 +13,20 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 void MainWindow::initView() {
-
     m_infoField = new InfoBoardView();
     m_boardField = new BoardView();
     m_gridLayout = new QGridLayout();
-    m_buttonsField =new ButtonBoardView();
+    m_buttonsField = new ButtonBoardView();
     m_centralWidget = new QWidget();
-
-
+    gameModel = new GameModel();
     m_menuBar = new QMenuBar(this);
-    setMenuBar(m_menuBar);
 
+    setMenuBar(m_menuBar);
     m_gameMenu = m_menuBar->addMenu("Games");
     m_snakeGame = m_gameMenu->addAction("Snake");
     m_tetrisGame = m_gameMenu->addAction("Tetris");
 
-
     m_menuBar->addMenu(m_gameMenu);
-
-
     m_gridLayout->addWidget(m_boardField, 0, 0, 2, 2);
     m_gridLayout->addWidget(m_infoField, 0, 2, 1, 1);
     m_gridLayout->addWidget(m_buttonsField, 1, 2, 1, 1);

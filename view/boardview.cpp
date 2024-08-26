@@ -1,5 +1,5 @@
 #include "inc/boardview.h"
-
+#include "../src/gameModel.h"
 const int sizeCell = 20;
 const int sizeItem = sizeCell - 2;
 
@@ -42,6 +42,10 @@ void BoardView::paintEvent(QPaintEvent *e)
     p.drawRect(1, 1, 18, 18);
 
     p.end();
+}
+
+void BoardView::setBoardModel(BoardModel* gameBoard) {
+    this->gameBoard = gameBoard;
 }
 
 InfoBoardView::InfoBoardView()

@@ -13,15 +13,18 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+#include_next "../../src/boardModel.h"
 class BoardView : public QWidget {
     Q_OBJECT
-
+    BoardModel* gameBoard;
 public:
     BoardView();
     explicit BoardView(int width, int height);
 protected:
+    void setBoardModel(BoardModel* gameBoard);
     void paintEvent(QPaintEvent* e) override;
     void drawGrid(QPainter* painter);
+    void drawTetris(QPainter* painter);
     void drawSnake(QPainter* painter);
     void drawShape(QPainter* painter);
 

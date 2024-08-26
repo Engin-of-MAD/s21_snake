@@ -6,7 +6,7 @@
 #include <QMenuBar>
 #include <QAction>
 #include "boardview.h"
-// #include "ui_mainwindow.h"
+#include "../../src/gameModel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow
     QMenu* m_gameMenu;
     QAction* m_snakeGame;
     QAction* m_tetrisGame;
+    GameModel* gameModel;
     void initView();
 public:
     MainWindow(QWidget *parent = nullptr);
