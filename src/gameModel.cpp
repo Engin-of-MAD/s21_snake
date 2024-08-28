@@ -2,7 +2,7 @@
 
 GameModel::GameModel()
         : m_gBoard(new BoardModel(10, 20))
-        , score(0) , timer(1000000), state(START){
+        , score(0) , timer(1000000), state(START), input(){
     stateMachine();
     srand(NULL);
 }
@@ -119,4 +119,16 @@ bool GameModel::checkPos(Shape& shape) {
 
 BoardModel* GameModel::getBoardModel() {
     return m_gBoard;
+}
+
+void GameModel::setGameControl(GameModel::gameControl control) {
+    input = control;
+}
+
+GameModel::gameControl GameModel::getGameControl() {
+    return input;
+}
+
+GameModel::stateGame GameModel::getStateGame() {
+    return state;
 }

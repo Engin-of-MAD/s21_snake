@@ -13,7 +13,7 @@
 
 
 class GameModel {
-    const char shapesArray[7] = {'S', 'Z','T','L','J', 'O', 'I'};
+public:
     enum stateGame{START = 0, SPAWN, MOVING, PAUSE, STOP, GAMEOVER, EXIT_STATE};
     enum gameControl {  MOVE_UP = 0,
         MOVE_DOWN,
@@ -22,6 +22,13 @@ class GameModel {
         STAR_PAUSE_GAME,
         EXIT_GAME,
         STOP_GAME};
+    GameModel();
+    BoardModel* getBoardModel();
+    void setGameControl(gameControl control);
+    gameControl getGameControl();
+    stateGame getStateGame();
+    void stateMachine();
+private:
     BoardModel* m_gBoard;
     Shape* m_currShape;
     Shape* m_nextShape;
@@ -39,11 +46,8 @@ class GameModel {
     bool checkPos(Shape& shape);
     void userAction(gameControl g_input);
     void updateScore();
-    void stateMachine();
     void start_action();
-public:
-    GameModel();
-    BoardModel* getBoardModel();
+
 };
 
 
