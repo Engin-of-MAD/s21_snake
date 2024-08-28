@@ -9,7 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(size());
     connect(m_snakeGame, &QAction::triggered, m_infoField, &InfoBoardView::snakeMod);
     connect(m_tetrisGame, &QAction::triggered, m_infoField, &InfoBoardView::tetrisMod);
+    connect(m_buttonsField->getStartBtn(), &QPushButton::clicked, this, &MainWindow::gameLoop);
 }
+
 
 
 void MainWindow::initView() {
@@ -37,7 +39,16 @@ void MainWindow::initView() {
     setWindowTitle("BrickGame");
 }
 
-
+void MainWindow::gameLoop() {
+    bool breakFlag = true;
+    while (breakFlag){
+        GameModel::stateGame state = gameModel->getStateGame();
+        if (state == GameModel::GAMEOVER || state == GameModel::EXIT_STATE)
+            breakFlag = false;
+        gameModel->stateMachine();
+        qDebug() << gameModel->getStateGame() << gameModel->getGameControl();
+    }
+}
 
 MainWindow::~MainWindow()
 {
@@ -47,14 +58,34 @@ MainWindow::~MainWindow()
 void MainWindow::keyPressEvent(QKeyEvent *e) {
     switch(e->key())
     {
-        case Qt::Key_Left:
-            qDebug() << "Left arrow key pressed";
+        case Qt::Key_Return:
+            gameModel->setGameControl(GameModel::STAR_PAUSE_GAME);
+            qDebug() << "Pressed Enter. GameControl: " << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
             break;
-        case Qt::Key_Right:
-            qDebug() << "Right arrow key pressed";
+        case Qt::Key_A:
+            gameModel->setGameControl(GameModel::MOVE_LEFT);
+            qDebug() << "Pressed Left. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
             break;
-        default:
-            QWidget::keyPressEvent(e); // Обработка остальных клавиш стандартным способом
+        case Qt::Key_D:
+            gameModel->setGameControl(GameModel::MOVE_RIGHT);
+            qDebug() << "Pressed Right. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
+        case Qt::Key_R:
+            gameModel->setGameControl(GameModel::MOVE_UP);
+            qDebug() << "Pressed Up. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
+        case Qt::Key_S:
+            gameModel->setGameControl(GameModel::MOVE_DOWN);
+            qDebug() << "Pressed Down. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
+        case Qt::Key_G:
+            gameModel->setGameControl(GameModel::STOP_GAME);
+            qDebug() << "Pressed Stop. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
+        case Qt::Key_Escape:
+            gameModel->setGameControl(GameModel::EXIT_GAME);
+            qDebug() << "Pressed Stop. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
     }
 }
 
@@ -63,5 +94,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e) {
 
 
 }
+
+
 
 

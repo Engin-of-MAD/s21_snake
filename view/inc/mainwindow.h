@@ -22,11 +22,14 @@ class MainWindow : public QMainWindow
     QAction* m_tetrisGame;
     GameModel* gameModel;
     void initView();
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 protected:
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
+protected slots:
+    void gameLoop();
 };
 #endif // MAINWINDOW_H
