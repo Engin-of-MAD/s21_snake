@@ -84,7 +84,13 @@ void BoardView::paintEvent(QPaintEvent *e)
     p.end();
 }
 
-
+void BoardView::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Enter:
+            qDebug() << "Enter";
+            break;
+    }
+}
 
 
 InfoBoardView::InfoBoardView()
@@ -150,6 +156,7 @@ ButtonBoardView::ButtonBoardView()
     m_lineLayout->addWidget(m_pauseBtn);
     m_lineLayout->addWidget(m_stopBtn);
     setLayout(m_lineLayout);
+
 }
 
 void ButtonBoardView::paintEvent(QPaintEvent *e)
@@ -160,4 +167,9 @@ void ButtonBoardView::paintEvent(QPaintEvent *e)
     p.drawRect(0, 0, width() - 1, height() - 1);
     p.end();
 }
+
+QPushButton *ButtonBoardView::getStartBtn() { return m_startBtn; }
+QPushButton *ButtonBoardView::getPauseBtn() { return m_pauseBtn; }
+QPushButton *ButtonBoardView::getStopBtn() { return m_stopBtn; }
+
 

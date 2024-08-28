@@ -12,7 +12,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
-
+#include <QKeyEvent>
 #include "../../src/gameModel.h"
 class BoardView : public QWidget {
     Q_OBJECT
@@ -32,6 +32,7 @@ protected:
     void drawBoardModel(QPainter* painter);
     void drawPixel(QPainter* painter, int x, int y, bool isFillItem);
     QRect normalizeCords(int x, int y);
+    void keyPressEvent(QKeyEvent* event) override;
 };
 
 class InfoBoardView : public QWidget {
@@ -62,6 +63,9 @@ class ButtonBoardView : public QWidget {
 
 public:
     ButtonBoardView();
+    QPushButton* getStartBtn();
+    QPushButton* getPauseBtn();
+    QPushButton* getStopBtn();
 protected:
     void paintEvent(QPaintEvent* e) override;
 };
