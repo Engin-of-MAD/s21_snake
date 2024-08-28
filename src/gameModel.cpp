@@ -1,7 +1,7 @@
 #include "gameModel.h"
 
 GameModel::GameModel()
-        : m_gBoard(BoardModel(10, 20))
+        : m_gBoard(new BoardModel(10, 20))
         , score(0) , timer(1000000), state(START){
     stateMachine();
     srand(NULL);
@@ -20,42 +20,42 @@ bool GameModel::delay() {
 
 void GameModel::updateScore() {
     int sum, count = 0;
-    for (int i = 0; i < m_gBoard.width(); ++i) {
-        if (sum == m_gBoard.width()) {
+    for (int i = 0; i < m_gBoard->width(); ++i) {
+        if (sum == m_gBoard->width()) {
             count++;
-            m_gBoard.clearFullRows(sum);
+            m_gBoard->clearFullRows(sum);
         }
-        for (int j = 0; j < m_gBoard.width(); ++j) {
-            sum += m_gBoard[i][j];
+        for (int j = 0; j < m_gBoard->width(); ++j) {
+            sum += *m_gBoard[i][j];
         }
     }
     score += 100;
 }
 
 void GameModel::userAction(gameControl g_input) {
-    Shape temp(m_currShape);
+    Shape temp(*m_currShape);
 
     switch (g_input) {
         case MOVE_DOWN:
             temp.increaseCordY();
             if (checkPos(temp)) temp.increaseCordY();
             else {
-                m_gBoard.setShapeOnBoard(temp);
+                m_gBoard->setShapeOnBoard(temp);
                 updateScore();
                 state = SPAWN;
             }
             break;
         case MOVE_RIGHT:
             temp.increaseCordX();
-            if (checkPos(temp)) m_currShape.increaseCordX();
+            if (checkPos(temp)) m_currShape->increaseCordX();
             break;
         case MOVE_LEFT:
             temp.decreaseCordX();
-            if (checkPos(temp)) m_currShape.decreaseCordX();
+            if (checkPos(temp)) m_currShape->decreaseCordX();
             break;
         case MOVE_UP:
             temp.rotateShape();
-            if (checkPos(temp)) m_currShape.rotateShape();
+            if (checkPos(temp)) m_currShape->rotateShape();
             break;
         case STAR_PAUSE_GAME:
             if (state == START) state = SPAWN;
@@ -83,8 +83,8 @@ void GameModel::stateMachine() {
             start_action();
             break;
         case SPAWN:
-            m_currShape = Shape(m_nextShape);
-            state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
+            *m_currShape = Shape(*m_nextShape);
+            state = genRandomShape(*m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
             userAction(input);
@@ -108,7 +108,7 @@ bool GameModel::genRandomShape(Shape& shape) {
 bool GameModel::checkPos(Shape& shape) {
     for (int i = 0; i < shape.width(); ++i) {
         for (int j = 0; j < shape.width(); ++j) {
-            if (shape.cordX() + j < 0 || shape.cordX() >= m_gBoard.width() || shape.cordY() + i) {
+            if (shape.cordX() + j < 0 || shape.cordX() >= m_gBoard->width() || shape.cordY() + i) {
                 if (shape[i][j]) return false;
             } else if (m_gBoard[shape.cordY() + i][shape.cordX() + j] && shape[i][j])
                 return false;
@@ -117,6 +117,6 @@ bool GameModel::checkPos(Shape& shape) {
     return true;
 }
 
-BoardModel GameModel::getBoardModel() {
+BoardModel* GameModel::getBoardModel() {
     return m_gBoard;
 }
