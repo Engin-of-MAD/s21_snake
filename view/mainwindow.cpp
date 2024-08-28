@@ -13,12 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 void MainWindow::initView() {
+    gameModel = new GameModel();
     m_infoField = new InfoBoardView();
-    m_boardField = new BoardView();
+    m_boardField = new BoardView(*gameModel->getBoardModel());
     m_gridLayout = new QGridLayout();
     m_buttonsField = new ButtonBoardView();
     m_centralWidget = new QWidget();
-    gameModel = new GameModel();
+
     m_menuBar = new QMenuBar(this);
 
     setMenuBar(m_menuBar);
@@ -37,8 +38,29 @@ void MainWindow::initView() {
 }
 
 
+
 MainWindow::~MainWindow()
 {
+
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+    switch(e->key())
+    {
+        case Qt::Key_Left:
+            qDebug() << "Left arrow key pressed";
+            break;
+        case Qt::Key_Right:
+            qDebug() << "Right arrow key pressed";
+            break;
+        default:
+            QWidget::keyPressEvent(e); // Обработка остальных клавиш стандартным способом
+    }
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *e) {
+
+
 
 }
 
