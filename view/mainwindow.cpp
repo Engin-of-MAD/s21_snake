@@ -47,6 +47,7 @@ void MainWindow::initView() {
 void MainWindow::startGame() {
     gameTimer->start(16);
     gameModel->setGameControl(GameModel::STAR_PAUSE_GAME);
+    qDebug() << "State:" << gameModel->getStateGame() << ", Control:" << gameModel->getGameControl();
     connect(m_buttonsField->getStopBtn(), &QPushButton::clicked, gameTimer, &QTimer::stop);
 }
 
