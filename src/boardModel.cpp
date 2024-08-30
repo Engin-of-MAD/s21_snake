@@ -3,7 +3,7 @@
 //
 
 #include "boardModel.h"
-#include <iostream>
+
 BoardModel::BoardModel() : BoardModel(10, 20){}
 BoardModel::BoardModel(int width, int height)
 : m_width(width)
@@ -43,11 +43,11 @@ int *BoardModel::operator[](int index) {
     return m_gameField[index];
 }
 
-void BoardModel::setShapeOnBoard(Shape& shape) {
-    for (int i = 0; i < shape.width(); ++i) {
-        for (int j = 0; j < shape.width(); ++j) {
+void BoardModel::setShapeOnBoard(Tetromino& shape) {
+    for (int i = 0; i < shape.getWidth(); ++i) {
+        for (int j = 0; j < shape.getWidth(); ++j) {
             if (shape[i][j])
-                m_gameField[shape.cordY() + i][shape.cordX() + j] = shape[i][j];
+                m_gameField[shape.getCordY() + i][shape.getCordY() + j] = shape[i][j];
         }
     }
 }

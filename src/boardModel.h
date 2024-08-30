@@ -1,8 +1,9 @@
 //
 // Created by roach on 23.08.2024.
 //
-#include "shapeModel.h"
 
+#include "TetraminoFactory.h"
+#include <iostream>
 #ifndef BOARDMODEL_H
 #define BOARDMODEL_H
 class BoardModel {
@@ -16,7 +17,7 @@ public:
     int width() const;
     int height() const;
     void printInConsole() const;
-    void setShapeOnBoard(Shape& shape);
+    void setShapeOnBoard(Tetromino& shape);
     void clearFullRows(int sum);
     int* operator [](int index);
     int& operator ()(int row, int col);
