@@ -25,8 +25,8 @@ add_executable(untitled2
         view/mainwindow.ui
         src/boardModel.cpp
         src/boardModel.h
-        src/shapeModel.cpp
-        src/shapeModel.h
+        src/TetraminoFactory.cpp
+        src/TetraminoFactory.h
         #        brick_game/tetris/tetris_backend.h
 #        brick_game/tetris/backend.c
 #        brick_game/tetris/tetris.h
