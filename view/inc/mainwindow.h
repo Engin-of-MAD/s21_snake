@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include <QMenuBar>
 #include <QAction>
+#include <QTimer>
 #include "boardview.h"
 #include "../../src/gameModel.h"
 
@@ -21,15 +22,18 @@ class MainWindow : public QMainWindow
     QAction* m_snakeGame;
     QAction* m_tetrisGame;
     GameModel* gameModel;
+    QTimer* gameTimer;
+
     void initView();
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 protected:
     void keyPressEvent(QKeyEvent* e) override;
-    void keyReleaseEvent(QKeyEvent* e) override;
+//    void keyReleaseEvent(QKeyEvent* e) override;
 protected slots:
     void gameLoop();
+    void startGame();
 };
 #endif // MAINWINDOW_H

@@ -1,20 +1,25 @@
 #include "inc/mainwindow.h"
-#include <qmenubar.h>
-// #include "../src/gameobj.h"
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
-
+    gameTimer = new QTimer(this);
     initView();
     adjustSize();
     setFixedSize(size());
+    setFocusPolicy(Qt::StrongFocus);
     connect(m_snakeGame, &QAction::triggered, m_infoField, &InfoBoardView::snakeMod);
     connect(m_tetrisGame, &QAction::triggered, m_infoField, &InfoBoardView::tetrisMod);
-    connect(m_buttonsField->getStartBtn(), &QPushButton::clicked, this, &MainWindow::gameLoop);
+    connect(m_buttonsField->getStartBtn(), &QPushButton::clicked, this, &MainWindow::startGame);
+    connect(gameTimer, &QTimer::timeout, this, &MainWindow::gameLoop);
+
 }
 
 
 
+
 void MainWindow::initView() {
+
     gameModel = new GameModel();
     m_infoField = new InfoBoardView();
     m_boardField = new BoardView(*gameModel->getBoardModel());
@@ -39,20 +44,36 @@ void MainWindow::initView() {
     setWindowTitle("BrickGame");
 }
 
+void MainWindow::startGame() {
+    gameTimer->start(16);
+    gameModel->setGameControl(GameModel::STAR_PAUSE_GAME);
+    connect(m_buttonsField->getStopBtn(), &QPushButton::clicked, gameTimer, &QTimer::stop);
+}
+
 void MainWindow::gameLoop() {
-    bool breakFlag = true;
-    while (breakFlag){
-        GameModel::stateGame state = gameModel->getStateGame();
-        if (state == GameModel::GAMEOVER || state == GameModel::EXIT_STATE)
-            breakFlag = false;
-        gameModel->stateMachine();
-        qDebug() << gameModel->getStateGame() << gameModel->getGameControl();
-    }
+    QTimer timer(this);
+    GameModel::stateGame state = gameModel->getStateGame();
+    if (state == GameModel::GAMEOVER || state == GameModel::EXIT_STATE)
+        timer.stop();
+    // Обновляем состояние игры
+    gameModel->stateMachine();
+
+    // Логирование состояния игры и управления (опционально)
+    qDebug() << "State:" << state << ", Control:" << gameModel->getGameControl();
 }
 
 MainWindow::~MainWindow()
 {
-
+    delete gameModel;
+    delete m_tetrisGame;
+    delete m_snakeGame;
+    delete m_gameMenu;
+    delete m_menuBar;
+    delete m_boardField;
+    delete m_buttonsField;
+    delete m_infoField;
+    delete m_gridLayout;
+    delete m_centralWidget;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e) {
@@ -89,11 +110,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e) {
     }
 }
 
-void MainWindow::keyReleaseEvent(QKeyEvent *e) {
 
-
-
-}
 
 
 
