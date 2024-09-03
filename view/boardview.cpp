@@ -60,14 +60,15 @@ void BoardView::drawPixel(QPainter *painter, int x, int y, bool isFillItem) {
 }
 
 void BoardView::drawBoardModel(QPainter *painter) {
-/*    for (int i = 0; i < gameData.current.width; i++) {
+/*
+    for (int i = 0; i < gameData.current.width; i++) {
         for (int j = 0; j < gameData.current.width; j++) {
             if (gameData.current.array[i][j])
                 Buffer[gameData.current.row + i][gameData.current.col + j] =
                         gameData.current.array[i][j];
         }
     }
-      */
+*/
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0, item = 0; j < m_width; ++j) {
             drawPixel(painter, j, i, (*gameBoard)[i][j]);

@@ -54,8 +54,8 @@ void MainWindow::startGame() {
 void MainWindow::gameLoop() {
     QTimer timer(this);
     GameModel::stateGame state = gameModel->getStateGame();
-    if (state == GameModel::GAMEOVER || state == GameModel::EXIT_STATE)
-        timer.stop();
+    if (state == GameModel::GAMEOVER)
+        close();
     // Обновляем состояние игры
     gameModel->stateMachine();
 
@@ -65,11 +65,12 @@ void MainWindow::gameLoop() {
 
 MainWindow::~MainWindow()
 {
+    delete m_menuBar;
     delete gameModel;
     delete m_tetrisGame;
     delete m_snakeGame;
     delete m_gameMenu;
-    delete m_menuBar;
+
     delete m_boardField;
     delete m_buttonsField;
     delete m_infoField;
