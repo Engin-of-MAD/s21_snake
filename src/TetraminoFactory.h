@@ -17,10 +17,12 @@ class Tetromino{
 
 public:
     enum class ShapesTypes : char { Z = 'Z', S = 'S', T = 'T', L = 'L', J = 'J', O = 'O', I = 'I'};
+    Tetromino();
     Tetromino(ShapesTypes shapeType, const Matrix4x4& shape, int cordX = 0, int cordY = 0);
     Tetromino(ShapesTypes shapeType, const Matrix3x3& shape, int cordX = 0, int cordY = 0);
     Tetromino(ShapesTypes shapeType, const Matrix2x2& shape, int cordX = 0, int cordY = 0);
     Tetromino(Tetromino& other);
+    Tetromino(Tetromino&& other);
     ~Tetromino();
     void printInConsole();
     void setCordX(int cordX);
@@ -37,6 +39,7 @@ public:
     void rotate();
     int* operator[](int index);
     Tetromino& operator=(const Tetromino& other);
+    Tetromino& operator=(Tetromino&& other) noexcept;
 
 protected:
     int m_width, m_cordX, m_cordY;
@@ -49,8 +52,11 @@ protected:
 
 class TetrominoFactory {
 public:
+
     static Tetromino createTetromino(Tetromino::ShapesTypes type);
     static Tetromino randomTetromino();
+    static Tetromino* createTetrominoPointer(Tetromino::ShapesTypes type);
+    static Tetromino* randomTetrominoPointer();
 
 };
 #endif //FIGUREFACTORY_H

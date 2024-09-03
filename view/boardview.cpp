@@ -1,18 +1,20 @@
 #include "inc/boardview.h"
 #include <iostream>
 #include <QPair>
+
 const int sizeCell = 21;
 const int sizeItem = sizeCell - 4;
 
 BoardView::BoardView() : BoardView(10, 20) {}
-BoardView::BoardView(int width, int height) : m_width(width), m_height(height)
-    {setFixedSize(m_width * sizeCell, m_height * sizeCell);}
+
+BoardView::BoardView(int width, int height) : m_width(width), m_height(height) {
+    setFixedSize(m_width * sizeCell, m_height * sizeCell);
+}
+
 BoardView::BoardView(BoardModel &model)
-        : BoardView(model.width(), model.height()) {gameBoard = &model;}
+        : BoardView(model.width(), model.height()) { gameBoard = &model; }
 
-void BoardView::drawGrid(QPainter *painter)
-{
-
+void BoardView::drawGrid(QPainter *painter) {
     QPen gridPen(Qt::lightGray);
     painter->setPen(gridPen);
     for (int i = 20; i < height() - 1; i += sizeCell) {
@@ -23,19 +25,20 @@ void BoardView::drawGrid(QPainter *painter)
     border(painter);
 }
 
-void BoardView::border(QPainter* painter) {
+void BoardView::border(QPainter *painter) {
     QPen border(Qt::black);
     painter->setPen(border);
     painter->drawRect(0, 0, width() - 1, height() - 1);
 }
+
 QRect BoardView::normalizeCords(int x, int y) {
     int x1 = x * sizeCell + 1;
     int y1 = y * sizeCell + 1;
 
 
-    QRect pixel(x1, y1, sizeItem , sizeItem) ;
+    QRect pixel(x1, y1, sizeItem, sizeItem);
     qDebug() << x << y;
-    qDebug() << "(" << x1 << "," << y1 << ')' ;
+    qDebug() << "(" << x1 << "," << y1 << ')';
     qDebug() << pixel.size();
     return pixel;
 }
@@ -47,8 +50,7 @@ void BoardView::drawPixel(QPainter *painter, int x, int y, bool isFillItem) {
     if (isFillItem) {
         brush.setColor(Qt::green);
         pixelPen.setColor(Qt::green);
-    }
-    else {
+    } else {
         brush.setColor(Qt::white);
         pixelPen.setColor(Qt::white);
     }
@@ -58,6 +60,14 @@ void BoardView::drawPixel(QPainter *painter, int x, int y, bool isFillItem) {
 }
 
 void BoardView::drawBoardModel(QPainter *painter) {
+/*    for (int i = 0; i < gameData.current.width; i++) {
+        for (int j = 0; j < gameData.current.width; j++) {
+            if (gameData.current.array[i][j])
+                Buffer[gameData.current.row + i][gameData.current.col + j] =
+                        gameData.current.array[i][j];
+        }
+    }
+      */
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0, item = 0; j < m_width; ++j) {
             drawPixel(painter, j, i, (*gameBoard)[i][j]);
@@ -65,20 +75,14 @@ void BoardView::drawBoardModel(QPainter *painter) {
     }
 }
 
-void BoardView::paintEvent(QPaintEvent *e)
-{
+void BoardView::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
     QPainter p;
 
     p.begin(this);
     border(&p);
     drawGrid(&p);
-//    drawPixel(&p, 0, 0);
-//    drawPixel(&p, 1, 1);
     drawBoardModel(&p);
-
-
-
 
 
     p.end();
@@ -93,8 +97,7 @@ void BoardView::keyPressEvent(QKeyEvent *event) {
 }
 
 
-InfoBoardView::InfoBoardView()
-{
+InfoBoardView::InfoBoardView() {
     setFixedSize(200, 196);
     m_gridLayout = new QGridLayout();
     m_score = new QLabel("Score: ");
@@ -119,22 +122,18 @@ InfoBoardView::InfoBoardView()
     setLayout(m_gridLayout);
 }
 
-void InfoBoardView::snakeMod()
-{
+void InfoBoardView::snakeMod() {
     m_nextShape->hide();
     m_nextShapeLabel->hide();
 }
 
-void InfoBoardView::tetrisMod()
-{
+void InfoBoardView::tetrisMod() {
     m_nextShape->show();
     m_nextShapeLabel->show();
 }
 
 
-
-void InfoBoardView::paintEvent(QPaintEvent *e)
-{
+void InfoBoardView::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
     QPainter p;
     p.begin(this);
@@ -142,8 +141,7 @@ void InfoBoardView::paintEvent(QPaintEvent *e)
     p.end();
 }
 
-ButtonBoardView::ButtonBoardView()
-{
+ButtonBoardView::ButtonBoardView() {
     setFixedSize(200, 198);
     m_startBtn = new QPushButton("Start");
     m_pauseBtn = new QPushButton("Pause");
@@ -159,8 +157,7 @@ ButtonBoardView::ButtonBoardView()
 
 }
 
-void ButtonBoardView::paintEvent(QPaintEvent *e)
-{
+void ButtonBoardView::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
     QPainter p;
     p.begin(this);
@@ -169,7 +166,9 @@ void ButtonBoardView::paintEvent(QPaintEvent *e)
 }
 
 QPushButton *ButtonBoardView::getStartBtn() { return m_startBtn; }
+
 QPushButton *ButtonBoardView::getPauseBtn() { return m_pauseBtn; }
+
 QPushButton *ButtonBoardView::getStopBtn() { return m_stopBtn; }
 
 

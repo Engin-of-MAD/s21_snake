@@ -7,9 +7,10 @@
 
 #include <ctime>
 #include <sys/time.h>
+#include <memory>
+
 
 #include "boardModel.h"
-//#include "shapeModel.h"
 #include "TetraminoFactory.h"
 
 class GameModel {
@@ -39,15 +40,14 @@ private:
     stateGame state;
     suseconds_t timer;
 
-
-    bool genRandomShape(Tetromino* shape);
-    suseconds_t getMicroSeconds(struct timeval timeDiff);
-    bool delay();
     bool checkPos(Tetromino* shape);
+    bool genRandomShape(Tetromino* shape);
+
+    bool delay();
+    suseconds_t getMicroSeconds(struct timeval timeDiff);
     void userAction(gameControl g_input);
     void updateScore();
     void start_action();
-
 };
 
 

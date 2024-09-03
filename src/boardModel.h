@@ -2,10 +2,12 @@
 // Created by roach on 23.08.2024.
 //
 
-#include "TetraminoFactory.h"
-#include <iostream>
+
 #ifndef BOARDMODEL_H
 #define BOARDMODEL_H
+#include "TetraminoFactory.h"
+#include <iostream>
+
 class BoardModel {
     int** m_gameField;
     int m_width, m_height;

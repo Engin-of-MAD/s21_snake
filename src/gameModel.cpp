@@ -1,10 +1,13 @@
 #include "gameModel.h"
-
+#include <QtCore>
 GameModel::GameModel()
-        : m_gBoard(new BoardModel(10, 20))
-        , score(0) , timer(1000000), state(START)
-        , m_currShape(nullptr), m_nextShape(nullptr)
-        {}
+    : m_gBoard(new BoardModel(10, 20))
+    , score(0) , timer(1000000)
+    , state(START){
+    m_currShape = TetrominoFactory::randomTetrominoPointer();
+    m_nextShape = TetrominoFactory::randomTetrominoPointer();
+}
+
 
 // getting microseconds for all time
 suseconds_t GameModel::getMicroSeconds(struct timeval timeDiff) {
@@ -26,24 +29,27 @@ void GameModel::updateScore() {
             m_gBoard->clearFullRows(sum);
         }
         for (int j = 0; j < m_gBoard->width(); ++j) {
-            sum += *m_gBoard[i][j];
+            sum += (*m_gBoard)[i][j];
         }
     }
     score += 100;
 }
 
 void GameModel::userAction(gameControl g_input) {
-    Tetromino temp(*m_currShape);
 
+    Tetromino temp(*m_currShape);
+    std::cout << char(temp.getName()) << " " << m_currShape << std::endl;
     switch (g_input) {
         case MOVE_DOWN:
             temp.increaseCordY();
-            if (checkPos(&temp)) temp.increaseCordY();
+            if (checkPos(&temp)) m_currShape->increaseCordY();
+
             else {
-                m_gBoard->setShapeOnBoard(temp);
+                m_gBoard->setShapeOnBoard(*m_currShape);
                 updateScore();
                 state = SPAWN;
-                delete m_currShape;
+//                delete m_currShape;
+//                m_currShape = nullptr;
             }
             break;
         case MOVE_RIGHT:
@@ -84,7 +90,7 @@ void GameModel::stateMachine() {
             start_action();
             break;
         case SPAWN:
-            m_currShape = new Tetromino(TetrominoFactory::randomTetromino());
+            m_currShape = m_nextShape;
             state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
@@ -98,39 +104,32 @@ void GameModel::stateMachine() {
 }
 
 bool GameModel::genRandomShape(Tetromino* shape) {
-
-    Tetromino newShape = TetrominoFactory::randomTetromino();
     bool collision = false;
-    if (!checkPos(&newShape))
+    shape = TetrominoFactory::randomTetrominoPointer();
+    shape->setCordX(rand() % (m_gBoard->width() - shape->getWidth() + 1));
+    if (!checkPos(shape))
         collision = true;
-    else if (shape != &newShape) *shape = newShape;
     return collision;
 }
 
 bool GameModel::checkPos(Tetromino* shape) {
-    for (int i = 0; i < shape->getWidth(); ++i) {
-        for (int j = 0; j < shape->getWidth(); ++j) {
-            if (shape->getCordX() + j < 0 || shape->getCordX() >= m_gBoard->width() || shape->getCordY() + i) {
-                if (shape[i][j]) return false;
-            } else if (m_gBoard[shape->getCordY() + i][shape->getCordX() + j] && shape[i][j])
+    for (int i = 0; i < shape->getWidth(); i++) {
+        for (int j = 0; j < shape->getWidth(); j++) {
+            int col = shape->getCordX() + j;
+            int row = shape->getCordY() + j;
+            int width = m_gBoard->width();
+            int height = m_gBoard->height();
+            bool checkShape = (*shape)[i][j];
+            if (col < 0 || col >= width || row >= height) {
+                if (checkShape) return false;
+            } else if ((*m_gBoard)[row][col] && checkShape)
                 return false;
         }
     }
     return true;
 }
 
-BoardModel* GameModel::getBoardModel() {
-    return m_gBoard;
-}
-
-void GameModel::setGameControl(GameModel::gameControl control) {
-    input = control;
-}
-
-GameModel::gameControl GameModel::getGameControl() {
-    return input;
-}
-
-GameModel::stateGame GameModel::getStateGame() {
-    return state;
-}
+BoardModel* GameModel::getBoardModel() { return m_gBoard; }
+void GameModel::setGameControl(GameModel::gameControl control) {input = control;}
+GameModel::gameControl GameModel::getGameControl() {return input;}
+GameModel::stateGame GameModel::getStateGame() {return state;}

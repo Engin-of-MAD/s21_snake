@@ -44,12 +44,19 @@ int *BoardModel::operator[](int index) {
 }
 
 void BoardModel::setShapeOnBoard(Tetromino& shape) {
-    for (int i = 0; i < shape.getWidth(); ++i) {
-        for (int j = 0; j < shape.getWidth(); ++j) {
+    int x = shape.getCordX();
+    int y = shape.getCordY();
+    int width = shape.getWidth();
+
+
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < width; ++j) {
             if (shape[i][j])
-                m_gameField[shape.getCordY() + i][shape.getCordY() + j] = shape[i][j];
+                m_gameField[y + i][x + j] = shape[i][j];
         }
     }
+//    testData1();
+//    printInConsole();
 }
 
 void BoardModel::clearFullRows(int sum) {
