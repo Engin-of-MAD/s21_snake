@@ -27,9 +27,6 @@ add_executable(untitled2
         src/boardModel.h
         src/TetraminoFactory.cpp
         src/TetraminoFactory.h
-        #        brick_game/tetris/tetris_backend.h
-#        brick_game/tetris/backend.c
-#        brick_game/tetris/tetris.h
 )
 target_link_libraries(untitled2
         Qt::Core
@@ -37,4 +34,4 @@ target_link_libraries(untitled2
         Qt::Widgets
 )
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fno-limit-debug-info")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
