@@ -28,7 +28,6 @@ void MainWindow::initView() {
     m_centralWidget = new QWidget();
 
     m_menuBar = new QMenuBar(this);
-
     setMenuBar(m_menuBar);
     m_gameMenu = m_menuBar->addMenu("Games");
     m_snakeGame = m_gameMenu->addAction("Snake");

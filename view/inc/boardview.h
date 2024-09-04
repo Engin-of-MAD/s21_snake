@@ -17,6 +17,7 @@
 class BoardView : public QWidget {
     Q_OBJECT
     BoardModel* gameBoard;
+    GameModel* gameModel;
     int m_width;
     int m_height;
 public:
