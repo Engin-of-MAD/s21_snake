@@ -17,16 +17,14 @@ add_executable(untitled2
         view/inc/boardview.h
         view/boardview.cpp
         view/inc/mainwindow.h
-        view/inc/ui_mainwindow.h
         view/mainwindow.cpp
-        src/main.cpp
-        src/gameModel.h
-        src/gameModel.cpp
-        view/mainwindow.ui
-        src/boardModel.cpp
-        src/boardModel.h
-        src/TetraminoFactory.cpp
-        src/TetraminoFactory.h
+        models/main.cpp
+        models/gameModel.h
+        models/gameModel.cpp
+        models/boardModel.cpp
+        models/boardModel.h
+        models/TetraminoFactory.cpp
+        models/TetraminoFactory.h
 )
 target_link_libraries(untitled2
         Qt::Core
@@ -34,4 +32,4 @@ target_link_libraries(untitled2
         Qt::Widgets
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
