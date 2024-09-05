@@ -2,7 +2,7 @@
 // Created by roach on 29.08.2024.
 //
 
-#include "TetraminoFactory.h"
+#include "../inc/TetraminoFactory.h"
 
 
 
@@ -26,9 +26,15 @@ Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix3x3& shape, i
     }
 }
 Tetromino::Tetromino()
-    : m_width(0), m_cordX(0)
-    , m_cordY(0), m_shape(nullptr), m_name()
+    : m_width(3), m_cordX(0)
+    , m_cordY(0), m_shape(new int * [m_width]), m_name()
 {
+    for (int i = 0; i < m_width; ++i) {
+        m_shape[i] = new int[m_width];
+        for (int j = 0; j < m_width; ++j) {
+            m_shape[i][j] = 0;
+        }
+    }
 }
 
 Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix4x4& shape, int cordX, int cordY)
@@ -156,7 +162,7 @@ void Tetromino::rotate() {
 Tetromino TetrominoFactory::createTetromino(Tetromino::ShapesTypes type) {
     switch (type) {
         case Tetromino::ShapesTypes::Z:
-            return Tetromino(type, Matrix3x3{{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}});
+            return Tetromino(type, Matrix3x3{{{1, 1, 0}, {0, 1, 1},{0, 0, 0}}});
         case Tetromino::ShapesTypes::S:
             return Tetromino(type, Matrix3x3{{{0, 1, 1}, {1, 1, 0}, {0, 0, 0}}});
         case Tetromino::ShapesTypes::T:

@@ -1,12 +1,9 @@
-#include "gameModel.h"
+#include "../inc/gameModel.h"
 #include <QtCore>
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
-    , score(0) , timer(1000000)
-    , state(START){
-    m_currShape = TetrominoFactory::randomTetrominoPointer();
-    m_nextShape = TetrominoFactory::randomTetrominoPointer();
-}
+    , score(0) , timer(1000000), state(START)
+    , m_currShape(new Tetromino()), m_nextShape(new Tetromino()){}
 
 
 // getting microseconds for all time
@@ -48,8 +45,6 @@ void GameModel::userAction(gameControl g_input) {
                 m_gBoard->setShapeOnBoard(*m_currShape);
                 updateScore();
                 state = SPAWN;
-//                delete m_currShape;
-//                m_currShape = nullptr;
             }
             break;
         case MOVE_RIGHT:
@@ -94,18 +89,20 @@ void GameModel::stateMachine() {
             state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
-            userAction(input);
-            gettimeofday(&now, nullptr);
-            if (delay()) {
-                userAction(MOVE_DOWN);
+            if (NOSIG != input) {
+                userAction(input);
             }
+
+
+            userAction(MOVE_DOWN);
+
             break;
     }
 }
 
 bool GameModel::genRandomShape(Tetromino* shape) {
     bool collision = false;
-    shape = TetrominoFactory::randomTetrominoPointer();
+    *shape = std::move(TetrominoFactory::randomTetromino());
     shape->setCordX(rand() % (m_gBoard->width() - shape->getWidth() + 1));
     if (!checkPos(shape))
         collision = true;
@@ -129,7 +126,15 @@ bool GameModel::checkPos(Tetromino* shape) {
     return true;
 }
 
-BoardModel* GameModel::getBoardModel() { return m_gBoard; }
+BoardModel GameModel::getBoardModel() { return *m_gBoard; }
 void GameModel::setGameControl(GameModel::gameControl control) {input = control;}
 GameModel::gameControl GameModel::getGameControl() {return input;}
 GameModel::stateGame GameModel::getStateGame() {return state;}
+
+Tetromino GameModel::getCurrentTetromino() {
+    return *m_currShape;
+}
+
+Tetromino GameModel::getNextTetromino() {
+    return *m_nextShape;
+}

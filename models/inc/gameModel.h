@@ -22,9 +22,12 @@ public:
         MOVE_LEFT,
         STAR_PAUSE_GAME,
         EXIT_GAME,
-        STOP_GAME};
+        STOP_GAME,
+        NOSIG};
     GameModel();
-    BoardModel* getBoardModel();
+    BoardModel getBoardModel();
+    Tetromino getCurrentTetromino();
+    Tetromino getNextTetromino();
     void setGameControl(gameControl control);
     gameControl getGameControl();
     stateGame getStateGame();

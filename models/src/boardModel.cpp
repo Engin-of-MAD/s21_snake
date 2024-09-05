@@ -2,7 +2,7 @@
 // Created by roach on 23.08.2024.
 //
 
-#include "boardModel.h"
+#include "../inc/boardModel.h"
 
 BoardModel::BoardModel() : BoardModel(10, 20){}
 BoardModel::BoardModel(int width, int height)
@@ -44,15 +44,10 @@ int *BoardModel::operator[](int index) {
 }
 
 void BoardModel::setShapeOnBoard(Tetromino& shape) {
-    int x = shape.getCordX();
-    int y = shape.getCordY();
-    int width = shape.getWidth();
-
-
-    for (int i = 0; i < width; ++i) {
-        for (int j = 0; j < width; ++j) {
+    for (int i = 0; i < shape.getWidth(); ++i) {
+        for (int j = 0; j < shape.getWidth(); ++j) {
             if (shape[i][j])
-                m_gameField[y + i][x + j] = shape[i][j];
+                m_gameField[shape.getCordY() + i][shape.getCordX() + j] = shape[i][j];
         }
     }
 //    testData1();
