@@ -7,7 +7,7 @@
 #include <QAction>
 #include <QTimer>
 #include "boardview.h"
-#include "../../src/gameModel.h"
+#include "../../models/inc/gameModel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -31,7 +31,7 @@ public:
     ~MainWindow() override;
 protected:
     void keyPressEvent(QKeyEvent* e) override;
-//    void keyReleaseEvent(QKeyEvent* e) override;
+    void keyReleaseEvent(QKeyEvent* e) override;
 protected slots:
     void gameLoop();
     void startGame();

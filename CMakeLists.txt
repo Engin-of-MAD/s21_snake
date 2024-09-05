@@ -4,7 +4,6 @@ project(untitled2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-#set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
 
 find_package(Qt6 COMPONENTS
@@ -18,13 +17,15 @@ add_executable(untitled2
         view/boardview.cpp
         view/inc/mainwindow.h
         view/mainwindow.cpp
-        models/main.cpp
-        models/gameModel.h
-        models/gameModel.cpp
-        models/boardModel.cpp
-        models/boardModel.h
-        models/TetraminoFactory.cpp
-        models/TetraminoFactory.h
+        models/src/main.cpp
+        models/inc/gameModel.h
+        models/src/gameModel.cpp
+        models/src/boardModel.cpp
+        models/inc/boardModel.h
+        models/src/TetraminoFactory.cpp
+        models/inc/TetraminoFactory.h
+        models/src/Timer.cpp
+        models/inc/Timer.h
 )
 target_link_libraries(untitled2
         Qt::Core
@@ -32,4 +33,4 @@ target_link_libraries(untitled2
         Qt::Widgets
 )
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")

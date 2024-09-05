@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_tetrisGame, &QAction::triggered, m_infoField, &InfoBoardView::tetrisMod);
     connect(m_buttonsField->getStartBtn(), &QPushButton::clicked, this, &MainWindow::startGame);
     connect(gameTimer, &QTimer::timeout, this, &MainWindow::gameLoop);
-
 }
 
 
@@ -22,7 +21,7 @@ void MainWindow::initView() {
 
     gameModel = new GameModel();
     m_infoField = new InfoBoardView();
-    m_boardField = new BoardView(*gameModel->getBoardModel());
+    m_boardField = new BoardView(gameModel);
     m_gridLayout = new QGridLayout();
     m_buttonsField = new ButtonBoardView();
     m_centralWidget = new QWidget();
@@ -44,10 +43,11 @@ void MainWindow::initView() {
 }
 
 void MainWindow::startGame() {
-    gameTimer->start(16);
+    gameTimer->start(30);
     gameModel->setGameControl(GameModel::STAR_PAUSE_GAME);
     qDebug() << "State:" << gameModel->getStateGame() << ", Control:" << gameModel->getGameControl();
     connect(m_buttonsField->getStopBtn(), &QPushButton::clicked, gameTimer, &QTimer::stop);
+
 }
 
 void MainWindow::gameLoop() {
@@ -57,7 +57,7 @@ void MainWindow::gameLoop() {
         close();
     // Обновляем состояние игры
     gameModel->stateMachine();
-
+    m_boardField->repaint();
     // Логирование состояния игры и управления (опционально)
     qDebug() << "State:" << state << ", Control:" << gameModel->getGameControl();
 }
@@ -107,6 +107,33 @@ void MainWindow::keyPressEvent(QKeyEvent *e) {
         case Qt::Key_Escape:
             gameModel->setGameControl(GameModel::EXIT_GAME);
             qDebug() << "Pressed Stop. GameControl: "  << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
+    }
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *e) {
+    switch(e->key())
+    {
+        case Qt::Key_Return:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
+        case Qt::Key_A:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
+        case Qt::Key_D:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
+        case Qt::Key_R:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
+        case Qt::Key_S:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
+        case Qt::Key_G:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
+        case Qt::Key_Escape:
+            gameModel->setGameControl(GameModel::NOSIG);
             break;
     }
 }

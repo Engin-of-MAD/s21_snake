@@ -13,17 +13,16 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QKeyEvent>
-#include "../../models/gameModel.h"
+#include "../../models/inc/gameModel.h"
 class BoardView : public QWidget {
     Q_OBJECT
-    BoardModel* gameBoard;
     GameModel* gameModel;
     int m_width;
     int m_height;
 public:
     BoardView();
     explicit BoardView(int width, int height);
-    BoardView(BoardModel& model);
+    BoardView(GameModel* model);
 
 protected:
     void border(QPainter* painter);
