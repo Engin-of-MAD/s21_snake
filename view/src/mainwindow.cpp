@@ -1,4 +1,4 @@
-#include "inc/mainwindow.h"
+#include "../inc/mainwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -64,17 +64,17 @@ void MainWindow::gameLoop() {
 
 MainWindow::~MainWindow()
 {
-    delete m_menuBar;
-    delete gameModel;
-    delete m_tetrisGame;
-    delete m_snakeGame;
-    delete m_gameMenu;
-
-    delete m_boardField;
-    delete m_buttonsField;
-    delete m_infoField;
-    delete m_gridLayout;
-    delete m_centralWidget;
+//    delete m_menuBar;
+//    delete gameModel;
+//    delete m_tetrisGame;
+//    delete m_snakeGame;
+//    delete m_gameMenu;
+//
+//    delete m_boardField;
+//    delete m_buttonsField;
+//    delete m_infoField;
+//    delete m_gridLayout;
+//    delete m_centralWidget;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e) {

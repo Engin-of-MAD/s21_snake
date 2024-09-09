@@ -1,4 +1,4 @@
-#include "inc/boardview.h"
+#include "../inc/boardview.h"
 #include <iostream>
 #include <QPair>
 
