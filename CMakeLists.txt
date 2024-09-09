@@ -14,16 +14,16 @@ find_package(Qt6 COMPONENTS
 
 add_executable(untitled2
         view/inc/boardview.h
-        view/boardview.cpp
+        view/src/boardview.cpp
         view/inc/mainwindow.h
-        view/mainwindow.cpp
+        view/src/mainwindow.cpp
         models/src/main.cpp
         models/inc/gameModel.h
         models/src/gameModel.cpp
         models/src/boardModel.cpp
         models/inc/boardModel.h
-        models/src/TetraminoFactory.cpp
-        models/inc/TetraminoFactory.h
+        models/src/TetrominoFactory.cpp
+        models/inc/TetrominoFactory.h
         models/src/Timer.cpp
         models/inc/Timer.h
 )
@@ -33,4 +33,4 @@ target_link_libraries(untitled2
         Qt::Widgets
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
