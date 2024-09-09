@@ -38,9 +38,6 @@ QRect BoardView::normalizeCords(int x, int y) {
 
 
     QRect pixel(x1, y1, sizeItem, sizeItem);
-/*    qDebug() << x << y;
-    qDebug() << "(" << x1 << "," << y1 << ')';
-    qDebug() << pixel.size();*/
     return pixel;
 }
 
@@ -65,6 +62,7 @@ void BoardView::drawBoardModel(QPainter *painter) {
     BoardModel buffer(gameBoard.width(), gameBoard.height());
     Tetromino current = gameModel->getCurrentTetromino();
     Tetromino next = gameModel->getNextTetromino();
+
     for (int i = 0; i < current.getWidth(); i++) {
         for (int j = 0; j < current.getWidth(); j++) {
             if (current[i][j])
@@ -72,14 +70,14 @@ void BoardView::drawBoardModel(QPainter *painter) {
         }
     }
 
-
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0, item = 0; j < m_width; ++j) {
             drawPixel(painter, j, i, gameBoard[i][j] + buffer[i][j] ? 1 : 0);
         }
     }
-    qDebug() << static_cast<char>(current.getName());
-    buffer.printInConsole();
+
+//    qDebug() << static_cast<char>(current.getName());
+//    buffer.printInConsole();
 }
 
 void BoardView::paintEvent(QPaintEvent *e) {
@@ -90,8 +88,6 @@ void BoardView::paintEvent(QPaintEvent *e) {
     border(&p);
     drawGrid(&p);
     drawBoardModel(&p);
-
-
     p.end();
 }
 
@@ -122,7 +118,6 @@ InfoBoardView::InfoBoardView() {
     m_gridLayout->addWidget(m_lcdBestScore, 1, 1);
     m_gridLayout->addWidget(m_nextShapeLabel, 2, 0);
     m_gridLayout->addWidget(m_nextShape, 2, 1);
-
     m_nextShape->hide();
     m_nextShapeLabel->hide();
 
