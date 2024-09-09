@@ -9,9 +9,9 @@
 #include <sys/time.h>
 #include <memory>
 
-
+#include "Timer.h"
 #include "boardModel.h"
-#include "TetraminoFactory.h"
+#include "TetrominoFactory.h"
 
 class GameModel {
 public:
@@ -38,18 +38,13 @@ private:
     Tetromino* m_nextShape;
 
     int score;
-    struct timeval before_now, now; // time points
     gameControl input;
     stateGame state;
-    suseconds_t timer;
 
     bool checkPos(Tetromino* shape);
     bool genRandomShape(Tetromino* shape);
-
-    bool delay();
-    suseconds_t getMicroSeconds(struct timeval timeDiff);
     void userAction(gameControl g_input);
-    void updateScore();
+    void removeFullRowsAndUpdateScore();
     void start_action();
 };
 

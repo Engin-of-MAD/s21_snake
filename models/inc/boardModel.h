@@ -5,7 +5,7 @@
 
 #ifndef BOARDMODEL_H
 #define BOARDMODEL_H
-#include "TetraminoFactory.h"
+#include "TetrominoFactory.h"
 #include <iostream>
 
 class BoardModel {
@@ -20,7 +20,9 @@ public:
     int height() const;
     void printInConsole() const;
     void setShapeOnBoard(Tetromino& shape);
-    void clearFullRows(int sum);
+    bool isRowFull(int rowI);
+    void shiftDownRows(int rowI);
+    void clearRow(int rowI);
     int* operator [](int index);
     int& operator ()(int row, int col);
     void testData1();

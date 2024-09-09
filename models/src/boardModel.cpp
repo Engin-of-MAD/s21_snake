@@ -17,9 +17,8 @@ BoardModel::BoardModel(int width, int height)
     for (int i = 0; i < m_height; ++i)
         for (int j = 0; j < m_width; ++j)
             m_gameField[i][j] = 0;
-
-
 }
+
 BoardModel::BoardModel(BoardModel &other): BoardModel(other.m_width, other.m_height)
 {
     for (int i = 0; i < other.m_height; ++i) {
@@ -50,21 +49,9 @@ void BoardModel::setShapeOnBoard(Tetromino& shape) {
                 m_gameField[shape.getCordY() + i][shape.getCordX() + j] = shape[i][j];
         }
     }
-//    testData1();
-//    printInConsole();
 }
 
-void BoardModel::clearFullRows(int sum) {
-    int r = 0;
-    for (r = 0; r >= 1; --r) {
-        for (int j = 0; j < m_width; ++j) {
-            m_gameField[r][j] = m_gameField[r - 1][j];
-        }
-    }
-    for (int c = 0; c < m_width; ++c) {
-        m_gameField[r][c] = 0;
-    }
-}
+
 
 void BoardModel::printInConsole() const {
     for (int i = 0; i < m_height; ++i) {
@@ -89,3 +76,27 @@ void BoardModel::testData1() {
     }
 }
 
+bool BoardModel::isRowFull(int rowI) {
+    int sum = 0;
+    for (int colI = 0; colI < m_width; ++colI)
+        sum += m_gameField[rowI][colI];
+    if (sum == m_width) {
+        return true;
+    }
+    return false;
+}
+
+void BoardModel::shiftDownRows(int rowI) {
+    std::cout << rowI << std::endl;
+    for (int shiftRowI = rowI; shiftRowI >= 1 ; --shiftRowI) {
+        for (int colI = 0; colI < m_width; ++colI) {
+            m_gameField[shiftRowI][colI] = m_gameField[shiftRowI - 1][colI];
+        }
+    }
+}
+
+void BoardModel::clearRow(int rowI) {
+    for (int colI = 0; colI < m_width; ++colI) {
+        m_gameField[rowI][colI] = 0;
+    }
+}

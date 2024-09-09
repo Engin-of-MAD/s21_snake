@@ -2,7 +2,7 @@
 // Created by roach on 29.08.2024.
 //
 
-#include "../inc/TetraminoFactory.h"
+#include "../inc/TetrominoFactory.h"
 
 
 

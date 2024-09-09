@@ -2,48 +2,18 @@
 #include <QtCore>
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
-    , score(0) , timer(1000000), state(START)
+    , score(0), state(START)
     , m_currShape(new Tetromino()), m_nextShape(new Tetromino()){}
 
-
-// getting microseconds for all time
-suseconds_t GameModel::getMicroSeconds(struct timeval timeDiff) {
-    suseconds_t microSeconds = timeDiff.tv_sec * 1000000 + timeDiff.tv_usec;
-    return microSeconds;
-}
-
-
-bool GameModel::delay() {
-    return (getMicroSeconds(now) -
-            getMicroSeconds(before_now)) > timer;
-}
-
-void GameModel::updateScore() {
-    int sum, count = 0;
-    for (int i = 0; i < m_gBoard->width(); ++i) {
-        if (sum == m_gBoard->width()) {
-            count++;
-            m_gBoard->clearFullRows(sum);
-        }
-        for (int j = 0; j < m_gBoard->width(); ++j) {
-            sum += (*m_gBoard)[i][j];
-        }
-    }
-    score += 100;
-}
-
 void GameModel::userAction(gameControl g_input) {
-
     Tetromino temp(*m_currShape);
-    std::cout << char(temp.getName()) << " " << m_currShape << std::endl;
     switch (g_input) {
         case MOVE_DOWN:
             temp.increaseCordY();
             if (checkPos(&temp)) m_currShape->increaseCordY();
-
             else {
                 m_gBoard->setShapeOnBoard(*m_currShape);
-                updateScore();
+                removeFullRowsAndUpdateScore();
                 state = SPAWN;
             }
             break;
@@ -89,13 +59,10 @@ void GameModel::stateMachine() {
             state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
-            if (NOSIG != input) {
-                userAction(input);
-            }
 
+            userAction(input);
 
-            userAction(MOVE_DOWN);
-
+//            userAction(MOVE_DOWN);
             break;
     }
 }
@@ -113,7 +80,7 @@ bool GameModel::checkPos(Tetromino* shape) {
     for (int i = 0; i < shape->getWidth(); i++) {
         for (int j = 0; j < shape->getWidth(); j++) {
             int col = shape->getCordX() + j;
-            int row = shape->getCordY() + j;
+            int row = shape->getCordY() + i;
             int width = m_gBoard->width();
             int height = m_gBoard->height();
             bool checkShape = (*shape)[i][j];
@@ -137,4 +104,16 @@ Tetromino GameModel::getCurrentTetromino() {
 
 Tetromino GameModel::getNextTetromino() {
     return *m_nextShape;
+}
+
+void GameModel::removeFullRowsAndUpdateScore() {
+    int removedRowsCount = 0, sum = 0;
+    for (int rowI = 0; rowI < m_gBoard->height(); ++rowI) {
+        if (m_gBoard->isRowFull(rowI)) {
+            m_gBoard->clearRow(rowI);
+            m_gBoard->shiftDownRows(rowI);
+        }
+    }
+    score += 100 * removedRowsCount;
+    std::cout << score << std::endl;
 }
