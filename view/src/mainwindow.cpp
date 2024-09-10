@@ -1,6 +1,5 @@
 #include "../inc/mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     gameTimer = new QTimer(this);
@@ -14,11 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(gameTimer, &QTimer::timeout, this, &MainWindow::gameLoop);
 }
 
-
-
-
 void MainWindow::initView() {
-
     gameModel = new GameModel();
     m_infoField = new InfoBoardView();
     m_boardField = new BoardView(gameModel);
@@ -63,19 +58,7 @@ void MainWindow::gameLoop() {
 }
 
 MainWindow::~MainWindow()
-{
-//    delete m_menuBar;
-//    delete gameModel;
-//    delete m_tetrisGame;
-//    delete m_snakeGame;
-//    delete m_gameMenu;
-//
-//    delete m_boardField;
-//    delete m_buttonsField;
-//    delete m_infoField;
-//    delete m_gridLayout;
-//    delete m_centralWidget;
-}
+{}
 
 void MainWindow::keyPressEvent(QKeyEvent *e) {
     switch(e->key())
