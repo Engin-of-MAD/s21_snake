@@ -1,9 +1,12 @@
 #include "../inc/gameModel.h"
-#include <QtCore>
+// models/src/gameModel.cpp
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
     , score(0), state(START)
-    , m_currShape(new Tetromino()), m_nextShape(new Tetromino()){}
+    , m_currShape(new Tetromino()), m_nextShape(new Tetromino()), timer(new Timer<GameModel>){
+    timer->setMethodInstance(this, &GameModel::userAction);
+
+}
 
 void GameModel::userAction(gameControl g_input) {
     Tetromino temp(*m_currShape);
@@ -41,7 +44,6 @@ void GameModel::userAction(gameControl g_input) {
             state = EXIT_STATE;
             break;
     }
-
 }
 
 void GameModel::start_action() {

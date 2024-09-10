@@ -4,14 +4,10 @@
 
 #ifndef BRICKGAME_GAMEOBJ_H
 #define BRICKGAME_GAMEOBJ_H
-
-#include <ctime>
-#include <sys/time.h>
-#include <memory>
-
-#include "Timer.h"
+// models/inc/gameModel.h
 #include "boardModel.h"
 #include "TetrominoFactory.h"
+#include "Timer.h"
 
 class GameModel {
 public:
@@ -36,7 +32,7 @@ private:
     BoardModel* m_gBoard;
     Tetromino* m_currShape;
     Tetromino* m_nextShape;
-
+    Timer<GameModel>* timer;
     int score;
     gameControl input;
     stateGame state;
@@ -47,7 +43,5 @@ private:
     void removeFullRowsAndUpdateScore();
     void start_action();
 };
-
-
 
 #endif //BRICKGAME_GAMEOBJ_H
