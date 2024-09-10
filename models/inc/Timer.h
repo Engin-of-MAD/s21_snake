@@ -6,16 +6,18 @@
 #define TIMER_H
 #include <chrono>
 #include <functional>
-#include <exception>
-template<typename T>
+#include <stdexcept>
+#include <iostream>
+// models/inc/Timer.h
+template<typename T, typename... Args>
 class Timer {
     using Model = T;
     bool isRunning;
     int milliseconds; // milliseconds;
     Model* obj;
-    std::function<void(Model*)> methodPtr;         // должен храниться указатель на метод класса
+    std::tuple<Args...> methodArguments;
+    std::function<void(Model*, Args...)> methodPtr;         // должен храниться указатель на метод класса
     void delay();
-
 public:
     Timer();
     ~Timer() = default;
@@ -23,6 +25,10 @@ public:
     void stop();
     void run();
     void setDelay(int milliseconds);
-    void setMethodInstance(Model* instance, Model* (*func)(Model*));
+
+    template<typename Func>
+    void setMethodInstance(Model* instance, Func func,Args... args);
+    void setMethodArguments(Args... args);
 };
+
 #endif //TIMER_H
