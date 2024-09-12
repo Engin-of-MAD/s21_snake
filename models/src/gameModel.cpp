@@ -124,6 +124,13 @@ void GameModel::removeFullRowsAndUpdateScore() {
         }
     }
     score += 100 * removedRowsCount;
-    std::cout << score << std::endl;
+    bestScore = score > bestScore? score : bestScore;
+    std::cout << "Score: "<< score << ", BestScore: " << bestScore << std::endl;
+}
+
+int GameModel::getScore() { return score; }
+
+int GameModel::getBestScore() {
+    return bestScore;
 }
 

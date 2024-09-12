@@ -31,6 +31,8 @@ public:
     void setGameControl(gameControl control);
     gameControl getGameControl();
     stateGame getStateGame();
+    int getScore();
+    int getBestScore();
     void stateMachine();
 private:
     BoardModel* m_gBoard;
@@ -38,7 +40,7 @@ private:
     Tetromino* m_nextShape;
     Timer* timerDown;
     Timer* timerControl;
-    int score;
+    int score, bestScore;
     gameControl input;
     stateGame state;
     bool checkPos(Tetromino* shape);
