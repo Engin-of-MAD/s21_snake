@@ -2,7 +2,7 @@
 // models/src/gameModel.cpp
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
-    , score(0), state(START)
+    , score(0), bestScore(0), state(START)
     , m_currShape(new Tetromino()), m_nextShape(new Tetromino())
     , timerDown(new Timer()), timerControl(new Timer()){}
 
@@ -121,16 +121,14 @@ void GameModel::removeFullRowsAndUpdateScore() {
         if (m_gBoard->isRowFull(rowI)) {
             m_gBoard->clearRow(rowI);
             m_gBoard->shiftDownRows(rowI);
+            removedRowsCount++;
         }
     }
     score += 100 * removedRowsCount;
-    bestScore = score > bestScore? score : bestScore;
+    bestScore = score > bestScore ? score : bestScore;
     std::cout << "Score: "<< score << ", BestScore: " << bestScore << std::endl;
 }
 
 int GameModel::getScore() { return score; }
-
-int GameModel::getBestScore() {
-    return bestScore;
-}
+int GameModel::getBestScore() { return bestScore; }
 

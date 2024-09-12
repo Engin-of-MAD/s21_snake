@@ -16,9 +16,9 @@ class Timer {
 public:
     Timer();
     ~Timer() = default;
-    bool delay(Milliseconds timer);
-    void setCurrentTime(Clock::time_point timePoint);
-    void setLastUpdateTime(Clock::time_point timePoint);
+    bool delay(Milliseconds&& timer);
+    void setCurrentTime(Clock::time_point&& timePoint);
+    void setLastUpdateTime(Clock::time_point&& timePoint);
 };
 
 
