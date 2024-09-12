@@ -111,7 +111,6 @@ InfoBoardView::InfoBoardView() {
     m_lcdBestScore = new QLCDNumber();
     m_nextShape = new BoardView(4, 4);
 
-
     m_gridLayout->addWidget(m_score, 0, 0);
     m_gridLayout->addWidget(m_bestScore, 1, 0);
     m_gridLayout->addWidget(m_lcdScore, 0, 1);
@@ -141,6 +140,13 @@ void InfoBoardView::paintEvent(QPaintEvent *e) {
     p.begin(this);
     p.drawRect(0, 0, width() - 1, height() - 1);
     p.end();
+}
+
+void InfoBoardView::setScore(int score, int bestScore) {
+    if (score && bestScore) {
+        m_lcdScore->display(score);
+        m_lcdBestScore->display(bestScore);
+    }
 }
 
 ButtonBoardView::ButtonBoardView() {

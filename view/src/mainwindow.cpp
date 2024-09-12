@@ -53,6 +53,7 @@ void MainWindow::gameLoop() {
     // Обновляем состояние игры
     gameModel->stateMachine();
     m_boardField->repaint();
+    m_infoField->setScore(gameModel->getScore(), gameModel->getBestScore());
     // Логирование состояния игры и управления (опционально)
     qDebug() << "State:" << state << ", Control:" << gameModel->getGameControl();
 }

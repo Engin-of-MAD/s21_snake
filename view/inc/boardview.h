@@ -45,6 +45,7 @@ class InfoBoardView : public QWidget {
     BoardView* m_nextShape;
 public:
     InfoBoardView();
+    void setScore(int score, int bestScore);
 public slots:
     void snakeMod();
     void tetrisMod();
