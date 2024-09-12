@@ -3,10 +3,8 @@
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
     , score(0), state(START)
-    , m_currShape(new Tetromino()), m_nextShape(new Tetromino()), timer(new Timer<GameModel>){
-    timer->setMethodInstance(this, &GameModel::userAction);
-
-}
+    , m_currShape(new Tetromino()), m_nextShape(new Tetromino())
+    , timerDown(new Timer()), timerControl(new Timer()){}
 
 void GameModel::userAction(gameControl g_input) {
     Tetromino temp(*m_currShape);
@@ -61,10 +59,19 @@ void GameModel::stateMachine() {
             state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
+            timerControl->setCurrentTime(Clock::now());
+            if (input) {
+                if (timerControl->delay(milliseconds{100})) {
+                    userAction(input);
+                    timerControl->setLastUpdateTime(Clock::now());
+                }
+            }
 
-            userAction(input);
-
-//            userAction(MOVE_DOWN);
+            timerDown->setCurrentTime(Clock::now());
+            if (timerDown->delay(milliseconds{250})){
+                userAction(MOVE_DOWN);
+                timerDown->setLastUpdateTime(Clock::now());
+            }
             break;
     }
 }
@@ -109,7 +116,7 @@ Tetromino GameModel::getNextTetromino() {
 }
 
 void GameModel::removeFullRowsAndUpdateScore() {
-    int removedRowsCount = 0, sum = 0;
+    int removedRowsCount = 0;
     for (int rowI = 0; rowI < m_gBoard->height(); ++rowI) {
         if (m_gBoard->isRowFull(rowI)) {
             m_gBoard->clearRow(rowI);
@@ -119,3 +126,4 @@ void GameModel::removeFullRowsAndUpdateScore() {
     score += 100 * removedRowsCount;
     std::cout << score << std::endl;
 }
+
