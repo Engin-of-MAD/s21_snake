@@ -26,6 +26,7 @@ add_executable(untitled2
         models/inc/TetrominoFactory.h
         models/src/Timer.cpp
         models/inc/Timer.h
+        tests/tests.cpp
 )
 target_link_libraries(untitled2
         Qt::Core
