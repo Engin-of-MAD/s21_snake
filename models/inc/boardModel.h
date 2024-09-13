@@ -11,6 +11,9 @@
 class BoardModel {
     int** m_gameField;
     int m_width, m_height;
+    int** copyGameField(int** board, int** otherBoard, int width, int height);
+    int** newBoard(int** board, int width, int height);
+    void delBoard(int** board, int width, int height);
 public:
     BoardModel();
     explicit BoardModel(int width = 1, int height = 1);
@@ -25,6 +28,7 @@ public:
     void clearRow(int rowI);
     int* operator [](int index);
     int& operator ()(int row, int col);
+    BoardModel& operator = (const BoardModel& other);
     void testData1();
 };
 #endif //BOARDMODEL_H

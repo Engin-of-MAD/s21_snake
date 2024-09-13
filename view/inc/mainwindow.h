@@ -17,17 +17,17 @@ class MainWindow : public QMainWindow
     ButtonBoardView* m_buttonsField;
     QGridLayout* m_gridLayout;
     QWidget* m_centralWidget;
-    QMenuBar* m_menuBar;
-    QMenu* m_gameMenu;
-    QAction* m_snakeGame;
-    QAction* m_tetrisGame;
+//    QMenuBar* m_menuBar;
+//    QMenu* m_gameMenu;
+//    QAction* m_snakeGame;
+//    QAction* m_tetrisGame;
     GameModel* gameModel;
     QTimer* gameTimer;
 
     void initView();
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr) ;
     ~MainWindow() override;
 protected:
     void keyPressEvent(QKeyEvent* e) override;

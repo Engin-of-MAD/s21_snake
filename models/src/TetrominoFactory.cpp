@@ -4,8 +4,6 @@
 
 #include "../inc/TetrominoFactory.h"
 
-
-
 Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix2x2& shape, int cordX, int cordY)
         : m_name(shapeType), m_width(2)
         , m_shape(new int* [m_width])
@@ -26,8 +24,8 @@ Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix3x3& shape, i
     }
 }
 Tetromino::Tetromino()
-    : m_width(3), m_cordX(0)
-    , m_cordY(0), m_shape(new int * [m_width]), m_name()
+    : m_width(4), m_cordX(0)
+    , m_cordY(0), m_shape(new int * [m_width]), m_name(ShapesTypes::E)
 {
     for (int i = 0; i < m_width; ++i) {
         m_shape[i] = new int[m_width];
@@ -48,14 +46,12 @@ Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix4x4& shape, i
 }
 
 Tetromino::Tetromino(Tetromino &other)
-    : m_cordX(other.m_cordX), m_cordY(other.m_cordY)
-    , m_name(other.m_name) {
-    m_width = other.m_width;
-    m_shape = createMatrix(m_shape,m_width);
+    : m_cordX(other.m_cordX), m_cordY(other.m_cordY), m_width(other.m_width)
+    , m_name(other.m_name), m_shape(createMatrix(nullptr,m_width)){
     fillMatrix(m_shape, other.m_shape, m_width);
 }
 
-Tetromino::Tetromino(Tetromino &&other)
+Tetromino::Tetromino(Tetromino &&other) noexcept
 : m_name(other.m_name), m_width(other.m_width)
 , m_cordX(other.m_cordX), m_cordY(other.m_cordY), m_shape(other.m_shape)
 {other.m_shape = nullptr;}
@@ -83,12 +79,16 @@ int Tetromino::getCordY() {return m_cordY;}
 int Tetromino::getWidth() {return m_width;}
 Tetromino::ShapesTypes Tetromino::getName() { return m_name; }
 void Tetromino::printInConsole() {
+    std::cout << "################################" << std::endl;
+    std::cout << "Pointer Tetromino: " << this << std::endl;
+    std::cout << static_cast<char>(m_name) << " " << std::endl;
     for (int i = 0; i < m_width; ++i) {
         for (int j = 0; j < m_width; ++j) {
             std::cout << m_shape[i][j] << " ";
         }
         std::cout << std::endl;
     }
+    std::cout << "################################" << std::endl;
 }
 
 int *Tetromino::operator[](int index) {
@@ -97,7 +97,6 @@ int *Tetromino::operator[](int index) {
 
 Tetromino &Tetromino::operator=(const Tetromino &other) {
     if (this == &other) return *this;
-
     delMatrix(m_shape, m_width);
     m_width = other.m_width;
     m_cordX = other.m_cordX;
@@ -112,6 +111,7 @@ Tetromino &Tetromino::operator=(const Tetromino &other) {
 
 Tetromino &Tetromino::operator=(Tetromino &&other) noexcept {
     if (&other != this) {
+        delMatrix(m_shape, m_width);
         m_width = other.m_width;
         m_cordX = other.m_cordX;
         m_cordY = other.m_cordY;
@@ -136,7 +136,6 @@ void Tetromino::delMatrix(int **shape, int width) {
             delete[] shape[i];
         }
         delete[] shape;
-        shape = nullptr;
     }
 }
 
@@ -155,9 +154,6 @@ void Tetromino::rotate() {
             m_shape[i][j] = tmpShape[k][i];
     }
 }
-
-
-
 
 Tetromino TetrominoFactory::createTetromino(Tetromino::ShapesTypes type) {
     switch (type) {

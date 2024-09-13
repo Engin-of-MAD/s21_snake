@@ -21,8 +21,10 @@ class BoardView : public QWidget {
     int m_height;
 public:
     BoardView();
+    BoardView(const BoardView& other);
     explicit BoardView(int width, int height);
-    BoardView(GameModel* model);
+    explicit BoardView(GameModel* model);
+
 
 protected:
     void border(QPainter* painter);
@@ -34,6 +36,16 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 };
 
+class NextShapeView : public BoardView{
+    using ShapesTypes = Tetromino::ShapesTypes;
+public:
+    NextShapeView();
+    Tetromino m_nextShape;
+    void setNextShape(Tetromino nextShape);
+    void centralShape(int ShapeField[5][5]);
+    void drawNextShape(QPainter* painter);
+    void paintEvent(QPaintEvent* e) override;
+};
 class InfoBoardView : public QWidget {
     Q_OBJECT
     QGridLayout* m_gridLayout;
@@ -42,13 +54,12 @@ class InfoBoardView : public QWidget {
     QLabel* m_nextShapeLabel;
     QLCDNumber* m_lcdScore;
     QLCDNumber* m_lcdBestScore;
-    BoardView* m_nextShape;
+    NextShapeView* m_nextShape;
 public:
     InfoBoardView();
+    ~InfoBoardView() override;
     void setScore(int score, int bestScore);
-public slots:
-    void snakeMod();
-    void tetrisMod();
+    NextShapeView* getNextShapeView();
 protected:
     void paintEvent(QPaintEvent* e) override;
 };
@@ -60,9 +71,9 @@ class ButtonBoardView : public QWidget {
     QPushButton* m_startBtn;
     QPushButton* m_pauseBtn;
     QPushButton* m_stopBtn;
-
 public:
     ButtonBoardView();
+    ~ButtonBoardView() override;
     QPushButton* getStartBtn();
     QPushButton* getPauseBtn();
     QPushButton* getStopBtn();

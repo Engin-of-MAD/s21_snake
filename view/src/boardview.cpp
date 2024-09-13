@@ -1,13 +1,14 @@
 #include "../inc/boardview.h"
-#include <iostream>
+
 #include <QPair>
+#include <utility>
 
 const int sizeCell = 21;
 const int sizeItem = sizeCell - 4;
 
 BoardView::BoardView() : BoardView(10, 20) {}
 
-BoardView::BoardView(int width, int height) : m_width(width), m_height(height) {
+BoardView::BoardView(int width, int height) : m_width(width), m_height(height), gameModel(nullptr) {
     setFixedSize(m_width * sizeCell, m_height * sizeCell);
 }
 
@@ -71,13 +72,10 @@ void BoardView::drawBoardModel(QPainter *painter) {
     }
 
     for (int i = 0; i < m_height; ++i) {
-        for (int j = 0, item = 0; j < m_width; ++j) {
+        for (int j = 0; j < m_width; ++j) {
             drawPixel(painter, j, i, gameBoard[i][j] + buffer[i][j] ? 1 : 0);
         }
     }
-
-//    qDebug() << static_cast<char>(current.getName());
-//    buffer.printInConsole();
 }
 
 void BoardView::paintEvent(QPaintEvent *e) {
@@ -99,6 +97,73 @@ void BoardView::keyPressEvent(QKeyEvent *event) {
     }
 }
 
+BoardView::BoardView(const BoardView &other) {
+    gameModel = other.gameModel;
+    m_width = other.m_width;
+    m_height = other.m_height;
+}
+
+NextShapeView::NextShapeView() : BoardView(5, 5) {}
+void NextShapeView::setNextShape(Tetromino nextShape) {
+    m_nextShape = std::move(nextShape);
+}
+
+void NextShapeView::centralShape(int ShapeField[5][5]) {
+    m_nextShape.printInConsole();
+    for (int i = 0; i < m_nextShape.getWidth(); ++i) {
+        for (int j = 0; j < m_nextShape.getWidth(); ++j) {
+            switch (m_nextShape.getName()) {
+                case ShapesTypes::I :
+                    ShapeField[i][j] = m_nextShape[i][j];
+                    break;
+                case ShapesTypes::O :
+                    ShapeField[i + 1][j + 2] = m_nextShape[i][j];
+                    break;
+                case ShapesTypes::S :
+                    ShapeField[i + 1][j + 1] = m_nextShape[i][j];
+                    break;
+                case ShapesTypes::Z :
+                    ShapeField[i + 1][j + 1] = m_nextShape[i][j];
+                    break;
+                case ShapesTypes::L :
+                    ShapeField[i + 1][j + 1] = m_nextShape[i][j];
+                    break;
+                case ShapesTypes::J :
+                    ShapeField[i + 1][j + 1] = m_nextShape[i][j];
+                    break;
+                case ShapesTypes::T :
+                    ShapeField[i + 1][j + 1] = m_nextShape[i][j];
+                    break;
+            }
+        }
+    }
+}
+
+void NextShapeView::drawNextShape(QPainter* painter) {
+    m_nextShape.printInConsole();
+    if (ShapesTypes::I == m_nextShape.getName()
+        || ShapesTypes::Z == m_nextShape.getName() ||
+        ShapesTypes::S == m_nextShape.getName()) {
+        m_nextShape.rotate();
+    }
+    int ShapeField[5][5] = {0};
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            centralShape(ShapeField);
+            drawPixel(painter, i, j, ShapeField[i][j]);
+        }
+    }
+}
+
+void NextShapeView::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e)
+    QPainter painter;
+    painter.begin(this);
+    drawGrid(&painter);
+    drawNextShape(&painter);
+    painter.end();
+}
+
 
 InfoBoardView::InfoBoardView() {
     setFixedSize(200, 196);
@@ -109,7 +174,7 @@ InfoBoardView::InfoBoardView() {
 
     m_lcdScore = new QLCDNumber();
     m_lcdBestScore = new QLCDNumber();
-    m_nextShape = new BoardView(4, 4);
+    m_nextShape = new NextShapeView();
 
     m_gridLayout->addWidget(m_score, 0, 0);
     m_gridLayout->addWidget(m_bestScore, 1, 0);
@@ -117,21 +182,12 @@ InfoBoardView::InfoBoardView() {
     m_gridLayout->addWidget(m_lcdBestScore, 1, 1);
     m_gridLayout->addWidget(m_nextShapeLabel, 2, 0);
     m_gridLayout->addWidget(m_nextShape, 2, 1);
-    m_nextShape->hide();
-    m_nextShapeLabel->hide();
+
 
     setLayout(m_gridLayout);
 }
 
-void InfoBoardView::snakeMod() {
-    m_nextShape->hide();
-    m_nextShapeLabel->hide();
-}
 
-void InfoBoardView::tetrisMod() {
-    m_nextShape->show();
-    m_nextShapeLabel->show();
-}
 
 
 void InfoBoardView::paintEvent(QPaintEvent *e) {
@@ -147,6 +203,21 @@ void InfoBoardView::setScore(int score, int bestScore) {
         m_lcdScore->display(score);
         m_lcdBestScore->display(bestScore);
     }
+}
+
+InfoBoardView::~InfoBoardView() {
+    delete m_gridLayout;
+    delete m_score;
+    delete m_bestScore;
+    delete m_nextShapeLabel;
+    delete m_lcdScore;
+    delete m_lcdBestScore;
+    delete m_nextShape;
+}
+
+
+NextShapeView* InfoBoardView::getNextShapeView() {
+    return m_nextShape;
 }
 
 ButtonBoardView::ButtonBoardView() {
@@ -166,7 +237,7 @@ ButtonBoardView::ButtonBoardView() {
 }
 
 void ButtonBoardView::paintEvent(QPaintEvent *e) {
-    Q_UNUSED(e);
+    Q_UNUSED(e)
     QPainter p;
     p.begin(this);
     p.drawRect(0, 0, width() - 1, height() - 1);
@@ -174,9 +245,12 @@ void ButtonBoardView::paintEvent(QPaintEvent *e) {
 }
 
 QPushButton *ButtonBoardView::getStartBtn() { return m_startBtn; }
-
 QPushButton *ButtonBoardView::getPauseBtn() { return m_pauseBtn; }
-
 QPushButton *ButtonBoardView::getStopBtn() { return m_stopBtn; }
 
-
+ButtonBoardView::~ButtonBoardView() {
+    delete m_lineLayout;
+    delete m_startBtn;
+    delete m_pauseBtn;
+    delete m_stopBtn;
+}

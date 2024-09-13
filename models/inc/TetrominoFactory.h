@@ -16,13 +16,13 @@ using Matrix2x2 = std::array<std::array<int, 2>, 2>;
 class Tetromino{
 
 public:
-    enum class ShapesTypes : char { Z = 'Z', S = 'S', T = 'T', L = 'L', J = 'J', O = 'O', I = 'I', };
+    enum class ShapesTypes : char { Z = 'Z', S = 'S', T = 'T', L = 'L', J = 'J', O = 'O', I = 'I', E = '-' };
     Tetromino();
     Tetromino(ShapesTypes shapeType, const Matrix4x4& shape, int cordX = 0, int cordY = 0);
     Tetromino(ShapesTypes shapeType, const Matrix3x3& shape, int cordX = 0, int cordY = 0);
     Tetromino(ShapesTypes shapeType, const Matrix2x2& shape, int cordX = 0, int cordY = 0);
     Tetromino(Tetromino& other);
-    Tetromino(Tetromino&& other);
+    Tetromino(Tetromino&& other) noexcept ;
     ~Tetromino();
     void printInConsole();
     void setCordX(int cordX);

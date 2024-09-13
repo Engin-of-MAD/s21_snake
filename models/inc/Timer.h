@@ -12,7 +12,6 @@ using Clock = std::chrono::steady_clock;
 
 class Timer {
     Clock::time_point m_currentTime, m_lastUpdateTime;
-    Milliseconds m_timer;
 public:
     Timer();
     ~Timer() = default;

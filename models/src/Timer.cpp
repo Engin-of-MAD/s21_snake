@@ -4,12 +4,12 @@
 
 #include "../inc/Timer.h"
 //models/src/Timer.cpp
-Timer::Timer() : m_lastUpdateTime(Clock::now()), m_timer(0){}
+Timer::Timer() : m_lastUpdateTime(Clock::now()){}
 bool Timer::delay(Milliseconds&& timer) {
     auto elapsedTime = std::chrono::duration_cast<Milliseconds>(m_currentTime - m_lastUpdateTime);
-    std::cout << "currentTime: " << m_currentTime.time_since_epoch().count() <<
-    ", lastTimeUpdate: "  << m_lastUpdateTime.time_since_epoch().count() << std::endl;
-    std::cout << "Timer: " << this << ", delay: " << m_timer.count() << ", elapsedTime: "  << elapsedTime.count() << std::endl;
+//    std::cout << "currentTime: " << m_currentTime.time_since_epoch().count() <<
+//    ", lastTimeUpdate: "  << m_lastUpdateTime.time_since_epoch().count() << std::endl;
+//    std::cout << "Timer: " << this << ", delay: " << m_timer.count() << ", elapsedTime: "  << elapsedTime.count() << std::endl;
     return elapsedTime > timer;
 }
 

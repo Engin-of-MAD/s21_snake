@@ -25,6 +25,9 @@ public:
         ,EXIT_GAME
         ,STOP_GAME};
     GameModel();
+    GameModel(const GameModel& other);
+    GameModel& operator = (const GameModel& other);
+    ~GameModel();
     BoardModel getBoardModel();
     Tetromino getCurrentTetromino();
     Tetromino getNextTetromino();

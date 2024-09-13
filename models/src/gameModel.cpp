@@ -3,8 +3,11 @@
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
     , score(0), bestScore(0), state(START)
-    , m_currShape(new Tetromino()), m_nextShape(new Tetromino())
-    , timerDown(new Timer()), timerControl(new Timer()){}
+    , m_currShape(new Tetromino())
+    , m_nextShape(new Tetromino(TetrominoFactory::randomTetromino()))
+    , timerDown(new Timer()), timerControl(new Timer()){
+    }
+
 
 void GameModel::userAction(gameControl g_input) {
     Tetromino temp(*m_currShape);
@@ -55,7 +58,7 @@ void GameModel::stateMachine() {
             start_action();
             break;
         case SPAWN:
-            m_currShape = m_nextShape;
+            *m_currShape = *m_nextShape;
             state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
@@ -78,7 +81,7 @@ void GameModel::stateMachine() {
 
 bool GameModel::genRandomShape(Tetromino* shape) {
     bool collision = false;
-    *shape = std::move(TetrominoFactory::randomTetromino());
+    *(shape) = std::move(TetrominoFactory::randomTetromino());
     shape->setCordX(rand() % (m_gBoard->width() - shape->getWidth() + 1));
     if (!checkPos(shape))
         collision = true;
@@ -126,9 +129,45 @@ void GameModel::removeFullRowsAndUpdateScore() {
     }
     score += 100 * removedRowsCount;
     bestScore = score > bestScore ? score : bestScore;
-    std::cout << "Score: "<< score << ", BestScore: " << bestScore << std::endl;
 }
 
 int GameModel::getScore() { return score; }
 int GameModel::getBestScore() { return bestScore; }
+
+GameModel::GameModel(const GameModel &other) {
+    m_gBoard = other.m_gBoard;
+    m_currShape = other.m_currShape;
+    m_nextShape = other.m_nextShape;
+    timerControl = other.timerControl;
+    timerDown = other.timerDown;
+    input = other.input;
+    score = other.score;
+    bestScore = other.bestScore;
+    state = other.state;
+
+}
+
+GameModel &GameModel::operator=(const GameModel &other) {
+    if (this != &other) {
+        m_gBoard = other.m_gBoard;
+        m_currShape = other.m_currShape;
+        m_nextShape = other.m_nextShape;
+        timerControl = other.timerControl;
+        timerDown = other.timerDown;
+        input = other.input;
+        score = other.score;
+        bestScore = other.bestScore;
+        state = other.state;
+    }
+    return *this;
+}
+
+GameModel::~GameModel() {
+    delete m_gBoard;
+    delete m_currShape;
+    delete m_nextShape;
+    delete timerDown;
+    delete timerControl;
+}
+
 

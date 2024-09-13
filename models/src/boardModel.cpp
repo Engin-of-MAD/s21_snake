@@ -100,3 +100,44 @@ void BoardModel::clearRow(int rowI) {
         m_gameField[rowI][colI] = 0;
     }
 }
+
+BoardModel &BoardModel::operator=(const BoardModel &other) {
+    if (this ==  &other) return *this;
+    m_width = other.m_width;
+    m_height = other.m_height;
+    delBoard(m_gameField, m_width, m_height);
+    m_gameField = copyGameField(m_gameField, other.m_gameField, m_width, m_width);
+    return *this;
+}
+
+int** BoardModel::copyGameField(int **board, int** otherBoard, int width, int height) {
+    board = newBoard(board, width, height);
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            board[i][j] = otherBoard[i][j];
+        }
+    }
+    return board;
+}
+
+int **BoardModel::newBoard(int **board, int width, int height) {
+    board = new int * [height];
+    if (board)
+    for (int i = 0; i < width; ++i) {
+        board[i] = new int [width];
+    }
+    return board;
+}
+
+void BoardModel::delBoard(int **board, int width, int height) {
+    if (board) {
+        for (int i = 0; i < height; ++i)
+            delete m_gameField[i];
+        delete board;
+        board = nullptr;
+    }
+}
+
+
+
+
