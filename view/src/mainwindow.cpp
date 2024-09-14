@@ -7,8 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
     adjustSize();
     setFixedSize(size());
     setFocusPolicy(Qt::StrongFocus);
-//    connect(m_snakeGame, &QAction::triggered, m_infoField, &InfoBoardView::snakeMod);
-//    connect(m_tetrisGame, &QAction::triggered, m_infoField, &InfoBoardView::tetrisMod);
     connect(m_buttonsField->getStartBtn(), &QPushButton::clicked, this, &MainWindow::startGame);
     connect(gameTimer, &QTimer::timeout, this, &MainWindow::gameLoop);
 }
@@ -20,13 +18,6 @@ void MainWindow::initView() {
     m_gridLayout = new QGridLayout();
     m_buttonsField = new ButtonBoardView();
     m_centralWidget = new QWidget();
-
-//    m_menuBar = new QMenuBar(this);
-//    setMenuBar(m_menuBar);
-//    m_gameMenu = m_menuBar->addMenu("Games");
-//    m_snakeGame = m_gameMenu->addAction("Snake");
-//    m_tetrisGame = m_gameMenu->addAction("Tetris");
-//    m_menuBar->addMenu(m_gameMenu);
 
     m_gridLayout->addWidget(m_boardField, 0, 0, 2, 2);
     m_gridLayout->addWidget(m_infoField, 0, 2, 1, 1);
@@ -68,10 +59,6 @@ MainWindow::~MainWindow()
     delete m_buttonsField;
     delete m_gridLayout;
     delete m_centralWidget;
-//    delete m_menuBar;
-//    delete m_gameMenu;
-////    delete m_snakeGame;
-//    delete m_tetrisGame;
     delete gameModel;
     delete gameTimer;
 }
