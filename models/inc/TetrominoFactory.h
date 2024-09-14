@@ -26,16 +26,15 @@ public:
     ~Tetromino();
     void printInConsole();
     void setCordX(int cordX);
-    void setCordY(int cordY);
-    void setWidth(int width);
-    int getCordX();
-    int getCordY();
-    int getWidth();
+
+    int getCordX() const;
+    int getCordY() const;
+    int getWidth() const;
     ShapesTypes getName();
     void increaseCordX();
     void increaseCordY();
     void decreaseCordX();
-    void decreaseCordY();
+
     void rotate();
     int* operator[](int index);
     Tetromino& operator=(const Tetromino& other);
@@ -56,7 +55,6 @@ public:
     static Tetromino createTetromino(Tetromino::ShapesTypes type);
     static Tetromino randomTetromino();
     static Tetromino* createTetrominoPointer(Tetromino::ShapesTypes type);
-    static Tetromino* randomTetrominoPointer();
 
 };
 #endif //FIGUREFACTORY_H

@@ -70,13 +70,10 @@ Tetromino::~Tetromino() {
 void Tetromino::increaseCordX() {++m_cordX;}
 void Tetromino::decreaseCordX() {--m_cordX;}
 void Tetromino::increaseCordY() {++m_cordY;}
-void Tetromino::decreaseCordY() {--m_cordY;}
 void Tetromino::setCordX(int cordX) {m_cordX = cordX;}
-void Tetromino::setCordY(int cordY) {m_cordY = cordY;}
-void Tetromino::setWidth(int width) {m_width = width;}
-int Tetromino::getCordX() {return m_cordX;}
-int Tetromino::getCordY() {return m_cordY;}
-int Tetromino::getWidth() {return m_width;}
+int Tetromino::getCordX() const {return m_cordX;}
+int Tetromino::getCordY() const {return m_cordY;}
+int Tetromino::getWidth() const {return m_width;}
 Tetromino::ShapesTypes Tetromino::getName() { return m_name; }
 void Tetromino::printInConsole() {
     std::cout << "################################" << std::endl;
@@ -210,6 +207,7 @@ Tetromino *TetrominoFactory::createTetrominoPointer(Tetromino::ShapesTypes type)
     }
 }
 
+/*
 Tetromino *TetrominoFactory::randomTetrominoPointer() {
     const Tetromino::ShapesTypes shapesType[7] = {Tetromino::ShapesTypes::Z, Tetromino::ShapesTypes::S, Tetromino::ShapesTypes::T,
                                                   Tetromino::ShapesTypes::L, Tetromino::ShapesTypes::J, Tetromino::ShapesTypes::O,
@@ -219,4 +217,5 @@ Tetromino *TetrominoFactory::randomTetrominoPointer() {
     int randomIndex = dist(rnd);
     return createTetrominoPointer(shapesType[randomIndex]);
 }
+*/
 

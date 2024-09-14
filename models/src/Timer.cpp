@@ -15,5 +15,3 @@ bool Timer::delay(Milliseconds&& timer) {
 
 void Timer::setCurrentTime(Clock::time_point&& timePoint) { m_currentTime = timePoint; }
 void Timer::setLastUpdateTime(Clock::time_point&& timePoint) { m_lastUpdateTime = timePoint; }
-
-
