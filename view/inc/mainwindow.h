@@ -17,10 +17,6 @@ class MainWindow : public QMainWindow
     ButtonBoardView* m_buttonsField;
     QGridLayout* m_gridLayout;
     QWidget* m_centralWidget;
-//    QMenuBar* m_menuBar;
-//    QMenu* m_gameMenu;
-//    QAction* m_snakeGame;
-//    QAction* m_tetrisGame;
     GameModel* gameModel;
     QTimer* gameTimer;
 
@@ -35,5 +31,7 @@ protected:
 protected slots:
     void gameLoop();
     void startGame();
+    void pauseGame();
+    void stopGame();
 };
 #endif // MAINWINDOW_H

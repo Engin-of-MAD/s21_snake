@@ -36,8 +36,6 @@ void BoardView::border(QPainter *painter) {
 QRect BoardView::normalizeCords(int x, int y) {
     int x1 = x * sizeCell + 1;
     int y1 = y * sizeCell + 1;
-
-
     QRect pixel(x1, y1, sizeItem, sizeItem);
     return pixel;
 }
@@ -81,7 +79,6 @@ void BoardView::drawBoardModel(QPainter *painter) {
 void BoardView::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
     QPainter p;
-
     p.begin(this);
     border(&p);
     drawGrid(&p);
@@ -109,7 +106,7 @@ void NextShapeView::setNextShape(Tetromino nextShape) {
 }
 
 void NextShapeView::centralShape(int ShapeField[5][5]) {
-    m_nextShape.printInConsole();
+//    m_nextShape.printInConsole();
     for (int i = 0; i < m_nextShape.getWidth(); ++i) {
         for (int j = 0; j < m_nextShape.getWidth(); ++j) {
             switch (m_nextShape.getName()) {
@@ -140,7 +137,7 @@ void NextShapeView::centralShape(int ShapeField[5][5]) {
 }
 
 void NextShapeView::drawNextShape(QPainter* painter) {
-    m_nextShape.printInConsole();
+//    m_nextShape.printInConsole();
     if (ShapesTypes::I == m_nextShape.getName()
         || ShapesTypes::Z == m_nextShape.getName() ||
         ShapesTypes::S == m_nextShape.getName()) {
@@ -182,8 +179,6 @@ InfoBoardView::InfoBoardView() {
     m_gridLayout->addWidget(m_lcdBestScore, 1, 1);
     m_gridLayout->addWidget(m_nextShapeLabel, 2, 0);
     m_gridLayout->addWidget(m_nextShape, 2, 1);
-
-
     setLayout(m_gridLayout);
 }
 
@@ -254,3 +249,4 @@ ButtonBoardView::~ButtonBoardView() {
     delete m_pauseBtn;
     delete m_stopBtn;
 }
+

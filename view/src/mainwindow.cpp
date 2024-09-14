@@ -8,7 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(size());
     setFocusPolicy(Qt::StrongFocus);
     connect(m_buttonsField->getStartBtn(), &QPushButton::clicked, this, &MainWindow::startGame);
+    connect(m_buttonsField->getPauseBtn(), &QPushButton::clicked, this, &MainWindow::pauseGame);
+    connect(m_buttonsField->getStopBtn(), &QPushButton::clicked, this, &MainWindow::stopGame);
     connect(gameTimer, &QTimer::timeout, this, &MainWindow::gameLoop);
+
 }
 
 void MainWindow::initView() {
@@ -30,11 +33,31 @@ void MainWindow::initView() {
 
 void MainWindow::startGame() {
     gameTimer->start(16);
-    gameModel->setGameControl(GameModel::STAR_PAUSE_GAME);
+    gameModel->setGameControl(GameModel::STAR_GAME);
+    m_buttonsField->getStartBtn()->setEnabled(false);
+    m_buttonsField->getStopBtn()->setEnabled(true);
+    m_buttonsField->getPauseBtn()->setEnabled(true);
 //    qDebug() << "State:" << gameModel->getStateGame() << ", Control:" << gameModel->getGameControl();
     connect(m_buttonsField->getStopBtn(), &QPushButton::clicked, gameTimer, &QTimer::stop);
 
 }
+void MainWindow::pauseGame() {
+    gameModel->setGameControl(GameModel::PAUSE_GAME);
+    if (m_buttonsField->getPauseBtn()->text() == "Pause")
+        m_buttonsField->getPauseBtn()->setText("Resume");
+    else if (m_buttonsField->getPauseBtn()->text() == "Resume")
+        m_buttonsField->getPauseBtn()->setText("Pause");
+}
+
+void MainWindow::stopGame() {
+    m_buttonsField->getStartBtn()->setEnabled(true);
+    m_buttonsField->getPauseBtn()->setEnabled(false);
+    m_buttonsField->getStopBtn()->setEnabled(false);
+    gameModel->resetGame();
+
+
+}
+
 
 void MainWindow::gameLoop() {
     QTimer timer(this);
@@ -66,8 +89,12 @@ MainWindow::~MainWindow()
 void MainWindow::keyPressEvent(QKeyEvent *e) {
     switch(e->key())
     {
+        case Qt::Key_P:
+            gameModel->setGameControl(GameModel::PAUSE_GAME);
+             qDebug() << "Pressed P. GameControl: " << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
+            break;
         case Qt::Key_Return:
-            gameModel->setGameControl(GameModel::STAR_PAUSE_GAME);
+            gameModel->setGameControl(GameModel::STAR_GAME);
 //            qDebug() << "Pressed Enter. GameControl: " << gameModel->getGameControl() << ", State game: " << gameModel->getStateGame();
             break;
         case Qt::Key_A:
@@ -98,8 +125,10 @@ void MainWindow::keyPressEvent(QKeyEvent *e) {
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e) {
-    switch(e->key())
-    {
+    switch(e->key()) {
+        case Qt::Key_P:
+            gameModel->setGameControl(GameModel::NOSIG);
+            break;
         case Qt::Key_Return:
             gameModel->setGameControl(GameModel::NOSIG);
             break;
@@ -123,6 +152,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e) {
             break;
     }
 }
+
 
 
 
