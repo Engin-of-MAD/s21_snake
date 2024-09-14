@@ -21,11 +21,11 @@ public:
         ,MOVE_DOWN
         ,MOVE_RIGHT
         ,MOVE_LEFT
-        ,STAR_PAUSE_GAME
+        ,STAR_GAME
+        , PAUSE_GAME
         ,EXIT_GAME
         ,STOP_GAME};
     GameModel();
-    GameModel(const GameModel& other);
     GameModel& operator = (const GameModel& other);
     ~GameModel();
     BoardModel getBoardModel();
@@ -34,9 +34,10 @@ public:
     void setGameControl(gameControl control);
     gameControl getGameControl();
     stateGame getStateGame();
-    int getScore();
-    int getBestScore();
+    int getScore() const;
+    int getBestScore() const;
     void stateMachine();
+    void resetGame();
 private:
     BoardModel* m_gBoard;
     Tetromino* m_currShape;
@@ -51,6 +52,7 @@ private:
     void userAction(gameControl g_input);
     void removeFullRowsAndUpdateScore();
     void start_action();
+    void move_action();
 };
 
 #endif //BRICKGAME_GAMEOBJ_H

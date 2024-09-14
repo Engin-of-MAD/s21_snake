@@ -68,10 +68,10 @@ int &BoardModel::operator()(int row, int col) {
     return m_gameField[row][col];
 }
 
-void BoardModel::testData1() {
+void BoardModel::reset() {
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_gameField[i][j] = 1;
+            m_gameField[i][j] = 0;
         }
     }
 }

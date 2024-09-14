@@ -33,7 +33,7 @@ void GameModel::userAction(gameControl g_input) {
             temp.rotate();
             if (checkPos(&temp)) m_currShape->rotate();
             break;
-        case STAR_PAUSE_GAME:
+        case STAR_GAME:
             if (state == START) state = SPAWN;
             if (state == MOVING) state = PAUSE;
             if (state == PAUSE) state = MOVING;
@@ -48,8 +48,29 @@ void GameModel::userAction(gameControl g_input) {
 }
 
 void GameModel::start_action() {
-    if (input == STAR_PAUSE_GAME) state = SPAWN;
+    if (input == STAR_GAME) state = SPAWN;
     if (input == EXIT_GAME) state = EXIT_STATE;
+}
+
+void GameModel::move_action() {
+    std::cout << "Input: " << input << std::endl;
+    if (input == PAUSE_GAME) {
+        state = PAUSE;
+        input = NOSIG; // для моментального сброса состояния переменной движения
+    }
+    timerControl->setCurrentTime(Clock::now());
+    if (input) {
+        if (timerControl->delay(milliseconds{100})) {
+            userAction(input);
+            timerControl->setLastUpdateTime(Clock::now());
+        }
+    }
+    timerDown->setCurrentTime(Clock::now());
+    if (timerDown->delay(milliseconds{250})){
+        userAction(MOVE_DOWN);
+        timerDown->setLastUpdateTime(Clock::now());
+    }
+
 }
 
 void GameModel::stateMachine() {
@@ -62,18 +83,13 @@ void GameModel::stateMachine() {
             state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
             break;
         case MOVING:
-            timerControl->setCurrentTime(Clock::now());
-            if (input) {
-                if (timerControl->delay(milliseconds{100})) {
-                    userAction(input);
-                    timerControl->setLastUpdateTime(Clock::now());
-                }
-            }
-
-            timerDown->setCurrentTime(Clock::now());
-            if (timerDown->delay(milliseconds{250})){
-                userAction(MOVE_DOWN);
-                timerDown->setLastUpdateTime(Clock::now());
+            move_action();
+            break;
+        case PAUSE:
+//            std::cout << "Game paused" << std::endl;
+            if (input == PAUSE_GAME) {
+                state = MOVING;
+                input = NOSIG; // для моментального сброса состояния переменной движения
             }
             break;
     }
@@ -131,21 +147,10 @@ void GameModel::removeFullRowsAndUpdateScore() {
     bestScore = score > bestScore ? score : bestScore;
 }
 
-int GameModel::getScore() { return score; }
-int GameModel::getBestScore() { return bestScore; }
+int GameModel::getScore() const { return score; }
+int GameModel::getBestScore() const { return bestScore; }
 
-GameModel::GameModel(const GameModel &other) {
-    m_gBoard = other.m_gBoard;
-    m_currShape = other.m_currShape;
-    m_nextShape = other.m_nextShape;
-    timerControl = other.timerControl;
-    timerDown = other.timerDown;
-    input = other.input;
-    score = other.score;
-    bestScore = other.bestScore;
-    state = other.state;
 
-}
 
 GameModel &GameModel::operator=(const GameModel &other) {
     if (this != &other) {
@@ -169,5 +174,18 @@ GameModel::~GameModel() {
     delete timerDown;
     delete timerControl;
 }
+
+void GameModel::resetGame() {
+    m_gBoard->reset();
+    input = NOSIG;
+    state = START;
+    delete m_currShape;
+    delete m_nextShape;
+    m_currShape = nullptr;
+    m_nextShape = nullptr;
+    m_currShape = new Tetromino();
+    m_nextShape = new Tetromino(TetrominoFactory::randomTetromino());
+}
+
 
 

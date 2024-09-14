@@ -29,6 +29,6 @@ public:
     int* operator [](int index);
     int& operator ()(int row, int col);
     BoardModel& operator = (const BoardModel& other);
-    void testData1();
+    void reset();
 };
 #endif //BOARDMODEL_H
