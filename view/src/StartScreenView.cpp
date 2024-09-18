@@ -2,22 +2,24 @@
 // Created by roach on 18.09.2024.
 //
 
-#include "StartScreenView.h"
+#include "../inc/StartScreenView.h"
 
 StartScreenView::StartScreenView(QWidget *parent) : QWidget(parent){
-    label = new QLabel("Brick Game");
-    snake = new QPushButton("Snake");
-    tetris = new QPushButton("Tetris");
-    boxLayout = new QHBoxLayout();
-    boxLayout->addWidget(label);
-    boxLayout->addWidget(snake);
-    boxLayout->addWidget(tetris);
-    setLayout(boxLayout);
+    m_snake = new QPushButton("Snake");
+    m_tetris = new QPushButton("Tetris");
+    m_boxLayout = new QVBoxLayout();
+    m_boxLayout->addWidget(m_snake);
+    m_boxLayout->addWidget(m_tetris);
+    setLayout(m_boxLayout);
+    setFixedSize(250, 100);
+    setWindowFlags(windowFlags() & ~Qt::WindowFullscreenButtonHint);
 }
 
 StartScreenView::~StartScreenView() {
-    delete label;
-    delete snake;
-    delete tetris;
-    delete boxLayout;
+    delete m_snake;
+    delete m_tetris;
+    delete m_boxLayout;
 }
+
+QPushButton *StartScreenView::getTetrisBtn() { return m_tetris; }
+QPushButton *StartScreenView::getSnakeBtn() { return m_snake; }

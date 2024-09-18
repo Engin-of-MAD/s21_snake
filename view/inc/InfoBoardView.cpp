@@ -2,7 +2,7 @@
 // Created by roach on 18.09.2024.
 //
 
-#include "InfoBoard.h"
+#include "InfoBoardView.h"
 
 InfoBoardView::InfoBoardView() {
     setFixedSize(200, 196);

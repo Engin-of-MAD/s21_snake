@@ -2,8 +2,8 @@
 // Created by roach on 18.09.2024.
 //
 
-#ifndef UNTITLED2_INFOBOARD_H
-#define UNTITLED2_INFOBOARD_H
+#ifndef INFOBOARDVIEW_H
+#define INFOBOARDVIEW_H
 #include <QLCDNumber>
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -14,7 +14,7 @@
 #include "BoardView.h"
 class InfoBoardView : public QWidget {
     Q_OBJECT
-            QGridLayout* m_gridLayout;
+    QGridLayout* m_gridLayout;
     QLabel* m_score;
     QLabel* m_bestScore;
     QLabel* m_nextShapeLabel;
@@ -31,4 +31,6 @@ protected:
 };
 
 
-#endif //UNTITLED2_INFOBOARD_H
+
+
+#endif //INFOBOARDVIEW_H
