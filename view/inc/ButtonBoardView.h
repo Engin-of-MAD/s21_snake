@@ -13,39 +13,11 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QKeyEvent>
+#include "BoardView.h"
 #include "../../models/inc/gameModel.h"
-class BoardView : public QWidget {
-    Q_OBJECT
-    GameModel* gameModel;
-    int m_width;
-    int m_height;
-public:
-    BoardView();
-    BoardView(const BoardView& other);
-    explicit BoardView(int width, int height);
-    explicit BoardView(GameModel* model);
 
 
-protected:
-    void border(QPainter* painter);
-    void paintEvent(QPaintEvent* e) override;
-    void drawGrid(QPainter* painter);
-    void drawBoardModel(QPainter* painter);
-    void drawPixel(QPainter* painter, int x, int y, bool isFillItem);
-    QRect normalizeCords(int x, int y);
-    void keyPressEvent(QKeyEvent* event) override;
-};
 
-class NextShapeView : public BoardView{
-    using ShapesTypes = Tetromino::ShapesTypes;
-public:
-    NextShapeView();
-    Tetromino m_nextShape;
-    void setNextShape(Tetromino nextShape);
-    void centralShape(int ShapeField[5][5]);
-    void drawNextShape(QPainter* painter);
-    void paintEvent(QPaintEvent* e) override;
-};
 class InfoBoardView : public QWidget {
     Q_OBJECT
     QGridLayout* m_gridLayout;

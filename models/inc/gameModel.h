@@ -4,7 +4,7 @@
 
 #ifndef BRICKGAME_GAMEOBJ_H
 #define BRICKGAME_GAMEOBJ_H
-// models/inc/gameModel.h
+// models/inc/m_gameModel.h
 #include "boardModel.h"
 #include "TetrominoFactory.h"
 #include "Timer.h"

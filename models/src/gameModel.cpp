@@ -1,5 +1,5 @@
 #include "../inc/gameModel.h"
-// models/src/gameModel.cpp
+// models/src/m_gameModel.cpp
 GameModel::GameModel()
     : m_gBoard(new BoardModel(10, 20))
     , score(0), bestScore(0), state(START)
