@@ -13,8 +13,8 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(untitled2
-        view/inc/boardview.h
-        view/src/boardview.cpp
+        view/inc/ButtonBoardView.h
+        view/src/ButtonBoardView.cpp
         view/inc/mainwindow.h
         view/src/mainwindow.cpp
         models/src/main.cpp
@@ -27,6 +27,22 @@ add_executable(untitled2
         models/src/Timer.cpp
         models/inc/Timer.h
         tests/tests.cpp
+        view/src/StartScreenView.cpp
+        view/inc/StartScreenView.h
+        view/src/TetrisView.cpp
+        view/inc/TetrisView.h
+        view/src/SnakeView.cpp
+        view/inc/SnakeView.h
+        models/src/SnakeModel.cpp
+        models/inc/SnakeModel.h
+        models/src/SnakeHead.cpp
+        models/inc/SnakeHead.h
+        models/src/SnakeTail.cpp
+        models/inc/SnakeTail.h
+        view/src/BoardView.cpp
+        view/inc/BoardView.h
+        view/inc/InfoBoardView.cpp
+        view/inc/InfoBoardView.h
 )
 target_link_libraries(untitled2
         Qt::Core
