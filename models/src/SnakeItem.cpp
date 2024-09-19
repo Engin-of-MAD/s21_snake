@@ -2,5 +2,5 @@
 // Created by roach on 18.09.2024.
 //
 
-#include "../inc/SnakeItem.h"
+#include "../inc/SnakeModel.h"
 namespace s21 {}
