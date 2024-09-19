@@ -8,18 +8,22 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
-
-class StartScreenView : public QWidget{
+namespace s21 {
+    class StartScreenView : public QWidget {
     Q_OBJECT
-    QVBoxLayout* m_boxLayout;
-    QPushButton* m_snake;
-    QPushButton* m_tetris;
-public:
-    explicit StartScreenView(QWidget* parent = nullptr);
-    ~StartScreenView() override;
-    QPushButton* getSnakeBtn();
-    QPushButton* getTetrisBtn();
-};
 
+        QVBoxLayout *m_boxLayout;
+        QPushButton *m_snake;
+        QPushButton *m_tetris;
+    public:
+        explicit StartScreenView(QWidget *parent = nullptr);
 
+        ~StartScreenView() override;
+
+        QPushButton *getSnakeBtn();
+
+        QPushButton *getTetrisBtn();
+    };
+
+}
 #endif //STARTSCREENVIEW_H

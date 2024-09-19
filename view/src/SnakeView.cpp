@@ -3,80 +3,81 @@
 //
 
 #include "../inc/SnakeView.h"
+namespace s21 {
+    SnakeView::SnakeView(QWidget *parent) : QWidget(parent) {
+        m_buttonBoard = new ButtonBoardView();
+        m_infoBoard = new InfoBoardView();
+        m_boardView = new SnakeBoardView(10, 20);
+        m_gridLayout = new QGridLayout();
+        m_gameModel = new SnakeGameModel();
+        m_gameTimer = new QTimer(this);
+        initView();
+    }
 
-SnakeView::SnakeView(QWidget *parent) : QWidget(parent){
-    m_buttonBoard = new ButtonBoardView();
-    m_infoBoard = new InfoBoardView();
-    m_boardView = new SnakeBoardView(10, 20);
-    m_gridLayout = new QGridLayout();
-    m_gameModel = new SnakeModel();
-    m_gameTimer = new QTimer(this);
-    initView();
-}
+    SnakeView::~SnakeView() {
+        delete m_buttonBoard;
+        delete m_infoBoard;
+        delete m_boardView;
+        delete m_gridLayout;
+        delete m_gameModel;
+        delete m_gameTimer;
+    }
 
-SnakeView::~SnakeView() {
-    delete m_buttonBoard;
-    delete m_infoBoard;
-    delete m_boardView;
-    delete m_gridLayout;
-    delete m_gameModel;
-    delete m_gameTimer;
-}
+    void SnakeView::initView() {
+        m_gridLayout->addWidget(m_boardView, 0, 0, 2, 2);
+        m_gridLayout->addWidget(m_infoBoard, 0, 2, 1, 1);
+        m_gridLayout->addWidget(m_buttonBoard, 1, 2, 1, 1);
+        m_infoBoard->hideNextShape();
+        setLayout(m_gridLayout);
+        setWindowTitle("Snake Game");
+    }
 
-void SnakeView::initView() {
-    m_gridLayout->addWidget(m_boardView, 0, 0, 2, 2);
-    m_gridLayout->addWidget(m_infoBoard, 0, 2, 1, 1);
-    m_gridLayout->addWidget(m_buttonBoard, 1, 2, 1, 1);
-    setLayout(m_gridLayout);
-    setWindowTitle("Snake Game");
-}
-
-void SnakeView::keyPressEvent(QKeyEvent *e) {
-    switch(e->key())
-    {
+    void SnakeView::keyPressEvent(QKeyEvent *e) {
+        switch (e->key()) {
 //        case Qt::Key_P:
-//            m_gameModel->setGameControl(GameModel::PAUSE_GAME);
+//            m_gameModel->setGameControl(TetrisGameModel::PAUSE_GAME);
 //            break;
 //        case Qt::Key_Return:
-//            m_gameModel->setGameControl(GameModel::STAR_GAME);
+//            m_gameModel->setGameControl(TetrisGameModel::STAR_GAME);
 //            break;
 //        case Qt::Key_A:
-//            m_gameModel->setGameControl(GameModel::MOVE_LEFT);
+//            m_gameModel->setGameControl(TetrisGameModel::MOVE_LEFT);
 //            break;
 //        case Qt::Key_D:
-//            m_gameModel->setGameControl(GameModel::MOVE_RIGHT);
+//            m_gameModel->setGameControl(TetrisGameModel::MOVE_RIGHT);
 //            break;
 //        case Qt::Key_R:
-//            m_gameModel->setGameControl(GameModel::MOVE_UP);
+//            m_gameModel->setGameControl(TetrisGameModel::MOVE_UP);
 //            break;
 //        case Qt::Key_S:
-//            m_gameModel->setGameControl(GameModel::MOVE_DOWN);
+//            m_gameModel->setGameControl(TetrisGameModel::MOVE_DOWN);
 //            break;
 //        case Qt::Key_G:
-//            m_gameModel->setGameControl(GameModel::STOP_GAME);
+//            m_gameModel->setGameControl(TetrisGameModel::STOP_GAME);
 //            break;
 //        case Qt::Key_Escape:
-//            m_gameModel->setGameControl(GameModel::EXIT_GAME);
+//            m_gameModel->setGameControl(TetrisGameModel::EXIT_GAME);
 //            break;
+        }
     }
-}
 
-void SnakeView::keyReleaseEvent(QKeyEvent *e) {
-    QWidget::keyReleaseEvent(e);
-}
+    void SnakeView::keyReleaseEvent(QKeyEvent *e) {
+        QWidget::keyReleaseEvent(e);
+    }
 
-void SnakeView::gameLoop() {
+    void SnakeView::gameLoop() {
 
-}
+    }
 
-void SnakeView::startGame() {
+    void SnakeView::startGame() {
 
-}
+    }
 
-void SnakeView::pauseGame() {
+    void SnakeView::pauseGame() {
 
-}
+    }
 
-void SnakeView::stopGame() {
+    void SnakeView::stopGame() {
 
+    }
 }
