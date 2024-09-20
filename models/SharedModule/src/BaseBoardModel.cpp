@@ -5,21 +5,21 @@
 #include "../inc/BaseBoardModel.h"
 namespace s21 {
     BaseBoardModel::BaseBoardModel() : BaseBoardModel(1, 1) {}
-
-    BaseBoardModel::BaseBoardModel(int width, int height)
-            : m_boardField(nullptr), m_width(width), m_height(height) {
+    BaseBoardModel::BaseBoardModel(int width, int height, int sizeCell)
+            : m_boardField(nullptr), m_width(width)
+            , m_height(height), m_sizeCell(sizeCell) {
         m_boardField = newBoard(m_width, m_height);
-        for (int i = 0; i < m_height; ++i)
-            for (int j = 0; j < m_width; ++j)
-                m_boardField[i][j] = 0;
+        if (m_boardField)
+            for (int i = 0; i < m_height; ++i)
+                for (int j = 0; j < m_width; ++j)
+                    m_boardField[i][j] = 0;
     }
 
     BaseBoardModel::BaseBoardModel(BaseBoardModel &other) : BaseBoardModel(other.m_width, other.m_height) {
-        for (int i = 0; i < other.m_height; ++i) {
-            for (int j = 0; j < other.m_width; ++j) {
-                m_boardField[i][j] = other.m_boardField[i][j];
-            }
-        }
+        if (m_boardField && other.m_boardField)
+            for (int i = 0; i < other.m_height; ++i)
+                for (int j = 0; j < other.m_width; ++j)
+                    m_boardField[i][j] = other.m_boardField[i][j];
     }
 
     BaseBoardModel::~BaseBoardModel() {
@@ -60,8 +60,8 @@ namespace s21 {
     }
 
     int BaseBoardModel::getWidth() const { return m_width; }
-
     int BaseBoardModel::getHeight() const { return m_height; }
+    int BaseBoardModel::getSizeCell() const { return m_sizeCell; }
 
     void BaseBoardModel::reset() {
         for (int i = 0; i < m_height; ++i)

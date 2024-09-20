@@ -120,20 +120,13 @@ namespace s21 {
     }
 
     TetrisBoardModel TetrisGameModel::getBoardModel() { return *m_gBoard; }
-
     void TetrisGameModel::setGameControl(TetrisGameModel::gameControl control) { input = control; }
-
     TetrisGameModel::gameControl TetrisGameModel::getGameControl() { return input; }
-
     TetrisGameModel::stateGame TetrisGameModel::getStateGame() { return state; }
-
-    Tetromino TetrisGameModel::getCurrentTetromino() {
-        return *m_currShape;
-    }
-
-    Tetromino TetrisGameModel::getNextTetromino() {
-        return *m_nextShape;
-    }
+    Tetromino TetrisGameModel::getCurrentTetromino() { return *m_currShape; }
+    Tetromino TetrisGameModel::getNextTetromino() { return *m_nextShape; }
+    int TetrisGameModel::getScore() const { return score; }
+    int TetrisGameModel::getBestScore() const { return bestScore; }
 
     void TetrisGameModel::removeFullRowsAndUpdateScore() {
         int removedRowsCount = 0;
@@ -147,10 +140,6 @@ namespace s21 {
         score += 100 * removedRowsCount;
         bestScore = score > bestScore ? score : bestScore;
     }
-
-    int TetrisGameModel::getScore() const { return score; }
-
-    int TetrisGameModel::getBestScore() const { return bestScore; }
 
     TetrisGameModel::~TetrisGameModel() {
         delete m_gBoard;

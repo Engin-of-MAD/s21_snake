@@ -14,7 +14,7 @@
 #include <QPushButton>
 #include <QKeyEvent>
 #include "BoardView.h"
-#include "../../models/inc/TetrisGameModel.h"
+#include "../../models/TetrisCore/inc/TetrisGameModel.h"
 
 
 

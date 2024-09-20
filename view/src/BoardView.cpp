@@ -160,4 +160,14 @@ namespace s21 {
     void SnakeBoardView::setGameModel(SnakeGameModel *model) {
         gameModel = model;
     }
+
+    void SnakeBoardView::drawBoardModel(QPainter *painter) {
+        BaseBoardModel board = gameModel->getGameBoard();
+        SnakeModel snake = gameModel->getSnakeModel();
+        for (int i = 0; i < board.getHeight(); ++i) {
+            for (int j = 0; j < board.getWidth(); ++j) {
+                drawPixel(painter ,j, i, 0);
+            }
+        }
+    }
 }

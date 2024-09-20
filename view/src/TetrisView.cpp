@@ -56,11 +56,10 @@ namespace s21 {
     }
 
     void TetrisView::gameLoop() {
-        QTimer timer(this);
         TetrisGameModel::stateGame state = m_gameModel->getStateGame();
 
         m_infoField->getNextShapeView()->setNextShape(m_gameModel->getNextTetromino());
-        if (state == TetrisGameModel::GAMEOVER)
+        if (state == TetrisGameModel::GAMEOVER || state == TetrisGameModel::EXIT_STATE)
             close();
         m_gameModel->stateMachine();
         m_boardField->repaint();

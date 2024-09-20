@@ -7,7 +7,7 @@
 
 #include "TetrisBoardModel.h"
 #include "TetrominoFactory.h"
-#include "Timer.h"
+#include "../../inc/Timer.h"
 #include <chrono>
 
 namespace s21 {

@@ -18,12 +18,13 @@ add_executable(untitled2
         view/inc/mainwindow.h
         view/src/mainwindow.cpp
 
-        models/inc/TetrisGameModel.h
-        models/src/TetrisGameModel.cpp
+        models/TetrisCore/inc/TetrisGameModel.h
+        models/TetrisCore/src/TetrisGameModel.cpp
+        models/TetrisCore/inc/TetrominoFactory.h
+        models/TetrisCore/src/TetrominoFactory.cpp
+
         models/inc/BaseBoardModel.h
         models/src/BaseBoardModel.cpp
-        models/inc/TetrominoFactory.h
-        models/src/TetrominoFactory.cpp
         models/inc/Timer.h
         models/src/Timer.cpp
         models/src/main.cpp
@@ -34,18 +35,16 @@ add_executable(untitled2
         view/src/TetrisView.cpp
         view/inc/SnakeView.h
         view/src/SnakeView.cpp
-        models/inc/SnakeGameModel.h
-        models/src/SnakeGameModel.cpp
-        models/inc/SnakeItem.h
-        models/src/SnakeModel.cpp
-        models/inc/SnakeModel.h
-        models/src/SnakeItem.cpp
+        models/SnakeCore/inc/SnakeGameModel.h
+        models/SnakeCore/src/SnakeGameModel.cpp
+        models/SnakeCore/src/SnakeModel.cpp
+        models/SnakeCore/inc/SnakeModel.h
         view/inc/BoardView.h
         view/src/BoardView.cpp
         view/inc/InfoBoardView.h
         view/src/InfoBoardView.cpp
-        models/inc/TetrisBoardModel.h
-        models/src/TetrisBoardModel.cpp
+        models/TetrisCore/inc/TetrisBoardModel.h
+        models/TetrisCore/src/TetrisBoardModel.cpp
 )
 target_link_libraries(untitled2
         Qt::Core

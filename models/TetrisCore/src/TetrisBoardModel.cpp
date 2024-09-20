@@ -7,9 +7,7 @@
 
 namespace s21 {
     TetrisBoardModel::TetrisBoardModel() : BaseBoardModel(1, 1) {}
-
     TetrisBoardModel::TetrisBoardModel(int width, int height) : BaseBoardModel(width, height) {}
-
     void TetrisBoardModel::setShapeOnBoard(Tetromino &shape) {
         for (int i = 0; i < shape.getWidth(); ++i) {
             for (int j = 0; j < shape.getWidth(); ++j) {
@@ -42,5 +40,4 @@ namespace s21 {
         for (int colI = 0; colI < m_width; ++colI)
             m_boardField[rowI][colI] = 0;
     }
-
 }
