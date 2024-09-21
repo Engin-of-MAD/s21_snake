@@ -39,7 +39,6 @@ namespace s21 {
     }
 
     void BoardView::drawPixel(QPainter *painter, int x, int y, bool isFillItem) {
-
         QBrush brush(Qt::green);
         QPen pixelPen(Qt::green);
         if (isFillItem) {
@@ -86,36 +85,18 @@ namespace s21 {
 
 
     NextShapeView::NextShapeView() : BoardView(5, 5) {}
-
-    void NextShapeView::setNextShape(Tetromino nextShape) {
-        m_nextShape = std::move(nextShape);
-    }
-
+    void NextShapeView::setNextShape(Tetromino nextShape) {m_nextShape = std::move(nextShape);}
     void NextShapeView::centralShape(int ShapeField[5][5]) {
         for (int i = 0; i < m_nextShape.getWidth(); ++i) {
             for (int j = 0; j < m_nextShape.getWidth(); ++j) {
                 switch (m_nextShape.getName()) {
-                    case ShapesTypes::I :
-                        ShapeField[i][j] = m_nextShape[i][j];
-                        break;
-                    case ShapesTypes::O :
-                        ShapeField[i + 1][j + 2] = m_nextShape[i][j];
-                        break;
-                    case ShapesTypes::S :
-                        ShapeField[i + 1][j + 1] = m_nextShape[i][j];
-                        break;
-                    case ShapesTypes::Z :
-                        ShapeField[i + 1][j + 1] = m_nextShape[i][j];
-                        break;
-                    case ShapesTypes::L :
-                        ShapeField[i + 1][j + 1] = m_nextShape[i][j];
-                        break;
-                    case ShapesTypes::J :
-                        ShapeField[i + 1][j + 1] = m_nextShape[i][j];
-                        break;
-                    case ShapesTypes::T :
-                        ShapeField[i + 1][j + 1] = m_nextShape[i][j];
-                        break;
+                    case ShapesTypes::I :ShapeField[i][j] = m_nextShape[i][j];break;
+                    case ShapesTypes::O :ShapeField[i + 1][j + 2] = m_nextShape[i][j];break;
+                    case ShapesTypes::S :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
+                    case ShapesTypes::Z :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
+                    case ShapesTypes::L :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
+                    case ShapesTypes::J :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
+                    case ShapesTypes::T :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
                 }
             }
         }
@@ -154,6 +135,7 @@ namespace s21 {
         QPainter painter;
         painter.begin(this);
         drawGrid(&painter);
+        drawBoardModel(&painter);
         painter.end();
     }
 
@@ -164,9 +146,19 @@ namespace s21 {
     void SnakeBoardView::drawBoardModel(QPainter *painter) {
         BaseBoardModel board = gameModel->getGameBoard();
         SnakeModel snake = gameModel->getSnakeModel();
+        BaseBoardModel buffer;
+        snake.log();
+//        for (int s = 0; s < snake.getSize(); ++s) {
+//            int x = snake[s]->x;
+//            int y = snake[s]->y;
+//            if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight())
+//            buffer[y][x] = 1;
+//        }
+
+        board.printInConsole();
         for (int i = 0; i < board.getHeight(); ++i) {
             for (int j = 0; j < board.getWidth(); ++j) {
-                drawPixel(painter ,j, i, 0);
+                drawPixel(painter, j, i, snake.isSnake(j, i));
             }
         }
     }

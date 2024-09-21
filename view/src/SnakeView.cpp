@@ -5,23 +5,18 @@
 #include "../inc/SnakeView.h"
 namespace s21 {
     SnakeView::SnakeView(QWidget *parent) : QWidget(parent) {
-        m_buttonBoard = new ButtonBoardView();
-        m_infoBoard = new InfoBoardView();
-        m_boardView = new SnakeBoardView(10, 20);
-        m_gridLayout = new QGridLayout();
-        m_gameModel = new SnakeGameModel();
-        m_gameTimer = new QTimer(this);
+
         initView();
         connect(m_buttonBoard->getStartBtn(), &QPushButton::clicked, this, &SnakeView::startGame);
         connect(m_buttonBoard->getPauseBtn(), &QPushButton::clicked, this, &SnakeView::pauseGame);
         connect(m_buttonBoard->getStopBtn(), &QPushButton::clicked, this, &SnakeView::stopGame);
-        connect(m_buttonBoard->getStopBtn(), &QPushButton::clicked, m_gameTimer, &QTimer::stop);
+//        connect(m_buttonBoard->getStopBtn(), &QPushButton::clicked, m_gameTimer, &QTimer::stop);
         connect(m_gameTimer, &QTimer::timeout, this, &SnakeView::gameLoop);
     }
 
     SnakeView::~SnakeView() {
         delete m_buttonBoard;
-        delete m_infoBoard;
+        delete m_infoBoardView;
         delete m_boardView;
         delete m_gridLayout;
         delete m_gameModel;
@@ -29,10 +24,18 @@ namespace s21 {
     }
 
     void SnakeView::initView() {
+        m_buttonBoard = new ButtonBoardView();
+        m_infoBoardView = new InfoBoardView();
+        m_boardView = new SnakeBoardView(10, 20);
+        m_gridLayout = new QGridLayout();
+        m_gameModel = new SnakeGameModel();
+        m_gameTimer = new QTimer(this);
+
         m_gridLayout->addWidget(m_boardView, 0, 0, 2, 2);
-        m_gridLayout->addWidget(m_infoBoard, 0, 2, 1, 1);
+        m_gridLayout->addWidget(m_infoBoardView, 0, 2, 1, 1);
         m_gridLayout->addWidget(m_buttonBoard, 1, 2, 1, 1);
-        m_infoBoard->hideNextShape();
+        m_boardView->setGameModel(m_gameModel);
+        m_infoBoardView->hideNextShape();
         setLayout(m_gridLayout);
         adjustSize();
         setFixedSize(size());
@@ -41,22 +44,38 @@ namespace s21 {
 
     void SnakeView::keyPressEvent(QKeyEvent *e) {
         switch (e->key()) {
-        case Qt::Key_P:
-            m_gameModel->setGameControl(SnakeGameModel::PAUSE_GAME); break;
-        case Qt::Key_Return:
-            m_gameModel->setGameControl(SnakeGameModel::STAR_GAME); break;
-        case Qt::Key_A:
-            m_gameModel->setGameControl(SnakeGameModel::MOVE_LEFT); break;
-        case Qt::Key_D:
-            m_gameModel->setGameControl(SnakeGameModel::MOVE_RIGHT); break;
-        case Qt::Key_R:
-            m_gameModel->setGameControl(SnakeGameModel::MOVE_UP); break;
-        case Qt::Key_S:
-            m_gameModel->setGameControl(SnakeGameModel::MOVE_DOWN); break;
-        case Qt::Key_G:
-            m_gameModel->setGameControl(SnakeGameModel::STOP_GAME); break;
-        case Qt::Key_Escape:
-            m_gameModel->setGameControl(SnakeGameModel::EXIT_GAME); break;
+        case Qt::Key_P: m_gameModel->setGameControl(SnakeGameModel::PAUSE_GAME);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_Return: m_gameModel->setGameControl(SnakeGameModel::STAR_GAME);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_A: m_gameModel->setGameControl(SnakeGameModel::MOVE_LEFT);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_D: m_gameModel->setGameControl(SnakeGameModel::MOVE_RIGHT);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_W: m_gameModel->setGameControl(SnakeGameModel::MOVE_UP);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_S: m_gameModel->setGameControl(SnakeGameModel::MOVE_DOWN);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_G: m_gameModel->setGameControl(SnakeGameModel::STOP_GAME);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
+        case Qt::Key_Escape: m_gameModel->setGameControl(SnakeGameModel::EXIT_GAME);
+//                qDebug() << "Key Log: " << m_gameModel->getGameControl()
+//                         << "State Log: " << m_gameModel->getState();
+                break;
         }
     }
 
@@ -84,27 +103,37 @@ namespace s21 {
     void SnakeView::gameLoop() {
         SnakeGameModel::GameState state = m_gameModel->getState();
         if(state == SnakeGameModel::GAMEOVER || state == SnakeGameModel::EXIT_STATE)
-            close();
+            gameOver();
         m_gameModel->stateMachine();
-        m_infoBoard->setScore(m_gameModel->getScore(), m_gameModel->getBestScore());
+        m_infoBoardView->setScore(m_gameModel->getScore(), m_gameModel->getBestScore());
         m_boardView->repaint();
-        m_infoBoard->repaint();
+        m_infoBoardView->repaint();
+//        qDebug() << "State Log: " << m_gameModel->getState();
     }
 
     void SnakeView::startGame() {
-        m_gameTimer->start(16);
+        if (m_gameModel->getState() == SnakeGameModel::GAMEOVER)
+            m_gameModel->reset();
+        m_gameTimer->start(30);
         m_gameModel->setGameControl(SnakeGameModel::STAR_GAME);
         m_buttonBoard->getStartBtn()->setEnabled(false);
         m_buttonBoard->getStopBtn()->setEnabled(true);
         m_buttonBoard->getPauseBtn()->setEnabled(true);
+
     }
 
     void SnakeView::pauseGame() {
         m_gameModel->setGameControl(SnakeGameModel::PAUSE_GAME);
-        if (m_buttonBoard->getPauseBtn()->text() == "Pause")
+        if (m_buttonBoard->getPauseBtn()->text() == "Pause") {
             m_buttonBoard->getPauseBtn()->setText("Resume");
-        else if (m_buttonBoard->getPauseBtn()->text() == "Resume")
+            m_gameTimer->stop();
+        }
+
+        else if (m_buttonBoard->getPauseBtn()->text() == "Resume") {
             m_buttonBoard->getPauseBtn()->setText("Pause");
+            m_gameTimer->start(200);
+        }
+
     }
 
     void SnakeView::stopGame() {
@@ -112,5 +141,15 @@ namespace s21 {
         m_buttonBoard->getPauseBtn()->setEnabled(false);
         m_buttonBoard->getStopBtn()->setEnabled(false);
         m_gameModel->reset();
+        m_gameTimer->stop();
+        m_boardView->repaint();
+    }
+
+    void SnakeView::gameOver() {
+        m_buttonBoard->getStartBtn()->setEnabled(true);
+        m_buttonBoard->getPauseBtn()->setEnabled(false);
+        m_buttonBoard->getStopBtn()->setEnabled(false);
+        m_gameTimer->stop();
+        m_boardView->repaint();
     }
 }

@@ -7,7 +7,7 @@
 
 #include <QWidget>
 #include <QPainter>
-
+#include <iostream>
 #include "../../models/TetrisCore/inc/TetrisGameModel.h"
 #include "../../models/SnakeCore/inc/SnakeGameModel.h"
 namespace s21 {
@@ -44,12 +44,12 @@ namespace s21 {
 
     class SnakeBoardView : public BoardView {
         SnakeGameModel *gameModel;
-        void setGameModel(SnakeGameModel *model);
+        void drawBoardModel(QPainter *painter) override;
+        void paintEvent(QPaintEvent *e) override;
     public:
         SnakeBoardView();
         SnakeBoardView(int width, int height);
-        void drawBoardModel(QPainter *painter) override;
-        void paintEvent(QPaintEvent *e) override;
+        void setGameModel(SnakeGameModel *model);
     };
 }
 #endif //BOARDVIEW_H

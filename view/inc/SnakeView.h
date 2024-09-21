@@ -16,7 +16,7 @@ namespace s21 {
     class SnakeView : public QWidget {
     Q_OBJECT
         ButtonBoardView *m_buttonBoard;
-        InfoBoardView *m_infoBoard;
+        InfoBoardView *m_infoBoardView;
         SnakeBoardView *m_boardView;
         QGridLayout *m_gridLayout;
         SnakeGameModel *m_gameModel;
@@ -33,6 +33,7 @@ namespace s21 {
         void startGame();
         void pauseGame();
         void stopGame();
+        void gameOver();
     };
 }
 
