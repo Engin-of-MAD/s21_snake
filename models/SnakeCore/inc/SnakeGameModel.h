@@ -4,7 +4,8 @@
 
 #ifndef SNAKEGAMEMODEL_H
 #define SNAKEGAMEMODEL_H
-#include "../../inc/BaseBoardModel.h"
+#include "../../SharedModule/inc/BaseBoardModel.h"
+#include "../../SharedModule/inc/Timer.h"
 #include "SnakeModel.h"
 namespace s21 {
     class SnakeGameModel {
@@ -21,18 +22,19 @@ namespace s21 {
         BaseBoardModel& getGameBoard();
         SnakeModel& getSnakeModel();
         GameState getState();
-        GameControl getGameControl(GameControl control);
+        GameControl getGameControl();
         int getScore();
         int getBestScore();
     private:
-        bool isBorders();
-        bool checkPos();
+        bool isBorders(SnakeItem head);
+        bool checkPos(SnakeItem head);
         void startAction();
         void movingAction();
         void gameControl();
         int m_score, m_bestScore;
         GameControl m_userControl;
         GameState m_state;
+        Timer* m_timerDown;
         BaseBoardModel* m_board;
         SnakeModel* m_snake;
     };

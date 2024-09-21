@@ -6,22 +6,33 @@
 #define UNTITLED2_SNAKEMODEL_H
 
 #include <vector>
+#include <list>
 #include <algorithm>
+#include <iostream>
 namespace s21 {
+    struct SnakeItem {
+        int x, y;
+        SnakeItem(int x, int y);
+        SnakeItem();
+    };
     class SnakeModel {
-        struct SnakeItem {
-            int x, y;
-            SnakeItem(int x, int y);
-        };
-        int m_size,  m_sizeItem;
-        std::vector<SnakeItem> m_snakeBody;
     public:
+        enum class Direction{MoveUp, MoveDown, MoveLeft, MoveRight};
         explicit SnakeModel(int sizeSnake = 4, int sizeItem = 10);
+        void setDirection(Direction direction);
+        void update();
         bool isSnake(int x, int y);
         bool checkSelfIntersection(int x, int y);
+        void push_head(SnakeItem* item);
         int getSize() const;
-        int getSizeItem() const;
-        SnakeItem& operator[](int index);
+        std::vector<SnakeItem*>::iterator begin();
+        std::vector<SnakeItem*>::iterator end();
+        SnakeItem* operator[](int index);
+        void log();
+    private:
+        int m_size,  m_sizeItem;
+        std::vector<SnakeItem*> m_snakeBody;
+        Direction m_snakeDirection;
 
     };
 }

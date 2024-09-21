@@ -23,11 +23,11 @@ add_executable(untitled2
         models/TetrisCore/inc/TetrominoFactory.h
         models/TetrisCore/src/TetrominoFactory.cpp
 
-        models/inc/BaseBoardModel.h
-        models/src/BaseBoardModel.cpp
-        models/inc/Timer.h
-        models/src/Timer.cpp
-        models/src/main.cpp
+        models/SharedModule/inc/BaseBoardModel.h
+        models/SharedModule/src/BaseBoardModel.cpp
+        models/SharedModule/inc/Timer.h
+        models/SharedModule/src/Timer.cpp
+        models/SharedModule/src/main.cpp
 
         view/inc/StartScreenView.h
         view/src/StartScreenView.cpp
