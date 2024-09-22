@@ -45,6 +45,8 @@ add_executable(untitled2
         view/src/InfoBoardView.cpp
         models/TetrisCore/inc/TetrisBoardModel.h
         models/TetrisCore/src/TetrisBoardModel.cpp
+        models/SnakeCore/FabricFood.cpp
+        models/SnakeCore/FabricFood.h
 )
 target_link_libraries(untitled2
         Qt::Core
