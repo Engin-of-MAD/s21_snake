@@ -23,8 +23,8 @@ namespace s21 {
         SnakeModel& getSnakeModel();
         GameState getState();
         GameControl getGameControl();
-        int getScore();
-        int getBestScore();
+        int getScore() const;
+        int getBestScore() const;
     private:
         bool isBorders(SnakeItem head);
         bool checkPos(SnakeItem head);

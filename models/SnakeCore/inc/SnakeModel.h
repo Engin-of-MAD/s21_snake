@@ -21,9 +21,10 @@ namespace s21 {
         explicit SnakeModel(int sizeSnake = 4, int sizeItem = 10);
         void setDirection(Direction direction);
         void update();
-        bool isSnake(int x, int y);
-        bool checkSelfIntersection(int x, int y);
+        bool isBody(SnakeItem head);
+
         void push_head(SnakeItem* item);
+
         int getSize() const;
         std::vector<SnakeItem*>::iterator begin();
         std::vector<SnakeItem*>::iterator end();
@@ -33,7 +34,7 @@ namespace s21 {
         int m_size,  m_sizeItem;
         std::vector<SnakeItem*> m_snakeBody;
         Direction m_snakeDirection;
-
+        bool isSelfInterference(Direction direction);
     };
 }
 

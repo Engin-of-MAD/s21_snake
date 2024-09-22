@@ -8,7 +8,8 @@ namespace s21 {
     SnakeGameModel::SnakeGameModel()
     : m_board(new BaseBoardModel(10, 20))
     , m_snake(new SnakeModel(4, m_board->getSizeCell() - 4))
-    , m_state(START), m_userControl(MOVE_DOWN), m_score(0), m_bestScore(0), m_timerDown(new Timer()){}
+    , m_state(START), m_userControl(MOVE_DOWN), m_score(0)
+    , m_bestScore(0), m_timerDown(new Timer()){}
 
     SnakeGameModel::~SnakeGameModel() {
         delete m_board;
@@ -22,8 +23,9 @@ namespace s21 {
     SnakeGameModel::GameState SnakeGameModel::getState() { return m_state; }
     BaseBoardModel &SnakeGameModel::getGameBoard() { return *m_board; }
     SnakeModel &SnakeGameModel::getSnakeModel() { return *m_snake; }
-    int SnakeGameModel::getScore() { return m_score; }
-    int SnakeGameModel::getBestScore() { return m_bestScore; }
+    int SnakeGameModel::getScore() const { return m_score; }
+    int SnakeGameModel::getBestScore() const { return m_bestScore; }
+
 
     void SnakeGameModel::gameControl() {
         SnakeModel tmp = *m_snake;
@@ -35,7 +37,7 @@ namespace s21 {
             case MOVE_RIGHT: tmp.setDirection(SnakeModel::Direction::MoveRight); break;
         }
         tmp.update();
-        if (!checkPos(*tmp[0]))
+        if (checkPos(*tmp[0]))
             m_state = GAMEOVER;
         else *m_snake = tmp;
     }
@@ -43,10 +45,10 @@ namespace s21 {
     bool SnakeGameModel::checkPos(SnakeItem head) {
         for (int y = 0; y < m_board->getHeight(); ++y) {
             for (int x = 0; x < m_board->getWidth(); ++x) {
-                if (isBorders(head)) return false;
+                if (isBorders(head) || !m_snake->isBody(head)) return true;
             }
         }
-        return true;
+        return false;
     }
 
     bool SnakeGameModel::isBorders(SnakeItem head) {
@@ -87,5 +89,6 @@ namespace s21 {
         m_snake = new SnakeModel(4, m_board->getSizeCell() - 4);
         m_state = START;
         m_userControl = MOVE_DOWN;
+
     }
 }
