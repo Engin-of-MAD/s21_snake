@@ -43,7 +43,7 @@ namespace s21 {
 
 
     class SnakeBoardView : public BoardView {
-        SnakeGameModel *gameModel;
+        SnakeGameModel *gameModel{};
         void drawBoardModel(QPainter *painter) override;
         void paintEvent(QPaintEvent *e) override;
     public:

@@ -127,10 +127,7 @@ namespace s21 {
     }
 
     SnakeBoardView::SnakeBoardView() : BoardView() {}
-
-    SnakeBoardView::SnakeBoardView(int width, int height)
-            : BoardView(width, height) {}
-
+    SnakeBoardView::SnakeBoardView(int width, int height): BoardView(width, height) {}
     void SnakeBoardView::paintEvent(QPaintEvent *e) {
         QPainter painter;
         painter.begin(this);
@@ -139,26 +136,22 @@ namespace s21 {
         painter.end();
     }
 
-    void SnakeBoardView::setGameModel(SnakeGameModel *model) {
-        gameModel = model;
-    }
-
+    void SnakeBoardView::setGameModel(SnakeGameModel *model) { gameModel = model; }
     void SnakeBoardView::drawBoardModel(QPainter *painter) {
         BaseBoardModel board = gameModel->getGameBoard();
         SnakeModel snake = gameModel->getSnakeModel();
-        BaseBoardModel buffer;
+        BaseBoardModel buffer = gameModel->getGameBoard();
         snake.log();
-//        for (int s = 0; s < snake.getSize(); ++s) {
-//            int x = snake[s]->x;
-//            int y = snake[s]->y;
-//            if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight())
-//            buffer[y][x] = 1;
-//        }
+        for (int s = 0; s < snake.getSize(); ++s) {
+            int x = snake[s]->x;
+            int y = snake[s]->y;
+            if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight())
+            buffer[y][x] = 1;
+        }
 
-        board.printInConsole();
         for (int i = 0; i < board.getHeight(); ++i) {
             for (int j = 0; j < board.getWidth(); ++j) {
-                drawPixel(painter, j, i, snake.isSnake(j, i));
+                drawPixel(painter, j, i, buffer[i][j]);
             }
         }
     }

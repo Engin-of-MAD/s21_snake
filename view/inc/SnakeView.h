@@ -15,12 +15,12 @@
 namespace s21 {
     class SnakeView : public QWidget {
     Q_OBJECT
-        ButtonBoardView *m_buttonBoard;
-        InfoBoardView *m_infoBoardView;
-        SnakeBoardView *m_boardView;
-        QGridLayout *m_gridLayout;
-        SnakeGameModel *m_gameModel;
-        QTimer *m_gameTimer;
+        ButtonBoardView *m_buttonBoard{};
+        InfoBoardView *m_infoBoardView{};
+        SnakeBoardView *m_boardView{};
+        QGridLayout *m_gridLayout{};
+        SnakeGameModel *m_gameModel{};
+        QTimer *m_gameTimer{};
         void initView();
     public:
         explicit SnakeView(QWidget *parent = nullptr);
