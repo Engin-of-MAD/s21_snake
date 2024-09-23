@@ -63,19 +63,12 @@ namespace s21 {
 
 
     void Tetromino::increaseCordX() { ++m_cordX; }
-
     void Tetromino::decreaseCordX() { --m_cordX; }
-
     void Tetromino::increaseCordY() { ++m_cordY; }
-
     void Tetromino::setCordX(int cordX) { m_cordX = cordX; }
-
     int Tetromino::getCordX() const { return m_cordX; }
-
     int Tetromino::getCordY() const { return m_cordY; }
-
     int Tetromino::getWidth() const { return m_width; }
-
     Tetromino::ShapesTypes Tetromino::getName() { return m_name; }
 
     void Tetromino::printInConsole() {
@@ -157,19 +150,19 @@ namespace s21 {
 
     Tetromino TetrominoFactory::createTetromino(Tetromino::ShapesTypes type) {
         switch (type) {
-            case Tetromino::ShapesTypes::Z:
+            case ShapeType::Z:
                 return Tetromino(type, Matrix3x3{{{1, 1, 0}, {0, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::S:
+            case ShapeType::S:
                 return Tetromino(type, Matrix3x3{{{0, 1, 1}, {1, 1, 0}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::T:
+            case ShapeType::T:
                 return Tetromino(type, Matrix3x3{{{0, 1, 0}, {1, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::L:
+            case ShapeType::L:
                 return Tetromino(type, Matrix3x3{{{0, 0, 1}, {1, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::J:
+            case ShapeType::J:
                 return Tetromino(type, Matrix3x3{{{1, 0, 0}, {1, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::O:
+            case ShapeType::O:
                 return Tetromino(type, Matrix2x2{{{1, 1}, {1, 1}}});
-            case Tetromino::ShapesTypes::I:
+            case ShapeType::I:
                 return Tetromino(type, Matrix4x4{{{0, 0, 0, 0}, {1, 1, 1, 1},
                                                   {0, 0, 0, 0}, {0, 0, 0, 0}}});
             default:
