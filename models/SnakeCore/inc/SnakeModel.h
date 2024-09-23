@@ -22,7 +22,7 @@ namespace s21 {
         void setDirection(Direction direction);
         void update();
         bool isBody(SnakeItem head);
-
+        bool isSnake(int x, int y);
         void push_head(SnakeItem* item);
 
         int getSize() const;
