@@ -8,8 +8,9 @@ namespace s21 {
     SnakeGameModel::SnakeGameModel()
     : m_board(new BaseBoardModel(10, 20))
     , m_snake(new SnakeModel(4, m_board->getSizeCell() - 4))
-    , m_state(START), m_userControl(MOVE_DOWN), m_score(0)
-    , m_bestScore(0), m_timerDown(new Timer()){}
+    , m_food(new SnakeFood()), m_timerDown(new Timer())
+    , m_state(START), m_userControl(MOVE_DOWN)
+    , m_score(0), m_bestScore(0){}
 
     SnakeGameModel::~SnakeGameModel() {
         delete m_board;
@@ -61,9 +62,9 @@ namespace s21 {
     void SnakeGameModel::stateMachine() {
         switch (m_state) {
             case START: startAction(); break;
-            case SPAWN: m_state = MOVING; break;
+            case SPAWN:
+//                spawnAction(); break;
             case MOVING: movingAction(); break;
-            case PAUSE: break;
         }
     }
 
@@ -73,6 +74,19 @@ namespace s21 {
             m_userControl = MOVE_DOWN;
         }
         if (m_userControl == EXIT_GAME) m_state = EXIT_STATE;
+    }
+
+    void SnakeGameModel::spawnAction() {
+        SnakeFood food(FabricSnakeFood::createFood());
+        bool correctFood = false;
+        while (!correctFood) {
+            if (m_snake->isSnake(food.getX(), food.getY())) {
+                *m_food = food;
+                correctFood = true;
+                m_state = MOVING;
+            }
+        }
+        m_food->log();
     }
 
     void SnakeGameModel::movingAction() {
@@ -86,9 +100,14 @@ namespace s21 {
     void SnakeGameModel::reset() {
         m_board->reset();
         delete m_snake;
+        delete m_food;
+        m_food = new SnakeFood(FabricSnakeFood::createFood());
         m_snake = new SnakeModel(4, m_board->getSizeCell() - 4);
         m_state = START;
         m_userControl = MOVE_DOWN;
+    }
 
+    SnakeFood &SnakeGameModel::getSnakeFood() {
+        return *m_food;
     }
 }

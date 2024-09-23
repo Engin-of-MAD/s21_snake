@@ -6,6 +6,7 @@
 #define SNAKEGAMEMODEL_H
 #include "../../SharedModule/inc/BaseBoardModel.h"
 #include "../../SharedModule/inc/Timer.h"
+#include "FabricSnakeFood.h"
 #include "SnakeModel.h"
 namespace s21 {
     class SnakeGameModel {
@@ -21,6 +22,7 @@ namespace s21 {
         void setState(GameState gameState);
         BaseBoardModel& getGameBoard();
         SnakeModel& getSnakeModel();
+        SnakeFood& getSnakeFood();
         GameState getState();
         GameControl getGameControl();
         int getScore() const;
@@ -29,6 +31,7 @@ namespace s21 {
         bool isBorders(SnakeItem head);
         bool checkPos(SnakeItem head);
         void startAction();
+        void spawnAction();
         void movingAction();
         void gameControl();
         int m_score, m_bestScore;
@@ -37,6 +40,7 @@ namespace s21 {
         Timer* m_timerDown;
         BaseBoardModel* m_board;
         SnakeModel* m_snake;
+        SnakeFood* m_food;
     };
 
 }
