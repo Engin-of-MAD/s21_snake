@@ -6,13 +6,11 @@ const int sizeItem = sizeCell - 4;
 #include "../inc/BoardView.h"
 namespace s21 {
     BoardView::BoardView() : BoardView(1, 1) {}
-
     BoardView::BoardView(int width, int height) : m_width(width), m_height(height), gameModel(nullptr) {
-        setFixedSize(m_width * sizeCell, m_height * sizeCell);
-    }
-
+        setFixedSize(m_width * sizeCell, m_height * sizeCell);}
     BoardView::BoardView(TetrisGameModel *model)
-            : BoardView(model->getBoardModel().getWidth(), model->getBoardModel().getHeight()) { gameModel = model; }
+            : BoardView(model->getBoardModel().getWidth()
+            , model->getBoardModel().getHeight()) { gameModel = model; }
 
     void BoardView::drawGrid(QPainter *painter) {
         QPen gridPen(Qt::lightGray);
@@ -133,6 +131,8 @@ namespace s21 {
         painter.begin(this);
         drawGrid(&painter);
         drawBoardModel(&painter);
+        drawFood(&painter, gameModel->getSnakeFood().getX(), gameModel->getSnakeFood().getY());
+        gameModel->getSnakeFood().log();
         painter.end();
     }
 
@@ -141,12 +141,10 @@ namespace s21 {
         BaseBoardModel board = gameModel->getGameBoard();
         SnakeModel snake = gameModel->getSnakeModel();
         BaseBoardModel buffer = gameModel->getGameBoard();
-        snake.log();
         for (int s = 0; s < snake.getSize(); ++s) {
-            int x = snake[s]->x;
-            int y = snake[s]->y;
+            int x = snake[s]->x, y = snake[s]->y;
             if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight())
-            buffer[y][x] = 1;
+                buffer[y][x] = 1;
         }
 
         for (int i = 0; i < board.getHeight(); ++i) {
@@ -154,5 +152,13 @@ namespace s21 {
                 drawPixel(painter, j, i, buffer[i][j]);
             }
         }
+    }
+
+    void SnakeBoardView::drawFood(QPainter *painter, int x, int y) {
+        QPen foodPen(Qt::darkGray);
+        QBrush foodBrush(Qt::darkGreen);
+        painter->setPen(foodPen);
+        painter->setBrush(foodBrush);
+        painter->drawRect(normalizeCords(x, y));
     }
 }

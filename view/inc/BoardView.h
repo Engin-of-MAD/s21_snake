@@ -45,6 +45,7 @@ namespace s21 {
     class SnakeBoardView : public BoardView {
         SnakeGameModel *gameModel{};
         void drawBoardModel(QPainter *painter) override;
+        void drawFood(QPainter* painter, int x, int y);
         void paintEvent(QPaintEvent *e) override;
     public:
         SnakeBoardView();
