@@ -179,36 +179,11 @@ namespace s21 {
 
 
     Tetromino TetrominoFactory::randomTetromino() {
-        const Tetromino::ShapesTypes shapesType[7] = {Tetromino::ShapesTypes::Z, Tetromino::ShapesTypes::S,
-                                                      Tetromino::ShapesTypes::T,
-                                                      Tetromino::ShapesTypes::L, Tetromino::ShapesTypes::J,
-                                                      Tetromino::ShapesTypes::O,
-                                                      Tetromino::ShapesTypes::I};
+        const Tetromino::ShapesTypes shapesType[7] = {ShapeType ::Z, ShapeType ::S, ShapeType::T,ShapeType::L
+                                                      , ShapeType::J, ShapeType::O, ShapeType::I};
         static std::mt19937 rnd(std::random_device{}());
         static std::uniform_int_distribution<> dist(0, 6);
         int randomIndex = dist(rnd);
         return createTetromino(shapesType[randomIndex]);
-    }
-
-    Tetromino *TetrominoFactory::createTetrominoPointer(Tetromino::ShapesTypes type) {
-        switch (type) {
-            case Tetromino::ShapesTypes::Z:
-                return new Tetromino(type, Matrix3x3{{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}});
-            case Tetromino::ShapesTypes::S:
-                return new Tetromino(type, Matrix3x3{{{0, 1, 1}, {1, 1, 0}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::T:
-                return new Tetromino(type, Matrix3x3{{{0, 1, 0}, {1, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::L:
-                return new Tetromino(type, Matrix3x3{{{0, 0, 1}, {1, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::J:
-                return new Tetromino(type, Matrix3x3{{{1, 0, 0}, {1, 1, 1}, {0, 0, 0}}});
-            case Tetromino::ShapesTypes::O:
-                return new Tetromino(type, Matrix2x2{{{1, 1}, {1, 1}}});
-            case Tetromino::ShapesTypes::I:
-                return new Tetromino(type, Matrix4x4{{{0, 0, 0, 0}, {1, 1, 1, 1},
-                                                      {0, 0, 0, 0}, {0, 0, 0, 0}}});
-            default:
-                throw std::invalid_argument("Unsupported tetromino type");
-        }
     }
 }
