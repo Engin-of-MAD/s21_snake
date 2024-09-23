@@ -31,6 +31,8 @@ namespace s21 {
     }
 
     void TetrisView::startGame() {
+        if (m_gameModel->getStateGame() == TetrisGameModel::GAMEOVER)
+            m_gameModel->resetGame();
         m_gameTimer->start(16);
         m_gameModel->setGameControl(TetrisGameModel::STAR_GAME);
         m_buttonsField->getStartBtn()->setEnabled(false);
@@ -59,7 +61,7 @@ namespace s21 {
 
         m_infoField->getNextShapeView()->setNextShape(m_gameModel->getNextTetromino());
         if (state == TetrisGameModel::GAMEOVER || state == TetrisGameModel::EXIT_STATE)
-            close();
+            stopGame();
         m_gameModel->stateMachine();
         m_boardField->repaint();
         m_infoField->setScore(m_gameModel->getScore(), m_gameModel->getBestScore());

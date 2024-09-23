@@ -35,10 +35,8 @@ namespace s21 {
     }
 
     void InfoBoardView::setScore(int score, int bestScore) {
-        if (score && bestScore) {
-            m_lcdScore->display(score);
-            m_lcdBestScore->display(bestScore);
-        }
+        m_lcdScore->display(score);
+        m_lcdBestScore->display(bestScore);
     }
 
     InfoBoardView::~InfoBoardView() {

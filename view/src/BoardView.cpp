@@ -132,7 +132,6 @@ namespace s21 {
         drawGrid(&painter);
         drawBoardModel(&painter);
         drawFood(&painter, gameModel->getSnakeFood().getX(), gameModel->getSnakeFood().getY());
-        gameModel->getSnakeFood().log();
         painter.end();
     }
 

@@ -73,19 +73,20 @@ namespace s21 {
         m_gameModel->stateMachine();
         m_infoBoardView->setScore(m_gameModel->getScore(), m_gameModel->getBestScore());
         m_boardView->repaint();
-        m_infoBoardView->repaint();
-//        qDebug() << "State Log: " << m_gameModel->getState();
+//        m_infoBoardView->repaint();
+
     }
 
     void SnakeView::startGame() {
         if (m_gameModel->getState() == SnakeGameModel::GAMEOVER)
             m_gameModel->reset();
+        m_gameModel->log();
         m_gameTimer->start(1);
         m_gameModel->setGameControl(SnakeGameModel::STAR_GAME);
         m_buttonBoard->getStartBtn()->setEnabled(false);
         m_buttonBoard->getStopBtn()->setEnabled(true);
         m_buttonBoard->getPauseBtn()->setEnabled(true);
-
+        m_infoBoardView->repaint();
     }
 
     void SnakeView::pauseGame() {
@@ -107,8 +108,11 @@ namespace s21 {
         m_buttonBoard->getPauseBtn()->setEnabled(false);
         m_buttonBoard->getStopBtn()->setEnabled(false);
         m_gameModel->reset();
-        m_gameTimer->stop();
+//        m_gameTimer->stop();
         m_boardView->repaint();
+        m_infoBoardView->setScore(m_gameModel->getScore(), m_gameModel->getBestScore());
+        m_infoBoardView->repaint();
+        m_gameModel->log();
     }
 
     void SnakeView::gameOver() {
@@ -117,6 +121,9 @@ namespace s21 {
         m_buttonBoard->getStopBtn()->setEnabled(false);
         m_gameTimer->stop();
         m_boardView->repaint();
-
+        m_infoBoardView->setScore(m_gameModel->getScore(), m_gameModel->getBestScore());
+        m_infoBoardView->repaint();
+        m_gameModel->log();
     }
+
 }
