@@ -12,6 +12,7 @@ namespace s21 {
     ,m_snakeDirection(Direction::MoveDown){for (int i = 0; i < m_size; ++i) m_snakeBody.push_back(new SnakeItem(i, 0));}
     int SnakeModel::getSize() const { return m_size; }
     void SnakeModel::log() {
+        std::cout << "Snake: " << this << ", Size: " << getSize() << std::endl;
         for (auto it = m_snakeBody.begin(); it != m_snakeBody.end(); ++it) {
             if (it == m_snakeBody.begin()) std::cout << "Snake Head: " << (*it)->x << " " << (*it)->y << std::endl;
             else std::cout << "Snake Item: " << (*it)->x << " " << (*it)->y << std::endl;
@@ -23,19 +24,7 @@ namespace s21 {
     void SnakeModel::setDirection(SnakeModel::Direction direction) {
         if (isSelfInterference(direction)) m_snakeDirection = direction; }
     void SnakeModel::update() {
-        SnakeItem* head;
-        SnakeItem oldHead = **m_snakeBody.begin();
-        switch (m_snakeDirection) {
-            case Direction::MoveDown:
-                head = new SnakeItem(oldHead.x, oldHead.y + 1); break;
-            case Direction::MoveUp:
-                head = new SnakeItem(oldHead.x, oldHead.y - 1); break;
-            case Direction::MoveLeft:
-                head = new SnakeItem(oldHead.x - 1, oldHead.y); break;
-            case Direction::MoveRight:
-                head = new SnakeItem(oldHead.x + 1, oldHead.y); break;
-        }
-        push_head(head);
+        push_head(genSnakeItem(*m_snakeBody.begin(), m_snakeDirection));
         m_snakeBody.pop_back();
     }
     SnakeItem *SnakeModel::operator[](int index) { return m_snakeBody[index]; }
@@ -60,5 +49,37 @@ namespace s21 {
             if (m_snakeBody[i]->x == x && m_snakeBody[i]->y == y)
                 return false;
         return true;
+    }
+
+    void SnakeModel::addTail() {
+        SnakeItem* lastItem = m_snakeBody[m_size - 1];
+        SnakeItem* prevItem = m_snakeBody[m_size - 2];
+        SnakeItem* newTail = nullptr;
+        if (prevItem->x - lastItem->x == 1)
+            newTail = genSnakeItem(lastItem, Direction::MoveRight);
+        else if (prevItem->x - lastItem->x == -1)
+            newTail = genSnakeItem(lastItem, Direction::MoveLeft);
+        else if (prevItem->y - lastItem->y == 1)
+            newTail = genSnakeItem(lastItem, Direction::MoveUp);
+        else if (prevItem->y - lastItem->y == -1)
+            newTail = genSnakeItem(lastItem, Direction::MoveDown);
+        m_snakeBody.push_back(newTail);
+        m_size = m_snakeBody.size();
+    }
+
+    SnakeItem *SnakeModel::genSnakeItem(SnakeItem* pos, Direction direction) {
+        SnakeItem* head;
+        SnakeItem oldHead = *pos;
+        switch (direction) {
+            case Direction::MoveDown:
+                head = new SnakeItem(oldHead.x, oldHead.y + 1); break;
+            case Direction::MoveUp:
+                head = new SnakeItem(oldHead.x, oldHead.y - 1); break;
+            case Direction::MoveLeft:
+                head = new SnakeItem(oldHead.x - 1, oldHead.y); break;
+            case Direction::MoveRight:
+                head = new SnakeItem(oldHead.x + 1, oldHead.y); break;
+        }
+        return head;
     }
 }

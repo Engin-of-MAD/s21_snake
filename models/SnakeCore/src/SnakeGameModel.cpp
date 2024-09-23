@@ -19,7 +19,6 @@ namespace s21 {
     }
 
     void SnakeGameModel::setGameControl(SnakeGameModel::GameControl control) { m_userControl = control; }
-    void SnakeGameModel::setState(SnakeGameModel::GameState gameState) { m_state = gameState; }
     SnakeGameModel::GameControl SnakeGameModel::getGameControl() {return m_userControl; }
     SnakeGameModel::GameState SnakeGameModel::getState() { return m_state; }
     BaseBoardModel &SnakeGameModel::getGameBoard() { return *m_board; }
@@ -38,9 +37,17 @@ namespace s21 {
             case MOVE_RIGHT: tmp.setDirection(SnakeModel::Direction::MoveRight); break;
         }
         tmp.update();
+
         if (checkPos(*tmp[0]))
             m_state = GAMEOVER;
-        else *m_snake = tmp;
+        else {
+            *m_snake = tmp;
+            if (m_food->isFood(tmp[0]->x, tmp[0]->y)){
+                m_snake->addTail();
+                m_state = SPAWN;
+                updateScore();
+            }
+        }
     }
 
     bool SnakeGameModel::checkPos(SnakeItem head) {
@@ -76,6 +83,7 @@ namespace s21 {
     }
 
     void SnakeGameModel::spawnAction() {
+
         SnakeFood food(FabricSnakeFood::createFood());
         bool correctFood = false;
         while (!correctFood) {
@@ -104,9 +112,21 @@ namespace s21 {
         m_snake = new SnakeModel(4, m_board->getSizeCell() - 4);
         m_state = START;
         m_userControl = MOVE_DOWN;
+        m_score = 0;
     }
 
     SnakeFood &SnakeGameModel::getSnakeFood() {
         return *m_food;
+    }
+
+    void SnakeGameModel::updateScore() {
+        m_score += 1;
+        m_bestScore = m_score > m_bestScore ? m_score : m_bestScore;
+    }
+
+    void SnakeGameModel::log() {
+        std::cout << "SnakeGameModel: " << this << ", Score: " << m_score << ", Best: " << m_bestScore << std::endl;
+        m_snake->log();
+        m_food->log();
     }
 }

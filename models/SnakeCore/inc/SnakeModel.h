@@ -6,8 +6,6 @@
 #define UNTITLED2_SNAKEMODEL_H
 
 #include <vector>
-#include <list>
-#include <algorithm>
 #include <iostream>
 namespace s21 {
     struct SnakeItem {
@@ -24,7 +22,7 @@ namespace s21 {
         bool isBody(SnakeItem head);
         bool isSnake(int x, int y);
         void push_head(SnakeItem* item);
-
+        void addTail();
         int getSize() const;
         std::vector<SnakeItem*>::iterator begin();
         std::vector<SnakeItem*>::iterator end();
@@ -35,6 +33,7 @@ namespace s21 {
         std::vector<SnakeItem*> m_snakeBody;
         Direction m_snakeDirection;
         bool isSelfInterference(Direction direction);
+        SnakeItem* genSnakeItem(SnakeItem* pos, Direction direction);
     };
 }
 

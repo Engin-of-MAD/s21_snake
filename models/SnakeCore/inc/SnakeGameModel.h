@@ -19,7 +19,6 @@ namespace s21 {
         void stateMachine();
         void reset();
         void setGameControl(GameControl control);
-        void setState(GameState gameState);
         BaseBoardModel& getGameBoard();
         SnakeModel& getSnakeModel();
         SnakeFood& getSnakeFood();
@@ -27,6 +26,7 @@ namespace s21 {
         GameControl getGameControl();
         int getScore() const;
         int getBestScore() const;
+        void log();
     private:
         bool isBorders(SnakeItem head);
         bool checkPos(SnakeItem head);
@@ -40,6 +40,7 @@ namespace s21 {
         Timer* m_timerDown;
         BaseBoardModel* m_board;
         SnakeModel* m_snake;
+        void updateScore();
         SnakeFood* m_food;
     };
 

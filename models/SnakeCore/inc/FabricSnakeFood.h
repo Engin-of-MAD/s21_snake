@@ -9,10 +9,10 @@
 namespace s21 {
     class SnakeFood {
         int m_x, m_y;
-        bool isFood(int x, int y) const;
     public:
         SnakeFood();
         SnakeFood(int x, int y);
+        bool isFood(int x, int y) const;
         int getX() const;
         int getY() const;
         void log();
