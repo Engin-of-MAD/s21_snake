@@ -62,8 +62,7 @@ namespace s21 {
     void SnakeGameModel::stateMachine() {
         switch (m_state) {
             case START: startAction(); break;
-            case SPAWN:
-//                spawnAction(); break;
+            case SPAWN: spawnAction(); break;
             case MOVING: movingAction(); break;
         }
     }
