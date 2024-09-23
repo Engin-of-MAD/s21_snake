@@ -2,13 +2,25 @@
 // Created by roach on 22.09.2024.
 //
 
-#ifndef UNTITLED2_FABRICFOOD_H
-#define UNTITLED2_FABRICFOOD_H
+#ifndef FABRICFOOD_H
+#define FABRICFOOD_H
+#include <random>
+#include <iostream>
+namespace s21 {
+    class SnakeFood {
+        int m_x, m_y;
+        bool isFood(int x, int y) const;
+    public:
+        SnakeFood();
+        SnakeFood(int x, int y);
+        int getX() const;
+        int getY() const;
+        void log();
+    };
+    class FabricSnakeFood {
+    public:
+        static SnakeFood createFood();
 
-
-class FabricFood {
-
-};
-
-
-#endif //UNTITLED2_FABRICFOOD_H
+    };
+}
+#endif //FABRICFOOD_H
