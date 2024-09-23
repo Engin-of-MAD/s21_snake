@@ -182,8 +182,7 @@ namespace s21 {
         const Tetromino::ShapesTypes shapesType[7] = {ShapeType ::Z, ShapeType ::S, ShapeType::T, ShapeType::L
                                                      ,ShapeType::J, ShapeType::O, ShapeType::I};
         static std::mt19937 rnd(std::random_device{}());
-        static std::uniform_int_distribution<> dist(0, 6);
-        int randomIndex = dist(rnd);
-        return createTetromino(shapesType[randomIndex]);
+        std::uniform_int_distribution<> dist(0, 6);
+        return createTetromino(shapesType[dist(rnd)]);
     }
 }
