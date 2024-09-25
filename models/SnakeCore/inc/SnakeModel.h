@@ -21,19 +21,19 @@ namespace s21 {
         void update();
         bool isBody(SnakeItem head);
         bool isSnake(int x, int y);
-        void push_head(SnakeItem* item);
+        void push_head(SnakeItem item);
         void addTail();
         int getSize() const;
-        std::vector<SnakeItem*>::iterator begin();
-        std::vector<SnakeItem*>::iterator end();
-        SnakeItem* operator[](int index);
+        std::vector<SnakeItem>::iterator begin();
+        std::vector<SnakeItem>::iterator end();
+        SnakeItem operator[](int index);
         void log();
     private:
         int m_size,  m_sizeItem;
-        std::vector<SnakeItem*> m_snakeBody;
+        std::vector<SnakeItem> m_snakeBody;
         Direction m_snakeDirection;
         bool isSelfInterference(Direction direction);
-        SnakeItem* genSnakeItem(SnakeItem* pos, Direction direction);
+        SnakeItem genSnakeItem(SnakeItem pos, Direction direction);
     };
 }
 

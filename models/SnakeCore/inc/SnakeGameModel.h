@@ -8,6 +8,9 @@
 #include "../../SharedModule/inc/Timer.h"
 #include "FabricSnakeFood.h"
 #include "SnakeModel.h"
+#include <algorithm>
+#include <fstream>
+#include <string>
 namespace s21 {
     class SnakeGameModel {
     public:
@@ -28,6 +31,8 @@ namespace s21 {
         int getBestScore() const;
         void log();
     private:
+        int readFromFile();
+        void writeToFile();
         bool isBorders(SnakeItem head);
         bool checkPos(SnakeItem head);
         void startAction();
@@ -35,13 +40,14 @@ namespace s21 {
         void movingAction();
         void gameControl();
         int m_score, m_bestScore;
+        std::string nameDataFile;
         GameControl m_userControl;
         GameState m_state;
-        Timer* m_timerDown;
-        BaseBoardModel* m_board;
-        SnakeModel* m_snake;
+        Timer m_timerDown;
+        BaseBoardModel m_board;
+        SnakeModel m_snake;
         void updateScore();
-        SnakeFood* m_food;
+        SnakeFood m_food;
     };
 
 }

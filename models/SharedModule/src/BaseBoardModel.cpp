@@ -51,12 +51,10 @@ namespace s21 {
 
 
     void BaseBoardModel::delBoard(int **board, int width, int height) {
-        if (board) {
+        if (!board || !*board) return;
             for (int i = 0; i < height; ++i)
                 delete[] m_boardField[i];
             delete[] board;
-
-        }
     }
 
     int BaseBoardModel::getWidth() const { return m_width; }

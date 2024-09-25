@@ -140,11 +140,13 @@ namespace s21 {
         BaseBoardModel board = gameModel->getGameBoard();
         SnakeModel snake = gameModel->getSnakeModel();
         BaseBoardModel buffer = gameModel->getGameBoard();
-        for (int s = 0; s < snake.getSize(); ++s) {
-            int x = snake[s]->x, y = snake[s]->y;
+        snake.log();
+        for (auto it = snake.begin(); it != snake.end(); ++it) {
+            int x = (*it).x, y = (*it).y;
             if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight())
                 buffer[y][x] = 1;
         }
+
 
         for (int i = 0; i < board.getHeight(); ++i) {
             for (int j = 0; j < board.getWidth(); ++j) {

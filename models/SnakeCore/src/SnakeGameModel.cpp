@@ -6,44 +6,44 @@
 namespace s21 {
 
     SnakeGameModel::SnakeGameModel()
-    : m_board(new BaseBoardModel(10, 20))
-    , m_snake(new SnakeModel(4, m_board->getSizeCell() - 4))
-    , m_food(new SnakeFood()), m_timerDown(new Timer())
+    : m_board(BaseBoardModel(10, 20))
+    , m_snake( SnakeModel(4, m_board.getSizeCell() - 4))
+    , m_food(SnakeFood()), m_timerDown(Timer())
     , m_state(START), m_userControl(MOVE_DOWN)
-    , m_score(0), m_bestScore(0){}
-
-    SnakeGameModel::~SnakeGameModel() {
-        delete m_board;
-        delete m_snake;
-        delete m_timerDown;
+    , m_score(0), m_bestScore(0), nameDataFile("snakeData.txt"){
+        m_bestScore = readFromFile();
     }
+
+
+    SnakeGameModel::~SnakeGameModel() {}
 
     void SnakeGameModel::setGameControl(SnakeGameModel::GameControl control) { m_userControl = control; }
     SnakeGameModel::GameControl SnakeGameModel::getGameControl() {return m_userControl; }
     SnakeGameModel::GameState SnakeGameModel::getState() { return m_state; }
-    BaseBoardModel &SnakeGameModel::getGameBoard() { return *m_board; }
-    SnakeModel &SnakeGameModel::getSnakeModel() { return *m_snake; }
+    BaseBoardModel &SnakeGameModel::getGameBoard() { return m_board; }
+    SnakeModel &SnakeGameModel::getSnakeModel() { return m_snake; }
     int SnakeGameModel::getScore() const { return m_score; }
     int SnakeGameModel::getBestScore() const { return m_bestScore; }
 
 
     void SnakeGameModel::gameControl() {
-        SnakeModel tmp = *m_snake;
-        std::cerr << "Input: " << m_userControl << std::endl;
+        SnakeModel tmp = m_snake;
+//        std::cerr << "Input: " << m_userControl << std::endl;
         switch (m_userControl) {
             case MOVE_UP: tmp.setDirection(SnakeModel::Direction::MoveUp); break;
             case MOVE_LEFT: tmp.setDirection(SnakeModel::Direction::MoveLeft); break;
             case MOVE_DOWN: tmp.setDirection(SnakeModel::Direction::MoveDown); break;
             case MOVE_RIGHT: tmp.setDirection(SnakeModel::Direction::MoveRight); break;
+            case PAUSE_GAME: m_state = PAUSE;
         }
         tmp.update();
 
-        if (checkPos(*tmp[0]))
+        if (checkPos((*tmp.begin())))
             m_state = GAMEOVER;
         else {
-            *m_snake = tmp;
-            if (m_food->isFood(tmp[0]->x, tmp[0]->y)){
-                m_snake->addTail();
+            m_snake = tmp;
+            if (m_food.isFood((*tmp.begin()).x, (*tmp.begin()).y)){
+                m_snake.addTail();
                 m_state = SPAWN;
                 updateScore();
             }
@@ -51,9 +51,9 @@ namespace s21 {
     }
 
     bool SnakeGameModel::checkPos(SnakeItem head) {
-        for (int y = 0; y < m_board->getHeight(); ++y) {
-            for (int x = 0; x < m_board->getWidth(); ++x) {
-                if (isBorders(head) || !m_snake->isBody(head)) return true;
+        for (int y = 0; y < m_board.getHeight(); ++y) {
+            for (int x = 0; x < m_board.getWidth(); ++x) {
+                if (isBorders(head) || !m_snake.isBody(head)) return true;
             }
         }
         return false;
@@ -61,8 +61,8 @@ namespace s21 {
 
     bool SnakeGameModel::isBorders(SnakeItem head) {
         bool checkX, checkY;
-        checkX = head.x < 0 || head.x >= m_board->getWidth();
-        checkY = head.y < 0 || head.y >= m_board->getHeight();
+        checkX = head.x < 0 || head.x >= m_board.getWidth();
+        checkY = head.y < 0 || head.y >= m_board.getHeight();
         return checkX || checkY;
     }
 
@@ -71,6 +71,9 @@ namespace s21 {
             case START: startAction(); break;
             case SPAWN: spawnAction(); break;
             case MOVING: movingAction(); break;
+            case PAUSE: if(m_userControl == PAUSE_GAME)
+                m_state = MOVING;
+            case GAMEOVER: writeToFile(); break;
         }
     }
 
@@ -87,36 +90,33 @@ namespace s21 {
         SnakeFood food(FabricSnakeFood::createFood());
         bool correctFood = false;
         while (!correctFood) {
-            if (m_snake->isSnake(food.getX(), food.getY())) {
-                *m_food = food;
+            if (m_snake.isSnake(food.getX(), food.getY())) {
+                m_food = food;
                 correctFood = true;
                 m_state = MOVING;
             }
         }
-        m_food->log();
+        m_food.log();
     }
 
     void SnakeGameModel::movingAction() {
-        m_timerDown->setCurrentTime(Clock::now());
-        if (m_timerDown->delay(Milliseconds{200})) {
-            m_timerDown->setLastUpdateTime(Clock::now());
+        m_timerDown.setCurrentTime(Clock::now());
+        if (m_timerDown.delay(Milliseconds{200})) {
+            m_timerDown.setLastUpdateTime(Clock::now());
             gameControl();
         }
     }
 
     void SnakeGameModel::reset() {
-        m_board->reset();
-        delete m_snake;
-        delete m_food;
-        m_food = new SnakeFood(FabricSnakeFood::createFood());
-        m_snake = new SnakeModel(4, m_board->getSizeCell() - 4);
+        m_food = SnakeFood(FabricSnakeFood::createFood());
+        m_snake = SnakeModel(4, m_board.getSizeCell() - 4);
         m_state = START;
         m_userControl = MOVE_DOWN;
         m_score = 0;
     }
 
     SnakeFood &SnakeGameModel::getSnakeFood() {
-        return *m_food;
+        return m_food;
     }
 
     void SnakeGameModel::updateScore() {
@@ -126,7 +126,43 @@ namespace s21 {
 
     void SnakeGameModel::log() {
         std::cout << "SnakeGameModel: " << this << ", Score: " << m_score << ", Best: " << m_bestScore << std::endl;
-        m_snake->log();
-        m_food->log();
+        m_snake.log();
+        m_food.log();
     }
+
+    int SnakeGameModel::readFromFile() {
+        std::fstream file(nameDataFile);
+        std::vector<int> nums;
+        int maxElement = 0;
+        if(file.is_open()){
+            while (file >> maxElement){
+                nums.push_back(maxElement);
+            }
+        }
+        file.close();
+        maxElement = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            std::cout << nums[i]  << std::endl;
+        }
+        if (!nums.empty()) {
+            maxElement = *std::max_element(nums.begin(), nums.end());
+            std::cout << "Максимальный элемент в векторе: " << maxElement << std::endl;
+        } else {
+            std::cout << "Вектор пуст." << std::endl;
+            maxElement = 0;
+        }
+
+        return maxElement;
+    }
+
+    void SnakeGameModel::writeToFile() {
+        int tmp = readFromFile();
+        std::fstream file(nameDataFile, std::ios_base::app);
+
+        if (file.is_open() && m_bestScore > 0 && m_bestScore > tmp) {
+            file << m_bestScore << std::endl;
+        }
+    }
+
+
 }
