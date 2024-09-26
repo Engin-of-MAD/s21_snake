@@ -7,7 +7,7 @@
 
 #include "TetrisBoardModel.h"
 #include "TetrominoFactory.h"
-#include "../../SharedModule/inc/Timer.h"
+#include "../../UnionModule/inc/Timer.h"
 #include <chrono>
 #include <algorithm>
 #include <fstream>

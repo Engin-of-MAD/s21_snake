@@ -4,8 +4,8 @@
 
 #ifndef SNAKEGAMEMODEL_H
 #define SNAKEGAMEMODEL_H
-#include "../../SharedModule/inc/BaseBoardModel.h"
-#include "../../SharedModule/inc/Timer.h"
+#include "../../UnionModule/inc/BaseBoardModel.h"
+#include "../../UnionModule/inc/Timer.h"
 #include "FabricSnakeFood.h"
 #include "SnakeModel.h"
 #include <algorithm>

@@ -4,7 +4,7 @@
 
 #ifndef TETRISBOARDMODLE_H
 #define TETRISBOARDMODLE_H
-#include "../../SharedModule/inc/BaseBoardModel.h"
+#include "../../UnionModule/inc/BaseBoardModel.h"
 #include "TetrominoFactory.h"
 namespace s21 {
     class TetrisBoardModel : public BaseBoardModel {

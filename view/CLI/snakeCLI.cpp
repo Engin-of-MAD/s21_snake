@@ -1,5 +1,5 @@
 #include <ncurses.h>
-#include "../models/SnakeCore/inc/SnakeGameModel.h"
+#include "../../models/SnakeCore/inc/SnakeGameModel.h"
 #include "frontend.h"
 
 using namespace s21;
