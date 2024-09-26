@@ -22,10 +22,7 @@ namespace s21 {
                     m_boardField[i][j] = other.m_boardField[i][j];
     }
 
-    BaseBoardModel::~BaseBoardModel() {
-        delBoard(m_boardField, m_height);
-    }
-
+    BaseBoardModel::~BaseBoardModel() { delBoard(m_boardField, m_height); }
     int **BaseBoardModel::newBoard(int width, int height) {
         int **board = new int *[height];
         if (!board) return nullptr;
@@ -49,7 +46,6 @@ namespace s21 {
         return board;
     }
 
-
     void BaseBoardModel::delBoard(int **board, int height) {
         if (!board || !*board) return;
             for (int i = 0; i < height; ++i)
@@ -60,13 +56,11 @@ namespace s21 {
     int BaseBoardModel::getWidth() const { return m_width; }
     int BaseBoardModel::getHeight() const { return m_height; }
     int BaseBoardModel::getSizeCell() const { return m_sizeCell; }
-
     void BaseBoardModel::reset() {
         for (int i = 0; i < m_height; ++i)
             for (int j = 0; j < m_width; ++j)
                 m_boardField[i][j] = 0;
     }
-
     void BaseBoardModel::printInConsole() const {
         for (int i = 0; i < m_height; ++i) {
             for (int j = 0; j < m_width; ++j) {
@@ -76,9 +70,7 @@ namespace s21 {
         }
     }
 
-
     int *BaseBoardModel::operator[](int index) { return m_boardField[index]; }
-
     BaseBoardModel &BaseBoardModel::operator=(const BaseBoardModel &other) {
         if (this == &other) return *this;
         m_width = other.m_width;
@@ -87,7 +79,6 @@ namespace s21 {
         m_boardField = copyBoard(other.m_boardField, m_width, m_width);
         return *this;
     }
-
 }
 
 
