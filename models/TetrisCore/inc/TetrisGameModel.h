@@ -9,7 +9,8 @@
 #include "TetrominoFactory.h"
 #include "../../SharedModule/inc/Timer.h"
 #include <chrono>
-
+#include <algorithm>
+#include <fstream>
 namespace s21 {
     class TetrisGameModel {
     public:
@@ -35,7 +36,9 @@ namespace s21 {
         void resetGame();
 
     private:
+
         TetrisBoardModel *m_gBoard;
+        std::string nameDataFile;
         Tetromino *m_currShape;
         Tetromino *m_nextShape;
         Timer *timerDown;
@@ -49,7 +52,13 @@ namespace s21 {
         void userAction(gameControl g_input);
         void removeFullRowsAndUpdateScore();
         void start_action();
+        void spawn_action();
         void move_action();
+        void stop_action();
+        void exit_action();
+        void pause_action();
+        int readFromFile();
+        void writeToFile();
     };
 }
 #endif //BRICKGAME_GAMEOBJ_H

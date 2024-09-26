@@ -36,6 +36,9 @@ namespace s21 {
         bool isBorders(SnakeItem head);
         bool checkPos(SnakeItem head);
         void startAction();
+        void stopAction();
+        void pauseAction();
+        void exitAction();
         void spawnAction();
         void movingAction();
         void gameControl();

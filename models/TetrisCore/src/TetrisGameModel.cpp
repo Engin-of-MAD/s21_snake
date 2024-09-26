@@ -1,10 +1,12 @@
+
 #include "../inc/TetrisGameModel.h"
 // models/src/m_gameModel.cpp
 namespace s21 {
     TetrisGameModel::TetrisGameModel()
-            : m_gBoard(new TetrisBoardModel(10, 20)), score(0), bestScore(0), state(START),
-              m_currShape(new Tetromino()), m_nextShape(new Tetromino(TetrominoFactory::randomTetromino())),
-              timerDown(new Timer()), timerControl(new Timer()) {
+            : m_gBoard(new TetrisBoardModel(10, 20)), nameDataFile("tetrisScore.txt"), m_currShape(new Tetromino()), m_nextShape(new Tetromino(TetrominoFactory::randomTetromino())),
+              timerDown(new Timer()), timerControl(new Timer()),
+              score(0),
+              bestScore(0), state(START) {
     }
 
 
@@ -42,6 +44,11 @@ namespace s21 {
                 break;
             case EXIT_GAME:
                 state = EXIT_STATE;
+                break;
+            case NOSIG:
+                break;
+            case PAUSE_GAME:
+                state = PAUSE;
                 break;
         }
     }
@@ -81,21 +88,17 @@ namespace s21 {
                 *m_currShape = *m_nextShape;
                 state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
                 break;
-            case MOVING:
-                move_action();
-                break;
-            case PAUSE:
-                if (input == PAUSE_GAME) {
-                    state = MOVING;
-                    input = NOSIG; // для моментального сброса состояния переменной движения
-                }
-                break;
+            case MOVING: move_action(); break;
+            case PAUSE: pause_action(); break;
+            case STOP: stop_action(); break;
+            case GAMEOVER:  writeToFile(); break;
+            case EXIT_STATE: exit_action(); break;
         }
     }
 
     bool TetrisGameModel::genRandomShape(Tetromino *shape) {
         bool collision = false;
-        *(shape) = std::move(TetrominoFactory::randomTetromino());
+        *(shape) = TetrominoFactory::randomTetromino();
         shape->setCordX(rand() % (m_gBoard->getWidth() - shape->getWidth() + 1));
         if (!checkPos(shape))
             collision = true;
@@ -160,5 +163,52 @@ namespace s21 {
         m_currShape = new Tetromino();
         m_nextShape = new Tetromino(TetrominoFactory::randomTetromino());
         score = 0;
+    }
+
+    void TetrisGameModel::pause_action() {
+        if (input == PAUSE_GAME) {
+            state = MOVING;
+            input = NOSIG; // для моментального сброса состояния переменной движения
+        }
+    }
+
+    int TetrisGameModel::readFromFile() {
+        std::fstream file(nameDataFile);
+        std::vector<int> nums;
+        int maxElement = 0;
+        if(!file.is_open()){ return -1;}
+        while (file >> maxElement){ nums.push_back(maxElement);}
+
+        file.close();
+        maxElement = 0;
+        std::cout << "Data from file:" << std::endl;
+        for (int num : nums) {std::cout << num  << std::endl;}
+        if (!nums.empty()) {
+            maxElement = *std::max_element(nums.begin(), nums.end());
+            std::cout << "Get max num from file: " << maxElement << std::endl;
+        } else {
+            std::cout << "File empty"<< std::endl;
+            maxElement = 0;
+        }
+        return maxElement;
+    }
+    void TetrisGameModel::stop_action() {
+        resetGame();
+    }
+
+    void TetrisGameModel::exit_action() {
+
+    }
+
+    void TetrisGameModel::writeToFile() {
+        int tmp = readFromFile();
+        std::fstream file(nameDataFile, std::ios_base::app);
+        if (file.is_open() && bestScore > 0 && bestScore > tmp) {
+            file << bestScore << std::endl;
+        }
+    }
+
+    void TetrisGameModel::spawn_action() {
+
     }
 }

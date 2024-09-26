@@ -6,7 +6,7 @@
 
 namespace s21 {
     Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix2x2 &shape, int cordX, int cordY)
-            : m_name(shapeType), m_width(2), m_shape(new int *[m_width]), m_cordX(cordX), m_cordY(cordY) {
+            : m_width(2), m_cordX(cordX), m_cordY(cordY), m_shape(new int *[m_width]), m_name(shapeType) {
         for (int i = 0; i < m_width; ++i) {
             m_shape[i] = new int[m_width];
             std::copy(shape[i].begin(), shape[i].end(), m_shape[i]);
@@ -14,7 +14,7 @@ namespace s21 {
     }
 
     Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix3x3 &shape, int cordX, int cordY)
-            : m_name(shapeType), m_width(3), m_shape(new int *[m_width]), m_cordX(cordX), m_cordY(cordY) {
+            : m_width(3), m_cordX(cordX), m_cordY(cordY), m_shape(new int *[m_width]), m_name(shapeType) {
         for (int i = 0; i < m_width; ++i) {
             m_shape[i] = new int[m_width];
             std::copy(shape[i].begin(), shape[i].end(), m_shape[i]);
@@ -32,9 +32,9 @@ namespace s21 {
     }
 
     Tetromino::Tetromino(Tetromino::ShapesTypes shapeType, const Matrix4x4 &shape, int cordX, int cordY)
-            : m_name(shapeType), m_width(4),
-              m_shape(new int *[m_width]),
-              m_cordX(cordX), m_cordY(cordY) {
+            : m_width(4), m_cordX(cordX),
+              m_cordY(cordY),
+              m_shape(new int *[m_width]), m_name(shapeType) {
         for (int i = 0; i < m_width; ++i) {
             m_shape[i] = new int[m_width];
             std::copy(shape[i].begin(), shape[i].end(), m_shape[i]);
@@ -42,14 +42,14 @@ namespace s21 {
     }
 
     Tetromino::Tetromino(Tetromino &other)
-            : m_cordX(other.m_cordX), m_cordY(other.m_cordY), m_width(other.m_width), m_name(other.m_name),
-              m_shape(createMatrix(nullptr, m_width)) {
+            : m_width(other.m_width), m_cordX(other.m_cordX), m_cordY(other.m_cordY), m_shape(createMatrix(nullptr, m_width)),
+              m_name(other.m_name) {
         fillMatrix(m_shape, other.m_shape, m_width);
     }
 
     Tetromino::Tetromino(Tetromino &&other) noexcept
-            : m_name(other.m_name), m_width(other.m_width), m_cordX(other.m_cordX), m_cordY(other.m_cordY),
-              m_shape(other.m_shape) { other.m_shape = nullptr; }
+            : m_width(other.m_width), m_cordX(other.m_cordX), m_cordY(other.m_cordY), m_shape(other.m_shape),
+              m_name(other.m_name) { other.m_shape = nullptr; }
 
 
     Tetromino::~Tetromino() {

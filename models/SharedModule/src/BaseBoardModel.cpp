@@ -23,7 +23,7 @@ namespace s21 {
     }
 
     BaseBoardModel::~BaseBoardModel() {
-        delBoard(m_boardField, m_width, m_height);
+        delBoard(m_boardField, m_height);
     }
 
     int **BaseBoardModel::newBoard(int width, int height) {
@@ -50,7 +50,7 @@ namespace s21 {
     }
 
 
-    void BaseBoardModel::delBoard(int **board, int width, int height) {
+    void BaseBoardModel::delBoard(int **board, int height) {
         if (!board || !*board) return;
             for (int i = 0; i < height; ++i)
                 delete[] m_boardField[i];
@@ -83,7 +83,7 @@ namespace s21 {
         if (this == &other) return *this;
         m_width = other.m_width;
         m_height = other.m_height;
-        delBoard(m_boardField, m_width, m_height);
+        delBoard(m_boardField, m_height);
         m_boardField = copyBoard(other.m_boardField, m_width, m_width);
         return *this;
     }

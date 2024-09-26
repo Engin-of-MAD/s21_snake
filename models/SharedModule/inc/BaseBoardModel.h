@@ -12,7 +12,7 @@ namespace s21 {
         int m_width, m_height, m_sizeCell;
         int **newBoard(int width, int height);
         int **copyBoard(int **otherBoard, int width, int height);
-        void delBoard(int **board, int width, int height);
+        void delBoard(int **board, int height);
 
     public:
         BaseBoardModel();

@@ -6,7 +6,7 @@ const int sizeItem = sizeCell - 4;
 #include "../inc/BoardView.h"
 namespace s21 {
     BoardView::BoardView() : BoardView(1, 1) {}
-    BoardView::BoardView(int width, int height) : m_width(width), m_height(height), gameModel(nullptr) {
+    BoardView::BoardView(int width, int height) : gameModel(nullptr), m_width(width), m_height(height) {
         setFixedSize(m_width * sizeCell, m_height * sizeCell);}
     BoardView::BoardView(TetrisGameModel *model)
             : BoardView(model->getBoardModel().getWidth()
@@ -95,6 +95,7 @@ namespace s21 {
                     case ShapesTypes::L :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
                     case ShapesTypes::J :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
                     case ShapesTypes::T :ShapeField[i + 1][j + 1] = m_nextShape[i][j];break;
+                    case ShapesTypes::E: break;
                 }
             }
         }
@@ -106,7 +107,7 @@ namespace s21 {
             ShapesTypes::S == m_nextShape.getName()) {
             m_nextShape.rotate();
         }
-        int ShapeField[5][5] = {0};
+        int ShapeField[5][5] = {{0}};
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
                 centralShape(ShapeField);
@@ -127,6 +128,7 @@ namespace s21 {
     SnakeBoardView::SnakeBoardView() : BoardView() {}
     SnakeBoardView::SnakeBoardView(int width, int height): BoardView(width, height) {}
     void SnakeBoardView::paintEvent(QPaintEvent *e) {
+        Q_UNUSED(e)
         QPainter painter;
         painter.begin(this);
         drawGrid(&painter);

@@ -6,11 +6,11 @@
 namespace s21 {
 
     SnakeGameModel::SnakeGameModel()
-    : m_board(BaseBoardModel(10, 20))
-    , m_snake( SnakeModel(4, m_board.getSizeCell() - 4))
-    , m_food(SnakeFood()), m_timerDown(Timer())
-    , m_state(START), m_userControl(MOVE_DOWN)
-    , m_score(0), m_bestScore(0), nameDataFile("snakeData.txt"){
+    : m_score(0)
+    , m_bestScore(0)
+    , nameDataFile("snakeData.txt"), m_userControl(MOVE_DOWN)
+    , m_state(START), m_timerDown(Timer())
+    , m_board(BaseBoardModel(10, 20)), m_snake( SnakeModel(4, m_board.getSizeCell() - 4)), m_food(SnakeFood()){
         m_bestScore = readFromFile();
     }
 
@@ -35,6 +35,10 @@ namespace s21 {
             case MOVE_DOWN: tmp.setDirection(SnakeModel::Direction::MoveDown); break;
             case MOVE_RIGHT: tmp.setDirection(SnakeModel::Direction::MoveRight); break;
             case PAUSE_GAME: m_state = PAUSE;
+            case NOSIG: break;
+            case STAR_GAME: m_state = START;break;
+            case EXIT_GAME: m_state = EXIT_STATE; break;
+            case STOP_GAME: m_state = STOP; break;
         }
         tmp.update();
 
@@ -71,9 +75,10 @@ namespace s21 {
             case START: startAction(); break;
             case SPAWN: spawnAction(); break;
             case MOVING: movingAction(); break;
-            case PAUSE: if(m_userControl == PAUSE_GAME)
-                m_state = MOVING;
+            case PAUSE: pauseAction(); break;
             case GAMEOVER: writeToFile(); break;
+            case STOP: stopAction(); break;
+            case EXIT_STATE: exitAction(); break;
         }
     }
 
@@ -88,13 +93,9 @@ namespace s21 {
     void SnakeGameModel::spawnAction() {
 
         SnakeFood food(FabricSnakeFood::createFood());
-        bool correctFood = false;
-        while (!correctFood) {
-            if (m_snake.isSnake(food.getX(), food.getY())) {
+        if (m_snake.isSnake(food.getX(), food.getY())) {
                 m_food = food;
-                correctFood = true;
                 m_state = MOVING;
-            }
         }
         m_food.log();
     }
@@ -134,34 +135,42 @@ namespace s21 {
         std::fstream file(nameDataFile);
         std::vector<int> nums;
         int maxElement = 0;
-        if(file.is_open()){
-            while (file >> maxElement){
-                nums.push_back(maxElement);
-            }
-        }
+        if(!file.is_open()){ return -1;}
+        while (file >> maxElement){ nums.push_back(maxElement);}
+
         file.close();
         maxElement = 0;
-        for (int i = 0; i < nums.size(); ++i) {
-            std::cout << nums[i]  << std::endl;
-        }
+        std::cout << "Data from file:" << std::endl;
+        for (int num : nums) {std::cout << num  << std::endl;}
         if (!nums.empty()) {
             maxElement = *std::max_element(nums.begin(), nums.end());
-            std::cout << "Максимальный элемент в векторе: " << maxElement << std::endl;
+            std::cout << "Get max num from file: " << maxElement << std::endl;
         } else {
-            std::cout << "Вектор пуст." << std::endl;
+            std::cout << "File empty"<< std::endl;
             maxElement = 0;
         }
-
         return maxElement;
     }
 
     void SnakeGameModel::writeToFile() {
         int tmp = readFromFile();
         std::fstream file(nameDataFile, std::ios_base::app);
-
         if (file.is_open() && m_bestScore > 0 && m_bestScore > tmp) {
             file << m_bestScore << std::endl;
         }
+    }
+
+    void SnakeGameModel::stopAction() {
+        if(m_userControl == STOP_GAME){
+            m_state = MOVING;}
+    }
+    void SnakeGameModel::pauseAction() {
+        if (m_userControl == PAUSE_GAME)
+            m_state = MOVING;
+    }
+    void SnakeGameModel::exitAction() {
+        if(m_userControl == PAUSE_GAME){
+            m_state = MOVING;}
     }
 
 

@@ -29,23 +29,23 @@ namespace s21 {
     }
     SnakeItem SnakeModel::operator[](int index) { return m_snakeBody[index]; }
     bool SnakeModel::isBody(SnakeItem head) {
-        for (int i = 1; i < m_snakeBody.size(); ++i)
+        for (size_t i = 1; i < m_snakeBody.size(); ++i)
             if (m_snakeBody[i].x == head.x && m_snakeBody[i].y == head.y)
                 return false;
         return true;
     }
     bool SnakeModel::isSelfInterference(SnakeModel::Direction direction) {
         bool checkDirection = true;
-        if (m_snakeDirection == Direction::MoveDown && direction == Direction::MoveUp
-        || m_snakeDirection == Direction::MoveUp && direction == Direction::MoveDown)
+        if ((m_snakeDirection == Direction::MoveDown && direction == Direction::MoveUp)
+        || (m_snakeDirection == Direction::MoveUp && direction == Direction::MoveDown))
             checkDirection = false;
-        if (m_snakeDirection == Direction::MoveRight && direction == Direction::MoveLeft
-        || m_snakeDirection == Direction::MoveLeft && direction == Direction::MoveRight)
+        if ((m_snakeDirection == Direction::MoveRight && direction == Direction::MoveLeft)
+        || (m_snakeDirection == Direction::MoveLeft && direction == Direction::MoveRight))
             checkDirection = false;
         return checkDirection;
     }
     bool SnakeModel::isSnake(int x, int y) {
-        for (int i = 1; i < m_snakeBody.size(); ++i)
+        for (size_t i = 1; i < m_snakeBody.size(); ++i)
             if (m_snakeBody[i].x == x && m_snakeBody[i].y == y)
                 return false;
         return true;
@@ -63,7 +63,7 @@ namespace s21 {
             newTail = genSnakeItem(lastItem, Direction::MoveUp);
         else if (prevItem.y - lastItem.y == -1)
             newTail = genSnakeItem(lastItem, Direction::MoveDown);
-            m_snakeBody.push_back(newTail);
+        m_snakeBody.push_back(newTail);
         m_size = m_snakeBody.size();
     }
 
