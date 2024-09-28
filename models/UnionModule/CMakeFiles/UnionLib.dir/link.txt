@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -shared -Wl,-soname,libUnionLib.so -o libUnionLib.so CMakeFiles/UnionLib.dir/UnionLib_autogen/mocs_compilation.cpp.o CMakeFiles/UnionLib.dir/src/BaseBoardModel.cpp.o CMakeFiles/UnionLib.dir/src/Timer.cpp.o
