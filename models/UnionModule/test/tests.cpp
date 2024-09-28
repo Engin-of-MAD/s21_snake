@@ -2,6 +2,9 @@
 #include "test.h"
 
 using namespace s21;
-TEST(UnionModuleTest1, Constructor_branch_test_1) {
+TEST(UnionModuleTest, BaseBoard1) {
+    BaseBoardModel boardModel;
+    ASSERT_EQ(boardModel.getWidth(), 1);
+
 
 }

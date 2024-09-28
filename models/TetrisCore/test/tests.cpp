@@ -3,5 +3,7 @@
 
 using namespace s21;
 TEST(TetrisTest1, Constructor_branch_test_1) {
-    ASSERT_EQ(true, true);
+    TetrisGameModel model;
+    ASSERT_EQ(model.getScore(), 0);
+    ASSERT_EQ(model.getStateGame(), TetrisGameModel::START);
 }

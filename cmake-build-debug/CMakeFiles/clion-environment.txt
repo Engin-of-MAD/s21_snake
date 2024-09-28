@@ -1,4 +1,0 @@
-ToolSet: 1.0 (local)Ninja: 1.12.0@/home/roach/.local/share/CLion-2024.1.4/clion-2024.1.4/bin/ninja/linux/x64/ninja
-Options: 
-
-Options:-DCMAKE_MAKE_PROGRAM=/home/roach/.local/share/CLion-2024.1.4/clion-2024.1.4/bin/ninja/linux/x64/ninja

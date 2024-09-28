@@ -18,7 +18,7 @@ add_subdirectory(models/TetrisCore)
 add_subdirectory(models/UnionModule)
 add_subdirectory(view/Desktop)
 
-set(TestLibs TetrisLib SnakeLib ${GTEST_LIBRARIES} gtest_main)
+set(TestLibs UnionLib TetrisLib SnakeLib ${GTEST_LIBRARIES} gtest_main)
 set(DesktopLibs DesktopLib TetrisLib SnakeLib Qt::Core Qt::Gui Qt::Widgets)
 set(CLI_LIBS SnakeLib UnionLib -lncurses)
 
@@ -43,7 +43,7 @@ if (GCOV OR LCOV OR GENHTML)
 endif ()
 
 if (BUILD_TESTS)
-    set(CMAKE_CXX_FLAGS " -fprofile-arcs -ftest-coverage ")
+    set(CMAKE_CXX_FLAGS "-g -O0  -fprofile-arcs -ftest-coverage")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCOV_FLAGS}")
 else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WCompiler}")
@@ -56,13 +56,16 @@ if(BUILD_TESTS)
     message("Building tests...")
     add_executable(test ${Tests})
     target_link_libraries(test ${TestLibs})
+
+    # Создание цели для генерации отчетов
     add_custom_target(gcov_report
             ./test
-            COMMAND lcov --capture --directory . --output-file coverage.info
+            COMMAND lcov --capture --directory ./ --output-file coverage.info
             COMMAND genhtml -o report coverage.info
             COMMAND xdg-open report/index.html
             DEPENDS test
     )
+
 endif()
 
 # Создание цели для сборки CLI версии
