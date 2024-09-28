@@ -4,11 +4,6 @@ project(BrickGame)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
-set(WCompiler "-Wall -Werror -Wextra")
-set(GCOV_FLAGS "-fprofile-arcs -ftest-coverage")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WCompiler} ${GCOV_FLAGS}")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCOV_FLAGS}")
-set(COVERAGE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/coverage")
 
 find_program(GCOV gcov)
 find_program(LCOV lcov)
@@ -41,20 +36,63 @@ else()
     message(STATUS "Qt6 Founded.")
 endif()
 if (GCOV OR LCOV OR GENHTML)
-    message("Testing tool founded")
+    message("Testing tool founded.")
 endif ()
+
+if (BUILD_TESTS)
+    set(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCOV_FLAGS}")
+else ()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WCompiler}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+endif ()
+
+
+option(GENERATE_COVERAGE_REPORT "Generate coverage report using gcov/lcov" ON)
+
+option(GENERATE_COVERAGE_REPORT "Generate coverage report using gcov/lcov" OFF)
+
+
+
+
+if(GENERATE_COVERAGE_REPORT)
+    # Проверка наличия необходимых инструментов
+
+        # Настройка флагов компиляции и линковки для генерации профилей
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+
+        # Определение путей к файлам профилей
+        file(GLOB GCDA_FILES "${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}_tests.gcda")
+        file(GLOB GCNO_FILES "${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}_tests.gcno")
+
+        # Создание списка путей к файлам профилей
+
+
+        # Создание цели для генерации отчетов
+    add_custom_target(gcov_report
+            ./test
+            COMMAND lcov --capture --directory . --output-file coverage.info --ignore-errors inconsistent
+            COMMAND genhtml -o report coverage.info
+            COMMAND xdg-open report/index.html
+            DEPENDS test
+    )
+endif()
+
+
+
+
+
+
+
 
 
 
 # Создание цели для сборки тестов
 if(BUILD_TESTS)
     message("Building tests...")
-    add_executable(${PROJECT_NAME}_tests ${Tests})
-    target_link_libraries(${PROJECT_NAME}_tests ${TestLibs})
-    set_target_properties(${PROJECT_NAME}_tests PROPERTIES COMPILE_FLAGS "${GCOV_FLAGS}" LINK_FLAGS "${GCOV_FLAGS}")
-    # Создаем целевую команду для запуска тестов с покрытием
-    add_custom_command(TARGET ${PROJECT_NAME}_tests POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E env COVERAGE=ON ctest ${GTEST_COV_ARGS})
+    add_executable(test ${Tests})
+    target_link_libraries(test ${TestLibs})
 endif()
 
 # Создание цели для сборки CLI версии
@@ -68,4 +106,3 @@ if(BUILD_DESKTOP_APP)
     add_executable(${PROJECT_NAME}_app ${Desktop})
     target_link_libraries(${PROJECT_NAME}_app ${DesktopLibs})
 endif()
-
