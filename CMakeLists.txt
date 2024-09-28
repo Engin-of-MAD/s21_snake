@@ -22,7 +22,10 @@ set(TestLibs TetrisLib SnakeLib ${GTEST_LIBRARIES} gtest_main)
 set(DesktopLibs DesktopLib TetrisLib SnakeLib Qt::Core Qt::Gui Qt::Widgets)
 set(CLI_LIBS SnakeLib UnionLib -lncurses)
 
-set(Tests tests/tests.cpp)
+set(Tests
+        models/SnakeCore/test/tests.cpp
+        models/TetrisCore/test/tests.cpp
+        models/UnionModule/test/tests.cpp)
 set(Desktop view/Desktop/BrickGameDesktop.cpp)
 set(CLI view/CLI/snakeCLI.cpp view/CLI/frontend.cpp)
 
@@ -40,7 +43,7 @@ if (GCOV OR LCOV OR GENHTML)
 endif ()
 
 if (BUILD_TESTS)
-    set(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
+    set(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage ")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCOV_FLAGS}")
 else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WCompiler}")
@@ -48,36 +51,8 @@ else ()
 endif ()
 
 
-option(GENERATE_COVERAGE_REPORT "Generate coverage report using gcov/lcov" ON)
+# Создание цели для генерации отчетов
 
-option(GENERATE_COVERAGE_REPORT "Generate coverage report using gcov/lcov" OFF)
-
-
-
-
-if(GENERATE_COVERAGE_REPORT)
-    # Проверка наличия необходимых инструментов
-
-        # Настройка флагов компиляции и линковки для генерации профилей
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-
-        # Определение путей к файлам профилей
-        file(GLOB GCDA_FILES "${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}_tests.gcda")
-        file(GLOB GCNO_FILES "${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}_tests.gcno")
-
-        # Создание списка путей к файлам профилей
-
-
-        # Создание цели для генерации отчетов
-    add_custom_target(gcov_report
-            ./test
-            COMMAND lcov --capture --directory . --output-file coverage.info --ignore-errors inconsistent
-            COMMAND genhtml -o report coverage.info
-            COMMAND xdg-open report/index.html
-            DEPENDS test
-    )
-endif()
 
 
 
@@ -93,6 +68,13 @@ if(BUILD_TESTS)
     message("Building tests...")
     add_executable(test ${Tests})
     target_link_libraries(test ${TestLibs})
+    add_custom_target(gcov_report
+            ./test
+            COMMAND lcov --capture --directory . --output-file coverage.info
+            COMMAND genhtml -o report coverage.info
+            COMMAND xdg-open report/index.html
+            DEPENDS test
+    )
 endif()
 
 # Создание цели для сборки CLI версии
