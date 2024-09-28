@@ -43,24 +43,12 @@ if (GCOV OR LCOV OR GENHTML)
 endif ()
 
 if (BUILD_TESTS)
-    set(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage ")
+    set(CMAKE_CXX_FLAGS " -fprofile-arcs -ftest-coverage ")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCOV_FLAGS}")
 else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WCompiler}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 endif ()
-
-
-# Создание цели для генерации отчетов
-
-
-
-
-
-
-
-
-
 
 
 # Создание цели для сборки тестов
