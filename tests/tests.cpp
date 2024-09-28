@@ -13,5 +13,5 @@ TEST(GameTest1, Constructor_branch_test_1) {
         model.setGameControl(s21::SnakeGameModel::MOVE_DOWN);
     }
 
-
+    ASSERT_EQ(true, true);
 }

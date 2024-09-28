@@ -1,0 +1,97 @@
+{
+	"BUILD_DIR" : "/home/roach/CLionProjects/untitled2/models/UnionModule/UnionLib_autogen",
+	"CMAKE_BINARY_DIR" : "/home/roach/CLionProjects/untitled2",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/roach/CLionProjects/untitled2/models/UnionModule",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/roach/CLionProjects/untitled2/models/UnionModule",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/roach/CLionProjects/untitled2/models/UnionModule/CMakeLists.txt"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/roach/CLionProjects/untitled2",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/home/roach/CLionProjects/untitled2/models/UnionModule/UnionLib_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "UnionLib_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/roach/CLionProjects/untitled2/models/UnionModule/inc/BaseBoardModel.h",
+			"Mu",
+			"DIG64O274K/moc_BaseBoardModel.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/models/UnionModule/inc/Timer.h",
+			"Mu",
+			"DIG64O274K/moc_Timer.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/roach/CLionProjects/untitled2/models/UnionModule/UnionLib_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/roach/CLionProjects/untitled2/models/UnionModule/UnionLib_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "UnionLib_EXPORTS" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/roach/CLionProjects/untitled2/models/UnionModule",
+		"/usr/include/c++/14.2.1",
+		"/usr/include/c++/14.2.1/x86_64-pc-linux-gnu",
+		"/usr/include/c++/14.2.1/backward",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include",
+		"/usr/local/include",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include-fixed",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/roach/CLionProjects/untitled2/models/UnionModule/UnionLib_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/roach/CLionProjects/untitled2/models/UnionModule/CMakeFiles/UnionLib_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt6/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 7,
+	"SETTINGS_FILE" : "/home/roach/CLionProjects/untitled2/models/UnionModule/CMakeFiles/UnionLib_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/roach/CLionProjects/untitled2/models/UnionModule/src/BaseBoardModel.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/models/UnionModule/src/Timer.cpp",
+			"Mu",
+			null
+		]
+	],
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}
