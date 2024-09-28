@@ -2,6 +2,7 @@
 #include "test.h"
 
 using namespace s21;
-TEST(GameTest1, Constructor_branch_test_1) {
+TEST(SnakeTest, Constructor_branch_test_1) {
+    SnakeGameModel model;
     ASSERT_EQ(true, true);
 }

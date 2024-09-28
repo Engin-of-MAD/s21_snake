@@ -1,0 +1,7 @@
+/home/roach/.local/share/CLion-2024.1.4/clion-2024.1.4/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/roach/.local/share/CLion-2024.1.4/clion-2024.1.4/bin/ninja/linux/x64/ninja -G Ninja -S /home/roach/CLionProjects/untitled2 -B /home/roach/CLionProjects/untitled2/cmake-build-debug
+-- Qt6 Founded.
+Testing tool founded.
+Building tests...
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/roach/CLionProjects/untitled2/cmake-build-debug

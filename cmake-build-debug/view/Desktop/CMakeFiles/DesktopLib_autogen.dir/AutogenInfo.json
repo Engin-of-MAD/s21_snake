@@ -1,0 +1,152 @@
+{
+	"BUILD_DIR" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/DesktopLib_autogen",
+	"CMAKE_BINARY_DIR" : "/home/roach/CLionProjects/untitled2/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/roach/CLionProjects/untitled2/view/Desktop",
+	"CMAKE_EXECUTABLE" : "/home/roach/.local/share/CLion-2024.1.4/clion-2024.1.4/bin/cmake/linux/x64/bin/cmake",
+	"CMAKE_LIST_FILES" : [ "/home/roach/CLionProjects/untitled2/view/Desktop/CMakeLists.txt" ],
+	"CMAKE_SOURCE_DIR" : "/home/roach/CLionProjects/untitled2",
+	"DEP_FILE" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/DesktopLib_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "DesktopLib_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/BoardView.h",
+			"Mu",
+			"DIG64O274K/moc_BoardView.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/ButtonBoardView.h",
+			"Mu",
+			"DIG64O274K/moc_ButtonBoardView.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/InfoBoardView.h",
+			"Mu",
+			"DIG64O274K/moc_InfoBoardView.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/SnakeView.h",
+			"Mu",
+			"DIG64O274K/moc_SnakeView.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/StartScreenView.h",
+			"Mu",
+			"DIG64O274K/moc_StartScreenView.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/TetrisView.h",
+			"Mu",
+			"DIG64O274K/moc_TetrisView.cpp",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/inc/mainwindow.h",
+			"Mu",
+			"DIG64O274K/moc_mainwindow.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/DesktopLib_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/DesktopLib_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "DesktopLib_EXPORTS", "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/roach/CLionProjects/untitled2/view/Desktop",
+		"/usr/include/qt6/QtCore",
+		"/usr/include/qt6",
+		"/usr/lib/qt6/mkspecs/linux-g++",
+		"/usr/include/qt6/QtGui",
+		"/usr/include/qt6/QtWidgets",
+		"/usr/include",
+		"/usr/include/c++/14.2.1",
+		"/usr/include/c++/14.2.1/x86_64-pc-linux-gnu",
+		"/usr/include/c++/14.2.1/backward",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include",
+		"/usr/local/include",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include-fixed"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/home/roach/.local/share/CLion-2024.1.4/clion-2024.1.4/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/DesktopLib_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/CMakeFiles/DesktopLib_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt6/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 7,
+	"SETTINGS_FILE" : "/home/roach/CLionProjects/untitled2/cmake-build-debug/view/Desktop/CMakeFiles/DesktopLib_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/BoardView.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/ButtonBoardView.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/InfoBoardView.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/SnakeView.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/StartScreenView.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/TetrisView.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/roach/CLionProjects/untitled2/view/Desktop/src/mainwindow.cpp",
+			"Mu",
+			null
+		]
+	],
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,64 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"models/TetrisCore/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "UnionLib::@b34ecf4774340faa4f79"
+		}
+	],
+	"id" : "TetrisLib_autogen_timestamp_deps::@6174abd461c2a02085a0",
+	"isGeneratorProvided" : true,
+	"name" : "TetrisLib_autogen_timestamp_deps",
+	"paths" : 
+	{
+		"build" : "models/TetrisCore",
+		"source" : "models/TetrisCore"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/models/TetrisCore/CMakeFiles/TetrisLib_autogen_timestamp_deps",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/models/TetrisCore/CMakeFiles/TetrisLib_autogen_timestamp_deps.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}
