@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.23)
 project(BrickGame)
 
+include(GNUInstallDirs)
+include(CPack)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG")
@@ -18,9 +21,9 @@ add_subdirectory(models/TetrisCore)
 add_subdirectory(models/UnionModule)
 add_subdirectory(view/Desktop)
 
-set(TestLibs UnionLib TetrisLib SnakeLib ${GTEST_LIBRARIES} gtest_main)
-set(DesktopLibs DesktopLib TetrisLib SnakeLib Qt::Core Qt::Gui Qt::Widgets)
-set(CLI_LIBS SnakeLib UnionLib -lncurses)
+set(TestLibs UnionModule TetrisLib SnakeModule ${GTEST_LIBRARIES} gtest_main)
+set(DesktopLibs DesktopLib TetrisLib SnakeModule Qt::Core Qt::Gui Qt::Widgets)
+set(CLI_LIBS SnakeModule UnionModule -lncurses)
 
 set(Tests
         models/SnakeCore/test/tests.cpp
@@ -44,10 +47,8 @@ endif ()
 
 if (BUILD_TESTS)
     set(CMAKE_CXX_FLAGS "-g -O0  -fprofile-arcs -ftest-coverage")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCOV_FLAGS}")
 else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WCompiler}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 endif ()
 
 
@@ -60,7 +61,7 @@ if(BUILD_TESTS)
     # Создание цели для генерации отчетов
     add_custom_target(gcov_report
             ./test
-            COMMAND lcov --capture --directory ./ --output-file coverage.info
+            COMMAND lcov --capture --directory ./ --output-file coverage.info --ignore-errors inconsistent
             COMMAND genhtml -o report coverage.info
             COMMAND xdg-open report/index.html
             DEPENDS test
@@ -79,3 +80,5 @@ if(BUILD_DESKTOP_APP)
     add_executable(${PROJECT_NAME}_app ${Desktop})
     target_link_libraries(${PROJECT_NAME}_app ${DesktopLibs})
 endif()
+
+#add_custom_target(install )
