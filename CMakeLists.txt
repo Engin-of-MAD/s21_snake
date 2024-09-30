@@ -85,6 +85,13 @@ if(DOXYGEN_FOUND)
             COMMENT "Generating DVI documentation..."
     )
 endif()
+if (APPLE)
+    set(OPEN open)
+endif ()
+if (LINUX)
+    set(OPEN xdg-open)
+endif ()
+
 
 #########################################################################################
 #########################################################################################
@@ -180,7 +187,7 @@ add_custom_target(gcov_report
     ./TestModels
     COMMAND lcov --capture --directory . --output-file coverage.info --ignore-errors inconsistent
     COMMAND genhtml -o report coverage.info
-    COMMAND xdg-open report/index.html
+    COMMAND ${OPEN} report/index.html
     DEPENDS test
 )
 
