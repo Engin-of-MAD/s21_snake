@@ -77,13 +77,6 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -Werror -Wextra ")
 endif()
 
-if(DOXYGEN_FOUND)
-    add_custom_target(dvi
-            COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
-            DEPENDS ${CMAKE_SOURCE_DIR}/Doxyfile
-            COMMENT "Generating DVI documentation..."
-    )
-endif()
 if (APPLE)
     set(OPEN open)
 endif ()
@@ -93,6 +86,17 @@ endif ()
 
 
 #########################################################################################
+
+if(DOXYGEN_FOUND)
+    add_custom_target(dvi
+            COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
+            DEPENDS ${CMAKE_SOURCE_DIR}/Doxyfile
+            COMMAND ${OPEN} doxygen/html/index.html
+            COMMENT "Generating DVI documentation..."
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    )
+endif()
+
 #########################################################################################
 set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -234,8 +238,7 @@ add_custom_target(dist
         rm -f ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.tar.gz
         COMMAND  echo ${CMAKE_COMMAND} -E tar czf ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.tar.gz ${PROJECT_SOURCE_DIR}
         COMMAND ${CMAKE_COMMAND} -E tar czf ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.tar.gz ${PROJECT_SOURCE_DIR}/dist
-        COMMAND echo ${PROJECT_SOURCE_DIR}
-#        COMMAND rm -rf dist/*
         COMMENT "Creating distribution..."
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
+
