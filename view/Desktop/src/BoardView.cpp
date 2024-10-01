@@ -164,7 +164,6 @@ void SnakeBoardView::drawBoardModel(QPainter *painter) {
   BaseBoardModel board = gameModel->getGameBoard();
   SnakeModel snake = gameModel->getSnakeModel();
   BaseBoardModel buffer = gameModel->getGameBoard();
-  snake.log();
   for (auto it = snake.begin(); it != snake.end(); ++it) {
     int x = (*it).x, y = (*it).y;
     if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight())

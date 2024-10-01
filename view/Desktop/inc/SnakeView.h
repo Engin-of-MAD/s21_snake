@@ -27,7 +27,6 @@ namespace s21 {
         ~SnakeView() override;
     protected:
         void keyPressEvent(QKeyEvent *e) override;
-        void keyReleaseEvent(QKeyEvent *e) override;
     protected slots:
         void gameLoop();
         void startGame();
