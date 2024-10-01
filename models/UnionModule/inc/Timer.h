@@ -10,11 +10,13 @@ namespace s21 {
     using Milliseconds = std::chrono::milliseconds;
     using Clock = std::chrono::steady_clock;
     class Timer {
+        Milliseconds m_delay;
         Clock::time_point m_currentTime, m_lastUpdateTime;
     public:
         Timer();
+        Timer(Milliseconds delay);
         ~Timer() = default;
-        bool delay(Milliseconds &&timer);
+        bool delay();
         void setCurrentTime(Clock::time_point &&timePoint);
         void setLastUpdateTime(Clock::time_point &&timePoint);
     };

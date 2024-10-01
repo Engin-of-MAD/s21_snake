@@ -96,4 +96,9 @@ SnakeItem SnakeModel::genSnakeItem(SnakeItem pos, Direction direction) {
   }
   return head;
 }
+
+SnakeModel::Direction SnakeModel::getDirection() const {
+    return m_snakeDirection;
+}
+
 }  // namespace s21

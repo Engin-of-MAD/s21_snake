@@ -7,8 +7,8 @@ TetrisGameModel::TetrisGameModel()
       nameDataFile("tetrisScore.txt"),
       m_currShape(new Tetromino()),
       m_nextShape(new Tetromino(TetrominoFactory::randomTetromino())),
-      timerDown(new Timer()),
-      timerControl(new Timer()),
+      timerDown(new Timer(Milliseconds{250})),
+      timerControl(new Timer(Milliseconds{100})),
       score(0),
       bestScore(0),
       state(START) {}
@@ -70,13 +70,13 @@ void TetrisGameModel::move_action() {
   }
   timerControl->setCurrentTime(Clock::now());
   if (input) {
-    if (timerControl->delay(std::chrono::milliseconds{100})) {
+    if (timerControl->delay()) {
       userAction(input);
       timerControl->setLastUpdateTime(Clock::now());
     }
   }
   timerDown->setCurrentTime(Clock::now());
-  if (timerDown->delay(std::chrono::milliseconds{250})) {
+  if (timerDown->delay()) {
     userAction(MOVE_DOWN);
     timerDown->setLastUpdateTime(Clock::now());
   }
