@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 project(BrickGame)
 
 include(GNUInstallDirs)
-include(CPack)
+#include(CPack)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -16,9 +16,8 @@ set(CMAKE_INSTALL_BINDIR "${INSTALL_PREFIX}/bin")
 set(CMAKE_INSTALL_LIBDIR "${INSTALL_PREFIX}/lib")
 set(CMAKE_INSTALL_INCLUDEDIR "${INSTALL_PREFIX}/include")
 set(CMAKE_INSTALL_DATADIR "${INSTALL_PREFIX}/share")
-message("${CMAKE_INSTALL_RPATH}")
 set(CMAKE_INSTALL_RPATH "$ENV{CMAKE_INSTALL_RPATH}:$ENV{HOME}/.local/lib")
-message("${CMAKE_INSTALL_RPATH}")
+
 ##########################################################################################
 #targets builds
 
@@ -153,17 +152,7 @@ add_custom_target(uninstall
 )
 
 
-add_custom_target(dist
-        COMMAND tar czf ${PROJECT_NAME}-${VERSION}.tar.gz
-#            --transform='s|^|${PROJECT_NAME}-${VERSION}/|' \
-#            --exclude-vcs \
-#            --exclude=${PROJECT_NAME}-${VERSION}.tar.gz \
-#            .
-#        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#        COMMENT "Creating distribution archive..."
-)
 
-# Set default build type to Release
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
 endif()
@@ -192,3 +181,61 @@ add_custom_target(gcov_report
 )
 
 #########################################################################################
+
+# Подключаем модуль CPack
+include(CPack)
+
+# Определяем имя пакета
+set(CPACK_PACKAGE_NAME "BrickGame")
+
+# Определяем версию пакета
+set(CPKA_PACKAGE_VERSION_MAJOR 1)
+set(CPKA_PACKAGE_VERSION_MINOR 0)
+
+# Устанавливаем формат архива
+set(CPACK_GENERATOR "TGZ")  # или ZIP для Windows
+
+# Настройки для CPack
+set(CPACK_SET_DESTDIR ON)
+set(CPACK_OUTPUT_FILE_PREFIX "${CMAKE_BINARY_DIR}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Brick Game package")
+#set(CPACK_PACKAGE_VENDOR "Your Company/Organization")
+
+# Создаем директорию для дистрибутива
+file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/dist)
+
+# Копируем необходимые файлы в директорию дистрибутива
+file(COPY ${PROJECT_SOURCE_DIR}/models DESTINATION ${PROJECT_SOURCE_DIR}/dist)
+file(COPY ${PROJECT_SOURCE_DIR}/view DESTINATION ${PROJECT_SOURCE_DIR}/dist)
+file(COPY ${PROJECT_SOURCE_DIR}/CMakeLists.txt DESTINATION ${PROJECT_SOURCE_DIR}/dist)
+file(COPY ${PROJECT_SOURCE_DIR}/gen_make.sh DESTINATION ${PROJECT_SOURCE_DIR}/dist)
+file(COPY ${PROJECT_SOURCE_DIR}/cmake DESTINATION ${PROJECT_SOURCE_DIR}/dist)
+file(REMOVE_RECURSE ${PROJECT_SOURCE_DIR}/dist/.git)
+file(REMOVE_RECURSE ${PROJECT_SOURCE_DIR}/dist/.idea)
+
+# Создаем файл конфигурации для CPack
+configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack_config.cmake.in
+        ${CMAKE_BINARY_DIR}/CPackConfig.cmake
+        @ONLY
+)
+
+# Проверяем наличие файла CPackConfig.cmake
+file(WRITE ${CMAKE_BINARY_DIR}/CPackConfig.cmake "")
+if(NOT EXISTS ${CMAKE_BINARY_DIR}/CPackConfig.cmake)
+    message(FATAL_ERROR "Файл CPackConfig.cmake не был создан.")
+endif()
+
+# Добавляем CPack для создания установщика
+include(${CMAKE_BINARY_DIR}/CPackConfig.cmake)
+message(${PROJECT_SOURCE_DIR})
+# Добавляем целевую цель для создания дистрибутива
+add_custom_target(dist
+        rm -f ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.tar.gz
+        COMMAND  echo ${CMAKE_COMMAND} -E tar czf ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.tar.gz ${PROJECT_SOURCE_DIR}
+        COMMAND ${CMAKE_COMMAND} -E tar czf ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.tar.gz ${PROJECT_SOURCE_DIR}/dist
+        COMMAND echo ${PROJECT_SOURCE_DIR}
+#        COMMAND rm -rf dist/*
+        COMMENT "Creating distribution..."
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
