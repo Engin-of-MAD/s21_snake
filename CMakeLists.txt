@@ -181,7 +181,7 @@ add_custom_target(gcov_report
     COMMAND lcov --capture --directory . --output-file coverage.info --ignore-errors inconsistent
     COMMAND genhtml -o report coverage.info
     COMMAND ${OPEN} report/index.html
-    DEPENDS test
+    DEPENDS tests
 )
 
 #########################################################################################
