@@ -166,7 +166,7 @@ endif()
 
 #########################################################################################
 
-add_custom_target(test DEPENDS TestModels)
+add_custom_target(tests DEPENDS TestModels)
 add_custom_target(app DEPENDS QBrickGame)
 add_custom_target(cli DEPENDS SnakeCLI)
 
