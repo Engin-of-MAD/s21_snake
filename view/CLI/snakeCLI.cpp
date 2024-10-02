@@ -4,8 +4,9 @@
 #include "frontend.h"
 
 using namespace s21;
-SnakeGameModel::GameControl get_signal(int user_input) {
-  SnakeGameModel::GameControl rc = SnakeGameModel::NOSIG;
+void get_signal(int user_input, SnakeGameModel* model) {
+
+  SnakeGameModel::GameControl rc = model->getGameControl();
   if (user_input == KEY_UP)
     rc = SnakeGameModel::MOVE_UP;
   else if (user_input == KEY_DOWN)
@@ -18,11 +19,9 @@ SnakeGameModel::GameControl get_signal(int user_input) {
     rc = SnakeGameModel::STOP_GAME;
   else if (user_input == 10)
     rc = SnakeGameModel::STAR_GAME;
-  else if (user_input == ERR)
-    rc = SnakeGameModel::NOSIG;
   else if (user_input == 'p')
     rc = SnakeGameModel::PAUSE_GAME;
-  return rc;
+  model->setGameControl(rc);
 }
 
 void game_loop(SnakeGameModel* gameModel) {
@@ -32,7 +31,8 @@ void game_loop(SnakeGameModel* gameModel) {
         gameModel->getState() == s21::SnakeGameModel::EXIT_STATE)
       break_flag = FALSE;
     gameModel->stateMachine();
-    gameModel->setGameControl(get_signal(getch()));
+
+    get_signal(getch(), gameModel);
     PrintGameField(gameModel);
   }
 }
@@ -59,10 +59,10 @@ void ncursesMode() {
   noecho();
   curs_set(0);
   keypad(stdscr, TRUE);
-  timeout(200);
+  timeout(20);
 }
 int main(void) {
-  SnakeGameModel game_data;
+  SnakeGameModel game_data(200);
   ncursesMode();
   game_loop(&game_data);
   game_end(game_data);

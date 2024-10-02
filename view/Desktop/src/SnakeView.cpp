@@ -80,8 +80,6 @@ void SnakeView::gameLoop() {
   m_infoBoardView->setScore(m_gameModel->getScore(),
                             m_gameModel->getBestScore());
   m_boardView->repaint();
-//  m_gameModel->log();
-  //        m_infoBoardView->repaint();
 }
 
 void SnakeView::startGame() {
@@ -111,11 +109,11 @@ void SnakeView::stopGame() {
   m_buttonBoard->getStartBtn()->setEnabled(true);
   m_buttonBoard->getPauseBtn()->setEnabled(false);
   m_buttonBoard->getStopBtn()->setEnabled(false);
-  m_gameModel->reset();
-  m_boardView->repaint();
+  m_gameModel->setGameControl(SnakeGameModel::STOP_GAME);
   m_infoBoardView->setScore(m_gameModel->getScore(),
                             m_gameModel->getBestScore());
   m_infoBoardView->repaint();
+  m_boardView->repaint();
   m_gameModel->log();
 }
 
