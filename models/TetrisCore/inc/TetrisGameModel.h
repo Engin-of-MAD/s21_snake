@@ -22,6 +22,7 @@ namespace s21 {
         };
 
         TetrisGameModel();
+        TetrisGameModel(int delayDown, int delayMoving);
         ~TetrisGameModel();
         TetrisBoardModel getBoardModel();
         Tetromino getCurrentTetromino();
@@ -34,19 +35,19 @@ namespace s21 {
         int getBestScore() const;
         void stateMachine();
         void resetGame();
-
+        void enableDelay();
+        void disableDelay();
     private:
 
         TetrisBoardModel *m_gBoard;
         std::string nameDataFile;
         Tetromino *m_currShape;
         Tetromino *m_nextShape;
-        Timer *timerDown;
-        Timer *timerControl;
+        Timer *timerDown, *timerControl;
         int score, bestScore;
         gameControl input;
         stateGame state;
-
+        bool delayState;
         bool checkPos(Tetromino *shape);
         bool genRandomShape(Tetromino *shape);
         void userAction(gameControl g_input);

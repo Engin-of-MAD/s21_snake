@@ -18,8 +18,11 @@ namespace s21 {
         enum GameControl {
             NOSIG = 0, MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT, STAR_GAME, PAUSE_GAME, EXIT_GAME, STOP_GAME};
         SnakeGameModel();
+        explicit SnakeGameModel(int delay);
         ~SnakeGameModel();
         void stateMachine();
+        void enableDelay();
+        void disableDelay();
         void reset();
         void setGameControl(GameControl control);
         BaseBoardModel& getGameBoard();
@@ -42,6 +45,7 @@ namespace s21 {
         void spawnAction();
         void movingAction();
         void gameControl();
+        GameControl directionToControl(SnakeModel::Direction direct);
         int m_score, m_bestScore;
         std::string nameDataFile;
         GameControl m_userControl;
@@ -51,6 +55,7 @@ namespace s21 {
         SnakeModel m_snake;
         void updateScore();
         SnakeFood m_food;
+        bool checkDelay;
     };
 
 }

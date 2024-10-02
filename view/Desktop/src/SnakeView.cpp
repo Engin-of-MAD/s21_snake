@@ -72,35 +72,6 @@ void SnakeView::keyPressEvent(QKeyEvent *e) {
   }
 }
 
-void SnakeView::keyReleaseEvent(QKeyEvent *e) {
-  switch (e->key()) {
-    case Qt::Key_P:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_Return:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_A:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_D:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_R:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_S:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_G:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-    case Qt::Key_Escape:
-      m_gameModel->setGameControl(SnakeGameModel::NOSIG);
-      break;
-  }
-}
-
 void SnakeView::gameLoop() {
   SnakeGameModel::GameState state = m_gameModel->getState();
   if (state == SnakeGameModel::GAMEOVER || state == SnakeGameModel::EXIT_STATE)
@@ -109,7 +80,6 @@ void SnakeView::gameLoop() {
   m_infoBoardView->setScore(m_gameModel->getScore(),
                             m_gameModel->getBestScore());
   m_boardView->repaint();
-  //        m_infoBoardView->repaint();
 }
 
 void SnakeView::startGame() {
@@ -127,12 +97,11 @@ void SnakeView::pauseGame() {
   m_gameModel->setGameControl(SnakeGameModel::PAUSE_GAME);
   if (m_buttonBoard->getPauseBtn()->text() == "Pause") {
     m_buttonBoard->getPauseBtn()->setText("Resume");
-    m_gameTimer->stop();
   }
 
   else if (m_buttonBoard->getPauseBtn()->text() == "Resume") {
     m_buttonBoard->getPauseBtn()->setText("Pause");
-    m_gameTimer->start(200);
+    m_gameTimer->start(1);
   }
 }
 
@@ -140,12 +109,11 @@ void SnakeView::stopGame() {
   m_buttonBoard->getStartBtn()->setEnabled(true);
   m_buttonBoard->getPauseBtn()->setEnabled(false);
   m_buttonBoard->getStopBtn()->setEnabled(false);
-  m_gameModel->reset();
-  //        m_gameTimer->stop();
-  m_boardView->repaint();
+  m_gameModel->setGameControl(SnakeGameModel::STOP_GAME);
   m_infoBoardView->setScore(m_gameModel->getScore(),
                             m_gameModel->getBestScore());
   m_infoBoardView->repaint();
+  m_boardView->repaint();
   m_gameModel->log();
 }
 

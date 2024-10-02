@@ -24,6 +24,7 @@ namespace s21 {
         void push_head(SnakeItem item);
         void addTail();
         int getSize() const;
+        Direction getDirection() const;
         std::vector<SnakeItem>::iterator begin();
         std::vector<SnakeItem>::iterator end();
         SnakeItem operator[](int index);
