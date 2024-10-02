@@ -65,18 +65,6 @@ void SnakeGameModel::gameControl() {
       tmp.setDirection(SnakeModel::Direction::MoveRight);
           tmp.update();
       break;
-    case PAUSE_GAME:
-      m_state = PAUSE;
-      m_userControl = NOSIG;
-      break;
-    case NOSIG: break;
-    case STAR_GAME:
-      m_state = START;
-      break;
-    case EXIT_GAME:
-      m_state = EXIT_STATE;
-      m_userControl = NOSIG;
-          break;
     case STOP_GAME:
       m_state = STOP;
       m_userControl = NOSIG;
@@ -229,9 +217,7 @@ void SnakeGameModel::writeToFile() {
 }
 
 void SnakeGameModel::stopAction() {
-  if (m_userControl == STOP_GAME) {
-    m_state = MOVING;
-  }
+    reset();
 }
 void SnakeGameModel::pauseAction() {
 
@@ -241,10 +227,7 @@ void SnakeGameModel::pauseAction() {
   }
 }
 void SnakeGameModel::exitAction() {
-  if (m_userControl == EXIT_GAME) {
-    m_state = MOVING;
-    m_userControl = directionToControl(m_snake.getDirection());
-  }
+    std::exit(0);
 }
 
 SnakeGameModel::GameControl SnakeGameModel::directionToControl(SnakeModel::Direction direct) {

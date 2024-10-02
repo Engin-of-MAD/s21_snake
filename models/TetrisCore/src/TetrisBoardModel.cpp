@@ -38,4 +38,10 @@ void TetrisBoardModel::shiftDownRows(int rowI) {
 void TetrisBoardModel::clearRow(int rowI) {
   for (int colI = 0; colI < m_width; ++colI) m_boardField[rowI][colI] = 0;
 }
+
+void TetrisBoardModel::initRow(int n) {
+    for (int i = 0; i < 10; ++i) {
+        m_boardField[n][i] = 1 ;
+    }
+}
 }  // namespace s21

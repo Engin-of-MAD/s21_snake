@@ -62,21 +62,47 @@ void BaseBoardModel::reset() {
     for (int j = 0; j < m_width; ++j) m_boardField[i][j] = 0;
 }
 void BaseBoardModel::printInConsole() const {
+    std::cout<< "#############################################"<< std::endl;
+
+    std::cout<< "BoardModel: " << this << std::endl;
   for (int i = 0; i < m_height; ++i) {
     for (int j = 0; j < m_width; ++j) {
       std::cout << m_boardField[i][j] << " ";
     }
     std::cout << "\n";
   }
+    std::cout<< "#############################################"<< std::endl;
+
 }
 
 int *BaseBoardModel::operator[](int index) { return m_boardField[index]; }
 BaseBoardModel &BaseBoardModel::operator=(const BaseBoardModel &other) {
-  if (this == &other) return *this;
-  m_width = other.m_width;
-  m_height = other.m_height;
-  delBoard(m_boardField, m_height);
-  m_boardField = copyBoard(other.m_boardField, m_width, m_width);
+  if (this != &other) {
+
+      delBoard(m_boardField, m_height);
+      m_width = other.m_width;
+      m_height = other.m_height;
+      m_sizeCell = other.m_sizeCell;
+
+//      m_boardField = newBoard(other.m_width, other.m_height);
+      m_boardField = copyBoard(other.m_boardField, other.m_width, other.m_height);
+  }
   return *this;
 }
+
+bool BaseBoardModel::operator==(const BaseBoardModel &other) {
+    bool check_params = (m_height == other.m_height) && (m_width == other.m_width) && (m_sizeCell == other.m_sizeCell);
+    int content_check = 0;
+    if(check_params) {
+        for (int i = 0; i < other.m_height; ++i) {
+            for (int j = 0; j < other.m_width; ++j) {
+                if (m_boardField[i][j] == other.m_boardField[i][j]) content_check++;
+            }
+        }
+    }
+    if (m_width * m_height == content_check)
+        return true;
+    return false;
+}
+
 }  // namespace s21

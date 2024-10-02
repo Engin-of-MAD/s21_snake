@@ -26,6 +26,7 @@ namespace s21 {
         void reset();
         virtual int *operator[](int index);
         BaseBoardModel &operator=(const BaseBoardModel &other);
+        bool operator==(const BaseBoardModel &other);
     };
 }
 

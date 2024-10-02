@@ -59,6 +59,10 @@ TEST(SnakeTest3, SnakeDirection) {
     }
     model.log();
     snake = model.getSnakeModel();
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
     ASSERT_EQ(model.getGameControl(), SnakeGameModel::MOVE_DOWN);
     ASSERT_EQ(snake.getDirection(), SnakeModel::Direction::MoveDown);
     ASSERT_TRUE(snake[0].x == 0 && snake[0].y == 4);
@@ -67,6 +71,10 @@ TEST(SnakeTest3, SnakeDirection) {
     for (int i = 0; i < 6; ++i) {
         model.stateMachine();
     }
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
     model.log();
     snake = model.getSnakeModel();
     ASSERT_EQ(model.getGameControl(), SnakeGameModel::MOVE_RIGHT);
@@ -77,13 +85,19 @@ TEST(SnakeTest3, SnakeDirection) {
     for (int i = 0; i < 4; ++i) {
         model.stateMachine();
     }
-
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
     model.log();
     snake = model.getSnakeModel();
     ASSERT_EQ(model.getGameControl(), SnakeGameModel::MOVE_UP);
     ASSERT_EQ(snake.getDirection(), SnakeModel::Direction::MoveUp);
     ASSERT_TRUE(snake[0].x == 6 && snake[0].y == 0);
-
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
+    model.setGameControl(s21::SnakeGameModel::PAUSE_GAME);
+    model.stateMachine();
     model.setGameControl(s21::SnakeGameModel::MOVE_LEFT);
     for (int i = 0; i < 10; ++i) {
         model.stateMachine();
@@ -94,5 +108,33 @@ TEST(SnakeTest3, SnakeDirection) {
     ASSERT_EQ(snake.getDirection(), SnakeModel::Direction::MoveLeft);
     ASSERT_TRUE(snake[0].x == 0 && snake[0].y == 0);
     ASSERT_EQ(model.getState(), SnakeGameModel::GAMEOVER);
+ }
+
+TEST(SnakeTest4, FSM_Check) {
+     SnakeGameModel model;
+     model.disableDelay();
+     model.setGameControl(s21::SnakeGameModel::STAR_GAME);
+    for (int i = 0; i < 10; ++i) {
+        model.stateMachine();
+    }
+    model.setGameControl(s21::SnakeGameModel::STOP_GAME);
+    model.stateMachine();
+    ASSERT_EQ(model.getState(), SnakeGameModel::STOP);
+    model.setGameControl(s21::SnakeGameModel::STAR_GAME);
+    for (int i = 0; i < 3; ++i) { model.stateMachine(); }
+    model.setGameControl(model.EXIT_GAME);
+    model.stateMachine();
+    ASSERT_EQ(model.getState(), SnakeGameModel::EXIT_STATE);
+    model.reset();
+    ASSERT_EQ(model.getState(), SnakeGameModel::START);
+ }
+
+
+TEST(SnakeTest5, IncreaseSnake) {
+SnakeModel snake;
+snake.addTail();
+ASSERT_EQ(snake.getSize(), 5);
 
  }
+
+

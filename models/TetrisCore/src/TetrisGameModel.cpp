@@ -10,9 +10,17 @@ TetrisGameModel::TetrisGameModel()
       timerDown(new Timer(Milliseconds{250})),
       timerControl(new Timer(Milliseconds{100})),
       score(0),
-      bestScore(0),
-      state(START) {}
-
+      bestScore(0), delayState(true),
+      state(START) {readFromFile();}
+TetrisGameModel::TetrisGameModel(int delayDown, int delayMoving): m_gBoard(new TetrisBoardModel(10, 20)),
+                                             nameDataFile("tetrisScore.txt"),
+                                             m_currShape(new Tetromino()),
+                                             m_nextShape(new Tetromino(TetrominoFactory::randomTetromino())),
+                                             timerDown(new Timer(Milliseconds{delayDown})),
+                                             timerControl(new Timer(Milliseconds{delayMoving})),
+                                             score(0),
+                                             bestScore(0),state(START) {readFromFile();
+    enableDelay();}
 void TetrisGameModel::userAction(gameControl g_input) {
   Tetromino temp(*m_currShape);
   switch (g_input) {
@@ -49,11 +57,6 @@ void TetrisGameModel::userAction(gameControl g_input) {
     case EXIT_GAME:
       state = EXIT_STATE;
       break;
-    case NOSIG:
-      break;
-    case PAUSE_GAME:
-      state = PAUSE;
-      break;
   }
 }
 
@@ -63,23 +66,27 @@ void TetrisGameModel::start_action() {
 }
 
 void TetrisGameModel::move_action() {
-  std::cout << "Input: " << input << std::endl;
   if (input == PAUSE_GAME) {
     state = PAUSE;
     input = NOSIG;  // для моментального сброса состояния переменной движения
   }
-  timerControl->setCurrentTime(Clock::now());
-  if (input) {
-    if (timerControl->delay()) {
-      userAction(input);
-      timerControl->setLastUpdateTime(Clock::now());
-    }
-  }
-  timerDown->setCurrentTime(Clock::now());
-  if (timerDown->delay()) {
-    userAction(MOVE_DOWN);
-    timerDown->setLastUpdateTime(Clock::now());
-  }
+  if (delayState) {
+      timerControl->setCurrentTime(Clock::now());
+      if (input) {
+          if (timerControl->delay()) {
+              userAction(input);
+              timerControl->setLastUpdateTime(Clock::now());
+          }
+      }
+      timerDown->setCurrentTime(Clock::now());
+      if (timerDown->delay()) {
+          userAction(MOVE_DOWN);
+          timerDown->setLastUpdateTime(Clock::now());
+      }
+  } else {
+      if (input) userAction(input);
+      userAction(MOVE_DOWN);
+      }
 }
 
 void TetrisGameModel::stateMachine() {
@@ -88,8 +95,7 @@ void TetrisGameModel::stateMachine() {
       start_action();
       break;
     case SPAWN:
-      *m_currShape = *m_nextShape;
-      state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
+      spawn_action();
       break;
     case MOVING:
       move_action();
@@ -199,23 +205,15 @@ int TetrisGameModel::readFromFile() {
 
   file.close();
   maxElement = 0;
-  std::cout << "Data from file:" << std::endl;
-  for (int num : nums) {
-    std::cout << num << std::endl;
-  }
   if (!nums.empty()) {
     maxElement = *std::max_element(nums.begin(), nums.end());
-    std::cout << "Get max num from file: " << maxElement << std::endl;
   } else {
-    std::cout << "File empty" << std::endl;
     maxElement = 0;
   }
   return maxElement;
 }
 void TetrisGameModel::stop_action() { resetGame(); }
-
 void TetrisGameModel::exit_action() {}
-
 void TetrisGameModel::writeToFile() {
   int tmp = readFromFile();
   std::fstream file(nameDataFile, std::ios_base::app);
@@ -224,5 +222,12 @@ void TetrisGameModel::writeToFile() {
   }
 }
 
-void TetrisGameModel::spawn_action() {}
+void TetrisGameModel::spawn_action() {
+    *m_currShape = *m_nextShape;
+    state = genRandomShape(m_nextShape) ? GAMEOVER : MOVING;
+}
+void TetrisGameModel::enableDelay() { delayState = true; }
+void TetrisGameModel::disableDelay() { delayState = false; }
+
+
 }  // namespace s21
